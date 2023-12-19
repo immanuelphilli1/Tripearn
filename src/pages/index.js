@@ -2,6 +2,7 @@ import * as React from "react"
 import Layout from "../components/layout"
 import ParcelCard from "../components/Card/parcelCard"
 import Search from "../components/Search"
+import { navigate } from "gatsby"
 
 const IndexPage = () => {
   return (
@@ -17,7 +18,7 @@ const IndexPage = () => {
                   and people who need to deliver any parcel</div>
                 <div className="flex flex-col md:flex-row gap-4 md:gap-10 pt-10">
                   <button type="button" className="py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green uppercase font-bold">send parcel</button>
-                  <button type="button" className="py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green uppercase font-bold">offer delivery</button>
+                  <button onClick={e => navigate('/parcel-content')} type="button" className="py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green uppercase font-bold">offer delivery</button>
                 </div>
               </div>
             </div>
@@ -47,7 +48,7 @@ const IndexPage = () => {
         </div>
         <div className="container mx-auto py-10">
           <div className="uppercase text-2xl md:text-5xl font-bold text-center pb-10">See Trip earn parcels in your area</div>
-          <div className="lg:bg-white rounded-full lg:p-10"><Search /></div>
+          <div className="lg:bg-white rounded-full lg:p-10"><Search border={'border-light_black'} /></div>
         </div>
         <div className="bg-white py-10 mt-10">
           <div className="container mx-auto">

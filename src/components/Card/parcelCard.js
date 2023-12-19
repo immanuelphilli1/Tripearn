@@ -2,7 +2,7 @@ import * as React from "react";
 
 const ParcelCard =()=>{
     return(
-        <div className=" bg-light_black p-4 rounded-lg w-full">
+        <div className=" bg-light_black border border-white p-4 rounded-lg w-full">
             <div className="flex flex-col md:flex-row gap-10">
                 <div className="bg-white p-10 w-[9rem] md:w-[11rem] rounded-lg">
                     <img src="/svg/siren-icon.svg" alt="parcelImage" />

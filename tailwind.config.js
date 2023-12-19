@@ -16,6 +16,7 @@ module.exports = {
       light_black:"#15292B",
       light_grey:"#D9D9D9",
       overlay:"rgba(21, 41, 43, .7)",
+      transparent: "rgba(0, 0, 0, 0)",
 
     },
     extend: {},
