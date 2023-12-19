@@ -1,3 +1,49 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer components {
+    #___gatsby {
+      @apply flex flex-col min-h-screen bg-[#15292B];
+    }
+}
+/* .wrapper, .container{
+    max-width: 1440px;
+  } */
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+@media screen and (min-width: 576px) {
+    /* .container {
+        max-width: 540px;
+      } */
+  }
+  @media screen and (min-width: 768px) {
+    /* .container {
+        max-width: 720px;
+    } */
+  }
+  @media screen and (min-width: 992px) {
+    /* .container {
+        max-width: 1140px;
+      } */
+  }
+  @media screen and (min-width: 1025px) {
+    .container {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+  }
+  select {
+    background:url("data:image/svg+xml;utf8,<svg width='20' height='25' viewBox='0 0 20 25' fill='navy' xmlns='http://www.w3.org/2000/svg'><path d='M10 15L18.6603 0H1.33975L10 15Z'/></svg>") no-repeat;
+    background-position: right 10px top 80%;
+  }
+  
+  select:focus {
+    background:url("data:image/svg+xml;utf8,<svg width='20' height='25' viewBox='0 0 20 25' fill='navy' xmlns='http://www.w3.org/2000/svg'><path d='M10 15L18.6603 0H1.33975L10 15Z' /></svg>") no-repeat;
+    background-position: right 10px top 80%;
+  }
+  select option {
+    background: #003566;
+    color: white;
+  }
