@@ -42,3 +42,11 @@
     background: #007BFF;
     color: white;
   }
+  .menu-avatar .dropdown {
+    height: 0;
+    transition: height 0.2s ease;
+  }
+  .menu-avatar:hover > .dropdown {
+    height: 110px;
+    /* @apply !border; */
+  }

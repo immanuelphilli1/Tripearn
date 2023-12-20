@@ -3,9 +3,35 @@ import Layout from "../components/layout"
 import ParcelCard from "../components/Card/parcelCard"
 import Search from "../components/Search"
 import { useState } from "react"
+import Modal from "../components/Modal"
 
 const ParcelPage = () => {
   const [filter, setFilter] = useState("")
+  const [showAcceptParcel, setShowAcceptParcel] = useState(false);
+  const [showParcelDetails, setShowParcelDetails] = useState(false);
+  const [showParcelSubmit, setShowParcelSubmit] = useState(false);
+
+  
+  function handleSubmit() {
+    setShowParcelSubmit(true);
+    setShowAcceptParcel(false);
+    setShowParcelDetails(false);
+  }
+  function handleAcceptParcel() {
+    setShowAcceptParcel(true);
+    setShowParcelSubmit(false);
+    setShowParcelDetails(false);
+  }
+  function handleParcelDetails() {
+    setShowParcelDetails(true);
+    setShowParcelSubmit(false);
+    setShowAcceptParcel(false);
+  }
+  function handleClose() {
+    setShowParcelSubmit(false);
+    setShowAcceptParcel(false);
+    setShowParcelDetails(false);
+  }
   return (
     <Layout>
       <main>
@@ -29,13 +55,126 @@ const ParcelPage = () => {
             </div>
           </div>
           <div className="py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 ">
-            <ParcelCard />
+            <ParcelCard handleDetails={handleParcelDetails} />
             <ParcelCard />
             <ParcelCard />
             <ParcelCard />
           </div>
         </div>
       </main>
+      {showParcelDetails && (
+        <Modal
+          handleClose={handleClose}
+          bigModal={true}
+          Content={
+            <div className="flex flex-col lg:flex-row gap-10">
+              <div className="flex p-10 bg-light_grey">
+                <div className="flex justify-center items-center">
+                <img src="/svg/siren-icon.svg" className="w-[20rem]" alt="logo" />
+                </div>
+                </div>
+              <div className="flex flex-col justify-between gap-10 w-full text-left">
+                <div className="border-b">
+                  <div>Destination: <span className="font-bold">Accra - Ghana</span></div>
+                  <div>Primary Location: <span className="font-bold">Accra - Ghana</span></div>
+                  <div>Required Delivery Date: <span className="font-bold">Accra - Ghana</span></div>
+                  <div>Package Size: <span className="font-bold">Accra - Ghana</span></div>
+                  <div>Package Type: <span className="font-bold">Accra - Ghana</span></div>
+                  <div>Amount: <span className="font-bold">Accra - Ghana</span></div>
+                </div>
+                <div>Amount is simply dummy text of the printing and 
+typesetting industry. Lorem Ipsum has been the 
+industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </div>
+                <div className="w-full">
+                <button
+                    onClick={handleAcceptParcel}
+                    type="button"
+                    className="py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green font-bold"
+                  >
+                    Accept
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
+        />
+      )}
+      {showAcceptParcel && (
+        <Modal
+          handleClose={handleClose} 
+          Title={"Offer Delivery"}
+          Content={
+            <div>
+              <form>
+                <div className="grid grid-cols-1 gap-6 md:gap-6 pt-4 px-6 text-left">
+                  <div>
+                    <label htmlFor="departure" className="text-black">
+                    Date of Departure
+                    </label>
+                    <input
+                      name="departure"
+                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
+                      type="date"
+                      required
+                      // onChange={(e) => {
+                      //   setDeparture(e.target.value);
+                      // }}
+                      // value={departure}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="arrivalDate" className="text-black">
+                    Date of Arrival
+                    </label>
+                    <input
+                      name="arrivalDate"
+                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
+                      type="date"
+                      required
+                      // onChange={(e) => {
+                      //   setArrivalDate(e.target.value);
+                      // }}
+                      // value={arrivalDate}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="arrivalTime" className="text-black">
+                    Arrival Time
+                    </label>
+                    <input
+                      name="arrivalTime"
+                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
+                      type="time"
+                      required
+                      // onChange={(e) => {
+                      //   setArrivalTime(e.target.value);
+                      // }}
+                      // value={arrivalTime}
+                    />
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <button type="button" onClick={handleSubmit} className="py-4 px-10 w-full lg:w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">Submit</button>
+                </div>
+                </div>
+              </form>
+            </div>
+          }
+        />
+      )}
+      {showParcelSubmit && (
+        <Modal 
+          Title={"Thank You"}
+          handleClose={handleClose}
+          bigModal={true}
+          Content={
+            <div className="pt-6">
+              We have received your request to deliver package 12345. Your details provided 
+are being processed! We will send you an email and SMS of package details 
+once approval is completed. Approval takes less than 24 hours 
+            </div>
+          }
+        />
+      )}
     </Layout>
   )
 }

@@ -3,7 +3,7 @@ import Layout from "../components/layout"
 
 const AboutUsPage = () => {
   return (
-    <Layout>
+    <Layout active={"about"}>
       <main>
         <div className="container mx-auto py-10">
           <div className="flex gap-10 justify-between">

@@ -9,7 +9,7 @@ const ContactUsPage = () => {
   const [message, setMessage] = useState("")
 
   return (
-    <Layout>
+    <Layout active={"contact"}>
       <main>
         <div className="container mx-auto py-10">
           <div className="flex gap-10 justify-between">

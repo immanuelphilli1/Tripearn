@@ -1,3 +1,4 @@
+import { navigate } from "gatsby";
 import * as React from "react";
 import { useState } from "react";
 
@@ -18,7 +19,7 @@ const Search = ({ border }) => {
                     <input name="to" placeholder="To" className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full ${border}`} type="text" required onChange={e => { setTo(e.target.value) }} value={to} />
                 </div>
                 <div className="flex items-center justify-center">
-                    <button type="button" className="py-4 px-10 w-full lg:w-1/2 rounded-lg text-black bg-green hover:bg-light_green font-bold">Search</button>
+                    <button type="button" onClick={e=>navigate('/parcel-content')} className="py-4 px-10 w-full lg:w-1/2 rounded-lg text-black bg-green hover:bg-light_green font-bold">Search</button>
                 </div>
             </div>
         </form>
