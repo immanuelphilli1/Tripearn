@@ -7,7 +7,7 @@ const Layout = ({ children, active }) => {
             <div className=""><Navigation active={active} />
                 <div className="w-full pt-28">{children}</div>
             </div>
-            <div className="py-10 text-center border-t">© All Rights reserved. This website is the property of Trip Earn , Copyrighted 2024. </div>
+            <div className="py-10 text-center border-t">© All Rights reserved. This website is the property of Parcelra , Copyrighted 2024. </div>
         </div>
     )
 }

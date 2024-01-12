@@ -21,9 +21,9 @@ const AboutUsPage = () => {
             <div className=" py-2 ">The words of which the initial letter is capitalized have meanings defined under the following conditions.</div>
             <div className=" py-2">The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</div>
             <div className=" text-2xl text-blue py-4 font-bold">Definitions</div>
-            <div className=" py-2 ">Company (referred to as either "the Company", "We", "Us" or "Our" in this Cookies Policy) refers to Tripearn.coporation, Russia Saratov Begovaya 22.</div>
+            <div className=" py-2 ">Company (referred to as either "the Company", "We", "Us" or "Our" in this Cookies Policy) refers to Parcelra.coporation, Russia Saratov Begovaya 22.</div>
             <div className=" py-2 ">You means the individual accessing the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</div>
-            <div className=" py-2 ">Website refers to https://tripearn.ru/ (Trip earn ).</div>
+            <div className=" py-2 ">Website refers to https://parcelra.ru/ (Parcelra ).</div>
             <div className=" py-2 ">Service refers to the Website.</div>
             <div className=" text-2xl text-blue py-4 font-bold">Disclaimer</div>
             <div className=" py-2 ">The information contained on the Service is for general information purposes only.</div>

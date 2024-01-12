@@ -51,7 +51,7 @@ const IndexPage = () => {
               <div className="bg-blue w-full h-[200px] md:h-[450px] rounded-lg"></div>
               <div>
                 <div className="uppercase font-bold text-5xl md:text-[92px] lg:pt-4">
-                  Trip earn
+                  Parcelra
                 </div>
                 <div className="pt-4 md:text-xl">
                   The largest parcel delivery service that unites travelers and
@@ -105,8 +105,8 @@ const IndexPage = () => {
                 Need to deliver a parcel?
               </div>
               <div className="text-black text-lg md:text-2xl text-center pt-2">
-                These are featured routes our travelers easily accept on Trip
-                Earn
+                These are featured routes our travelers easily accept on Parcelra
+                
               </div>
             </div>
             <div className="py-10 flex flex-col lg:flex-row gap-10  ">
@@ -119,7 +119,7 @@ const IndexPage = () => {
         </div>
         <div className="container mx-auto py-10">
           <div className="uppercase text-2xl md:text-5xl font-bold text-center pb-10">
-            See Trip earn parcels in your area
+            See Parcelra parcels in your area
           </div>
           <div className="lg:bg-white rounded-full lg:p-10">
             <Search border={"border-light_black"} />
@@ -129,7 +129,7 @@ const IndexPage = () => {
           <div className="container mx-auto">
             <div>
               <div className="uppercase text-2xl md:text-5xl text-black font-bold text-center pb-10">
-                Some items you can send with trip earn
+                Some items you can send with Parcelra
               </div>
             </div>
             <div className="py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 justify-items-center text-black gap-10">
@@ -201,7 +201,7 @@ const IndexPage = () => {
           <div className="container mx-auto pb-10">
             <div>
               <div className="uppercase text-2xl md:text-5xl text-black font-bold text-center pb-10">
-                advantages using trip earn
+                advantages using Parcelra
               </div>
             </div>
             <div className="py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center text-black gap-10">
@@ -378,7 +378,7 @@ const IndexPage = () => {
                       disabled
                       className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-red `}
                       type="text"
-                      // value={amount}
+                      value={"700"}
                     />
                   </div>
                   <div className=" md:col-span-2">
@@ -487,12 +487,12 @@ industry's standard dummy text ever since the 1500s, when an unknown printer too
                   </div>
                   <div>
                     <label htmlFor="arrivalTime" className="text-black">
-                    Arrival Time
+                    Form of travel
                     </label>
                     <input
                       name="arrivalTime"
                       className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
-                      type="time"
+                      type="text"
                       required
                       // onChange={(e) => {
                       //   setArrivalTime(e.target.value);

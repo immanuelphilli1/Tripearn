@@ -39,15 +39,15 @@ const ContactUsPage = () => {
                 <div>
                   <div className=" text-2xl text-blue py-4 font-bold">Emails</div>
                   <div className="  text-2xl text-green ">For general enquiries</div>
-                  <div className="">tripearn@gmail.com</div>
+                  <div className="">parcelra@gmail.com</div>
                 </div>
                 <div>
                   <div className=" text-2xl text-green pt-4 font-bold">For technical support</div>
-                  <div className=" ">tripearn@gmail.com</div>
+                  <div className=" ">parcelra@gmail.com</div>
                 </div>
                 <div>
                   <div className=" text-2xl text-green pt-4 font-bold">Questions about advertising and joint projects</div>
-                  <div className=" ">tripearn@gmail.com</div>
+                  <div className=" ">parcelra@gmail.com</div>
                 </div>
               </div>
               <div className="border-l">

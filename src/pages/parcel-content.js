@@ -39,7 +39,7 @@ const ParcelPage = () => {
           <div className="flex gap-10 justify-between">
             <div className="flex flex-col gap-6 lg:gap-10 w-full">
               <div className="bg-blue w-full min-h-[350px] rounded-lg py-10 px-6">
-                <div className="uppercase text-2xl md:text-5xl font-bold text-center py-10">See Trip earn parcels in your area</div>
+                <div className="uppercase text-2xl md:text-5xl font-bold text-center py-10">See Parcelra parcels in your area</div>
                 <Search border={"border-white"} />
               </div>
             </div>

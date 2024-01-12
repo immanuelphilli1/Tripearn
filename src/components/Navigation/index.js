@@ -78,7 +78,7 @@ const Navigation = ({ active }) => {
               disclaimer
             </a>
           </div>
-          {/* <div className="relative menu-avatar cursor-pointer hidden lg:block">
+          <div className="relative menu-avatar cursor-pointer hidden lg:block">
           <div className="flex gap-4 items-center ">
             <div className="bg-white rounded-full p-6"></div>
             <div>Immanuel</div>
@@ -99,8 +99,8 @@ const Navigation = ({ active }) => {
                         </li>
                         </ul>
                         </div>
-          </div> */}
-          <div className="bg-white px-4 py-2 font-medium items-center hidden lg:flex gap-4 rounded-lg">
+          </div>
+          {/* <div className="bg-white px-4 py-2 font-medium items-center hidden lg:flex gap-4 rounded-lg">
           <button
               onClick={handleSignIn} className="text-light_black hover:text-blue">
               Sign In
@@ -111,7 +111,7 @@ const Navigation = ({ active }) => {
             >
               Sign Up
             </button>
-          </div>
+          </div> */}
           {/* <!-- mobile button goes here --> */}
           <div className="lg:hidden flex items-center">
             <button
