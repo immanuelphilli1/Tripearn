@@ -1,3 +1,65 @@
+import md5 from "md5"
+
+
+// async function validateHuman(token) {
+//   let secret = process.env.SECRET_KEY
+//   let recaptchaENDPOINT = `${Base_url}/recaptcha` // // Replace with environment variables
+
+//   try {
+//     let result = await fetchData(recaptchaENDPOINT, { secret, token })
+//     return result.success
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
+
+export const handleLoginRequest = async (username, password, accountType, token) => {
+  let hashedPassword = md5(password)
+
+  let loginENDPOINT = `${Base_url}/login` // // Replace with environment variables
+
+  try {
+    let result = await fetchData(loginENDPOINT, {
+      username,
+      password: hashedPassword,
+      accountType,
+      token: token,
+    })
+    // console.log(accountType)
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const handleRegisterRequest = async (
+  accountType,
+  username,
+  password,
+  cpassword,
+  accountNumber
+) => {
+  // console.log('reqest')
+  // console.log(Base_url)
+  let registerENDPOINT = `${Base_url}/register` // // Replace with environment variables
+
+  try {
+    let hashedPassword = md5(password)
+    let hashedcPassword = md5(cpassword)
+    let result = await fetchData(registerENDPOINT, {
+      accountType,
+      username,
+      password: hashedPassword,
+      cpassword:hashedcPassword,
+      accountNumber
+    })
+    // console.log(result)
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const fetchData = async (
     endpoint,
     requestParams = {},
