@@ -37,7 +37,7 @@ const Modal = ({
                 <div className="flex justify-center">
                 {loader === true ? (
                   <svg version="1.1" className="w-5 h-5" fill="#fff" x="0px" y="0px"
-                  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;"  >
+                  viewBox="0 0 50 50"  >
                  <path d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
                  <animateTransform attributeType="xml"
                  attributeName="transform"
@@ -51,18 +51,6 @@ const Modal = ({
                 ) : null}
                 {ButtonText}
                 </div>
-              </a>
-            </div>
-          )}
-          {!!CancelButton && (
-            <div className="w-full">
-              <a
-                aria-label="submit"
-                type="submit"
-                onClick={handleCancel}
-                className="tracking-wider font-bold border-none p-3 rounded text-center bg-red hover:bg-light_grey self-end w-full cursor-pointer"
-              >
-                {CancelButton}
               </a>
             </div>
           )}

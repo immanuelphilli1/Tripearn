@@ -4,6 +4,7 @@ import ParcelCard from "../components/Card/parcelCard"
 import Search from "../components/Search"
 import { useState } from "react"
 import Modal from "../components/Modal"
+import { navigate } from "gatsby"
 
 const ParcelPage = () => {
   const [filter, setFilter] = useState("")
@@ -18,6 +19,11 @@ const ParcelPage = () => {
     setShowParcelDetails(false);
   }
   function handleAcceptParcel() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate("/sign-in")
+
+    }
     setShowAcceptParcel(true);
     setShowParcelSubmit(false);
     setShowParcelDetails(false);

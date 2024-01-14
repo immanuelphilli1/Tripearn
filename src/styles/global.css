@@ -34,14 +34,15 @@
         padding-right: 20px;
       }
   }
-  select {
+  /* select {
     background:url("data:image/svg+xml;utf8,<svg width='20' height='25' viewBox='0 0 20 25' fill='navy' xmlns='http://www.w3.org/2000/svg'><path d='M10 15L18.6603 0H1.33975L10 15Z'/></svg>") no-repeat;
     background-position: right 10px top 80%;
-  }
-  select option {
+  } */
+  /* select option {
     background: #007BFF;
     color: white;
-  }
+    width: 50%;
+  } */
   .menu-avatar .dropdown {
     height: 0;
     transition: height 0.2s ease;

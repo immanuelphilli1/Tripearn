@@ -3,6 +3,8 @@ import Layout from "../components/layout"
 import { useState } from "react"
 import ProfileCard from "../components/Card/profileCard"
 import Modal from "../components/Modal"
+import { useEffect } from "react"
+import { navigate } from "gatsby"
 
 const ProfilePage = () => {
   const [filter, setFilter] = useState("")
@@ -37,6 +39,15 @@ const ProfilePage = () => {
     setShowAcceptParcel(false);
     setShowParcelDetails(false);
   }
+
+  useEffect(() => {
+    // Retrieve data from localStorage when the component mounts
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate("/sign-in")
+
+    }
+  }, []);
 
   return (
     <Layout>

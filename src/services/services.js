@@ -1,29 +1,29 @@
-import md5 from "md5"
 
+let Base_url = "https://parcelra.com/api/v1"
 
-// async function validateHuman(token) {
-//   let secret = process.env.SECRET_KEY
-//   let recaptchaENDPOINT = `${Base_url}/recaptcha` // // Replace with environment variables
+export const handleLogoutRequest = async () => {
 
-//   try {
-//     let result = await fetchData(recaptchaENDPOINT, { secret, token })
-//     return result.success
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
+  let loginENDPOINT = `${Base_url}/logout` // // Replace with environment variables
 
-export const handleLoginRequest = async (username, password, accountType, token) => {
-  let hashedPassword = md5(password)
+  try {
+    let result = await fetchData(loginENDPOINT, {})
+    // console.log(accountType)
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const handleLoginRequest = async (email, password) => {
+  let hashedPassword = password
 
   let loginENDPOINT = `${Base_url}/login` // // Replace with environment variables
 
   try {
     let result = await fetchData(loginENDPOINT, {
-      username,
+      email,
       password: hashedPassword,
-      accountType,
-      token: token,
+      remember:true,
     })
     // console.log(accountType)
     return result
@@ -33,25 +33,31 @@ export const handleLoginRequest = async (username, password, accountType, token)
 }
 
 export const handleRegisterRequest = async (
-  accountType,
-  username,
-  password,
-  cpassword,
-  accountNumber
+  name,
+    surname,
+    country,
+    email,
+    phone,
+    password,
+    confirmPassword,
 ) => {
   // console.log('reqest')
   // console.log(Base_url)
   let registerENDPOINT = `${Base_url}/register` // // Replace with environment variables
 
   try {
-    let hashedPassword = md5(password)
-    let hashedcPassword = md5(cpassword)
+    let hashedPassword = password
+    let hashedcPassword = confirmPassword
     let result = await fetchData(registerENDPOINT, {
-      accountType,
-      username,
+      name,
+    surname,
+    country,
+    gender:false,
+    birthday:"01.01.2000",
+    email,
+    phone,
       password: hashedPassword,
-      cpassword:hashedcPassword,
-      accountNumber
+      password_confirmation:hashedcPassword,
     })
     // console.log(result)
     return result
@@ -74,41 +80,45 @@ export const fetchData = async (
         headers: {
           'Content-Type': 'application/json'
         },
-        credentials: 'include'
+        // credentials: 'include'
       })
       // const data = await response.json();
-      // console.log(data)
-      const { data, message } = await response.json()
+      console.log(response)
+      const { data, token, message, user, errors } = await response.json()
+      
       if (response.status === 200) {
         // Move response Data to the backend
         finalResponse['success'] = true
         finalResponse['data'] = data
+        finalResponse['token'] = token
         finalResponse['msg'] = message
+        finalResponse['user'] = user
+        finalResponse['errors'] = errors
         return finalResponse
       }
   
       finalResponse['success'] = false
       finalResponse['msg'] = message
+      finalResponse['token'] = token
       finalResponse['data'] = data
-  
+      finalResponse['user'] = user
+      finalResponse['errors'] = errors
       return finalResponse
     } catch (error) {
       return finalResponse
     }
   }
 
-  let Base_url = "process.env.BASE_URL"
+ 
 
-export const topUp = async (initiator_msisdn, receiver_msisdn,username,amount) => {
-    let TopUpEndpoint = `${Base_url}/top-up`// // Replace with environment variables
-  
-    try {
-      let result = await fetchData(TopUpEndpoint, {initiator_msisdn,receiver_msisdn, username, amount });
-      // console.log(result)
-      return result
-  
-    } catch (error) {
-      console.log(error)
-  
-    }
+export async function getAllCountries() {
+  const apiUrl = 'https://restcountries.com/v3.1/all';
+  try {
+    const response = await fetch(apiUrl);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error; // Rethrow the error for the calling code to handle
   }
+}
