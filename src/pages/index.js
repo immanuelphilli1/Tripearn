@@ -107,7 +107,7 @@ const IndexPage = () => {
           <div className="container mx-auto">
             <div>
               <div className="uppercase text-2xl md:text-5xl text-black font-bold text-center">
-                Need to deliver a parcel?
+                Need to deliver a parcel? ?
               </div>
               <div className="text-black text-lg md:text-2xl text-center pt-2">
                 These are featured routes our travelers easily accept on Parcelra
