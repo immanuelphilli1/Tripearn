@@ -20,7 +20,7 @@ const ParcelPage = () => {
   }
   function handleAcceptParcel() {
     const token = localStorage.getItem('token');
-    if (!token) {
+    if (token === undefined || token === null || token === "" || !token) {
       navigate("/sign-in")
 
     }

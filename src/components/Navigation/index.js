@@ -6,7 +6,7 @@ import { handleLogoutRequest } from "../../services/services";
 
 const Navigation = ({ active }) => {
   const [showMobileMenu, setMobileMenu] = useState(false);
-  const [check, setCheck] = useState([])
+  const [check, setCheck] = useState(null)
   const [user, setUser] = useState([])
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const Navigation = ({ active }) => {
   function handleLogout (){
     handleLogoutRequest()
     localStorage.removeItem('token');
-    const targetURL = 'http://localhost:8000/';
+    const targetURL = 'http://localhost:8000/' || 'https://parcelra.com/';
 
 if (window.location.href === targetURL) {
   window.location.reload()
@@ -72,7 +72,7 @@ if (window.location.href === targetURL) {
               disclaimer
             </a>
           </div>
-          {check !== null && (
+          {check !== null   ? (
           <div className="relative menu-avatar cursor-pointer hidden lg:block">
           <div className="flex gap-4 items-center ">
             <div className="bg-white rounded-full p-6"></div>
@@ -95,9 +95,8 @@ if (window.location.href === targetURL) {
                         </ul>
                         </div>
           </div>
-          // console.log("res:::::::::::::::",check)
-          )}
-          {check === null && (
+          // console.log("res::::::::::check:::::",check)
+          ) : (
           <div className="bg-white px-4 py-2 font-medium items-center hidden lg:flex gap-4 rounded-lg">
             <a
               href="/sign-in" className="text-light_black hover:text-blue">
@@ -162,6 +161,7 @@ if (window.location.href === targetURL) {
           >
             disclaimer
           </a>
+          {check === null ? (
           <div>
             <a
               href="/sign-in"
@@ -176,6 +176,7 @@ if (window.location.href === targetURL) {
               sign up
             </a>
           </div>
+          ): (
           <div>
             <a
               href="/profile"
@@ -190,6 +191,7 @@ if (window.location.href === targetURL) {
               logout
             </a>
           </div>
+          )}
         </div>
       </nav>
     </div>

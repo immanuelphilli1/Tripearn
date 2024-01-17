@@ -26,9 +26,8 @@ const IndexPage = () => {
   }
   function handleAcceptParcel() {
     const token = localStorage.getItem('token');
-    if (!token) {
+    if (token === undefined || token === null || token === "" || !token) {
       navigate("/sign-in")
-
     }
     setShowAcceptParcel(true);
     setShowParcelSubmit(false);

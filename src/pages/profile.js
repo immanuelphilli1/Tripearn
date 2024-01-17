@@ -43,7 +43,7 @@ const ProfilePage = () => {
   useEffect(() => {
     // Retrieve data from localStorage when the component mounts
     const token = localStorage.getItem('token');
-    if (!token) {
+    if (token === undefined || token === null || token === "" || !token) {
       navigate("/sign-in")
 
     }

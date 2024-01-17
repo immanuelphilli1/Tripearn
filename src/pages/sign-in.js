@@ -41,11 +41,13 @@ const SignInPage = () => {
                 });
               });
               setLoader(false)
-            } else {
+            } else if (res.success === true) {
               toast.success("Login Successful!", {duration: 5000, position: 'bottom-center',})
               setTimeout(()=> {handleNavigate()}, 5000)
               localStorage.setItem('token', res.token);
               localStorage.setItem('user', res.user.name);
+            } else {
+              toast.error("We are facing technical issues. Kindly try again later!", {duration: 5000, position: 'bottom-right',})
             }
           })
         }
