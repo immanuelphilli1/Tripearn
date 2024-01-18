@@ -58,6 +58,13 @@ if (window.location.href === targetURL) {
               about us
             </a>
             <a
+              href="/parcel-content"
+              className={`hover:text-blue py-2 ${active === "parcels" ? "text-blue border-b border-blue" : ""
+                }`}
+            >
+              Parcels
+            </a>
+            <a
               href="/contact-us"
               className={`hover:text-blue py-2 ${active === "contact" ? "text-blue border-b border-blue" : ""
                 }`}

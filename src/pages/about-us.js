@@ -16,22 +16,26 @@ const AboutUsPage = () => {
           <div className="py-10">
             <div className=" text-2xl py-6">Parcelra is the largest parcel delivery service that brings together travelers and people who need to deliver any package.</div>
             <div className=" text-2xl text-blue py-4 font-bold">How it all began</div>
-            <div className=" py-2 ">In August 2018, while studying at Saratov State Technical University, I faced a problem that was the birth of this wonderful idea. As an international student in Russia, you are required to renew your visa annually, but this particular year I had to renew my visa and my passport because my passport was only valid for seven months. I presented my passport to the Ghanaian Embassy in Moscow. I only had 3 months for my visa to expire. After waiting for about 2 months and 20 days, my passport was finally ready at the embassy in Moscow. The problem was that I needed a courier service to deliver my passport to Saratov. I also didn't have a lot of money, and if I used the regular post office delivery, it would take about two weeks. Luckily, my friend was going to travel from Moscow to Saratov by bus that same day, and I told him to pick up my passport for me at the embassy. And in less than 24 hours, I had my passport.</div>
+            <div className=" py-2 ">While studying at Saratov State Technical University in August 2018, I encountered a challenge that sparked a wonderful idea. As an international student in Russia, renewing my visa and passport annually was mandatory. Facing a tight deadline with only three months left on my visa, I needed my passport renewed. The Ghanaian Embassy in Moscow took over two months to process it. To overcome the delivery hurdle, I asked a friend traveling to Saratov to pick up my passport, avoiding the lengthy post office delivery. This experience inspired us to create a system to assist others in similar situations, and with my co-founders, we brought this idea to life.</div>
             <div className=" py-2">So I asked myself what if there was a system that could help others in this situation. Together with my co-founders, we were able to bring this idea to life.</div>
-            <div className="bg-light_grey p-10 w-full min-h-[200px] rounded-lg my-10 "></div>
+            <div className="bg-white w-full min-h-[50px] flex items-center justify-center rounded-lg my-10 ">
+            <img alt="bg" src="/img/about-1.jpg" className="" />
+            </div>
             <div className=" text-2xl text-blue py-4 font-bold">Currently</div>
-            <div className=" py-2 ">Parcelra is the largest delivery service for all types of parcels, helping to find a traveler who, traveling by bus, train or plane, having free space in his luggage, can deliver your any parcel to the desired destination along his travel route. At the same time, the traveler receives some reward for the delivery, and your parcel successfully arrives at its destination, on time and in complete safety.</div>
+            <div className=" py-2 ">Presently, Parcelra stands as the leading parcel delivery service, connecting you with travelers who, whether by bus, train, or plane, have extra space in their luggage. They can seamlessly deliver your parcel along their travel route to the desired destination. This benefits both you and the traveler, as they earn a reward for the delivery, ensuring your parcel arrives safely and on time.</div>
             <div className=" text-2xl text-blue py-4 font-bold">What makes us unique</div>
             <div className=" py-2 ">There is no doubt that there are many delivery services out there, so what is the unique difference between Parcelra and the rest?</div>
-            <div className=" text-2xl text-blue py-4 font-bold">Speed</div>
-            <div className=" py-2">We use the fastest shipping system compared to the rest. That's because we've cut down on all the unnecessary bureaucracy that hinders the smooth delivery of services.</div>
-            <div className="bg-light_grey p-10 w-full min-h-[200px] rounded-lg my-10 "></div>
-            <div className=" text-2xl text-blue py-4 font-bold">Friendly & Reliable</div>
-            <div className=" py-2 ">We are well aware that it takes trust to ensure that only good travelers have your parcels, which is why we have created a secure delivery service with trust that brings together only verified travelers. In addition, there is sufficient information to track the location of your packages.</div>
+            <div className=" text-2xl text-blue py-4 font-bold">Rapid Delivery</div>
+            <div className=" py-2">Get your documents, gifts, or important parcels delivered in less than 24 hours. With people traveling around the clock, we ensure swift delivery regardless of the time of day.</div>
+            <div className="bg-white w-full min-h-[50px] flex items-center justify-center rounded-lg my-10 ">
+            <img alt="bg" src="/img/about-2.jpg" className="" />
+            </div>
+            <div className=" text-2xl text-blue py-4 font-bold">Reliable & Approachable</div>
+            <div className=" py-2 ">Understanding the importance of trust in parcel delivery, we've crafted a secure service connecting you with only verified and reliable travelers. Our system provides ample information for tracking your packages, ensuring a reliable and approachable delivery experience.</div>
             <div className=" text-2xl text-blue py-4 font-bold">Diversity Between Technology and Man</div>
             <div className=" py-2">Technology is rapidly moving us towards a robotic society and we have to stick to our human values, hence we have created this service to involve more human contacts. The service allows you to expand your social circle and make friends with those who are engaged in drop shipping. This will go a long way in fostering a sense of altruism and true humanity in society. It will also add new acquaintances for you to build on in the future.</div>
-            <div className=" text-2xl text-blue py-4 font-bold">Extra Earnings</div>
-            <div className=" py-2">By using Parcelra on your journey to help people deliver any packages to their desired destination on their travel itinerary, it is possible to get extra money to cover some of the costs on your trip.</div>
+            <div className=" text-2xl text-blue py-4 font-bold">Earn Extra on the Go</div>
+            <div className=" py-2">Lend a hand with Parcelra on your journey, delivering packages to destinations along your travel route. It's an opportunity to earn extra money and offset some of your travel costs.</div>
           </div>
         </div>
       </main>

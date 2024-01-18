@@ -39,7 +39,7 @@ const ParcelPage = () => {
     setShowParcelDetails(false);
   }
   return (
-    <Layout>
+    <Layout active={"parcels"}>
       <main>
         <div className="container mx-auto py-10">
           <div className="flex gap-10 justify-between">
@@ -74,9 +74,9 @@ const ParcelPage = () => {
           bigModal={true}
           Content={
             <div className="flex flex-col lg:flex-row gap-10">
-              <div className="flex p-10 bg-light_grey">
+              <div className="flex p-10 bg-purple rounded-lg">
                 <div className="flex justify-center items-center">
-                <img src="/svg/siren-icon.svg" className="w-[20rem]" alt="logo" />
+                <img src="/img/tripearn.png" className="w-[20rem]" alt="logo" />
                 </div>
                 </div>
               <div className="flex flex-col justify-between gap-10 w-full text-left">

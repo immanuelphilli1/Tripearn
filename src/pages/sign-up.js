@@ -7,6 +7,7 @@ import { navigate } from "gatsby";
 import Loader from "../components/Modal/loader";
 import Navigation from "../components/Navigation";
 import { useEffect } from "react";
+import { Eye, EyeClosed } from "@phosphor-icons/react";
 
 
 const SignUpPage = () => {
@@ -20,6 +21,8 @@ const SignUpPage = () => {
     const [phone, setPhone] = useState("+")
     const [countryData, setCountryData] = useState([])
   const [loading, setLoader] = useState(false);
+  const [toggler, setToggler] = useState(false);
+  const [togglerC, setTogglerC] = useState(false);
 
   useEffect(() => {
     getAllCountries().then(countries => {
@@ -43,7 +46,12 @@ const SignUpPage = () => {
     setCountry("")
     setPhone("")
   }
-
+  function handleToggler(){
+    setToggler(!toggler)
+  }
+  function handleCToggler(){
+    setTogglerC(!togglerC)
+  }
   function handleSignUpSubmit(e) {
     e.preventDefault()
     validate()
@@ -156,10 +164,11 @@ setLoader(true)
                     <label htmlFor="password" className="">
                       Password <span className="text-purple">(eg. $Aa)</span>
                     </label>
+                    <div className="flex border text-black focus:border-purple mt-1 rounded-lg focus:outline-none w-full border-light_black bg-white">
                     <input
                       name="password"
-                      className={` border text-black focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
-                      type="password"
+                      className={`w-full p-4 rounded-lg outline-none appearance-none`}
+                      type={toggler ? "text" : "password"}
                       requipurple
                       placeholder="Xxxxx$"
                       title="Password must contain a Symbol (eg. $), Capital letter (eg. A), a small letter (eg. a), and not less than 6 characters."
@@ -169,16 +178,19 @@ setLoader(true)
                       }}
                       value={password}
                     />
-                    <small className="text-purple tracking-tighter ">Password must contain a Symbol (eg. $), Capital letter (eg. A), a small letter (eg. a)</small>
+                    <button type="button" onClick={handleToggler} className="flex items-center justify-center px-2">{toggler ? (<Eye size={32} />):(<EyeClosed size={32} />)}</button>
+                    </div>
+                    <small className="text-purple pr-6 ">Password must contain a Symbol (eg. $), Capital letter (eg. A), a small letter (eg. a)</small>
                   </div>
                   <div>
                     <label htmlFor="confirmPassword" className="">
                       Confirm Password
                     </label>
+                    <div className="flex border text-black focus:border-purple mt-1 rounded-lg focus:outline-none w-full border-light_black bg-white">
                     <input
                       name="confirmPassword"
-                      className={` border text-black focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
-                      type="password"
+                      className={`w-full p-4 rounded-lg outline-none appearance-none`}
+                      type={togglerC ? "text" : "password"}
                       requipurple
                       title="Confirm Password must match Password above"
                       minLength={6}
@@ -187,6 +199,8 @@ setLoader(true)
                       }}
                       value={confirmPassword}
                     />
+                    <button type="button" onClick={handleCToggler} className="flex items-center justify-center px-2">{togglerC ? (<Eye size={32} />):(<EyeClosed size={32} />)}</button>
+                    </div>
                      <small className="text-purple">Confirm Password must match Password above</small>
                   </div>
                   <div className=" md:col-span-2">

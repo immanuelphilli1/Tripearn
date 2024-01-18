@@ -6,6 +6,7 @@ import { Toaster, toast } from 'sonner';
 import { navigate } from "gatsby";
 import Loader from "../components/Modal/loader";
 import Navigation from "../components/Navigation";
+import { Eye, EyeClosed } from "@phosphor-icons/react";
 
 
 const SignInPage = () => {
@@ -13,6 +14,7 @@ const SignInPage = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoader] = useState(false);
+  const [toggler, setToggler] = useState(false);
 
   let signInForm = useRef(null)
   function signInValidate() {
@@ -26,7 +28,9 @@ const SignInPage = () => {
     setEmail("")
     setPassword("")
   }
-
+function handleToggler(){
+  setToggler(!toggler)
+}
     function handleSignInSubmit(e) {
         e.preventDefault()
         signInValidate()
@@ -80,10 +84,11 @@ const SignInPage = () => {
                     <label htmlFor="password" className="">
                       Password <span className="text-purple">(eg. $Aa)</span>
                     </label>
+                    <div className="flex border text-black focus:border-purple mt-1 rounded-lg focus:outline-none w-full border-light_black bg-white">
                     <input
                       name="password"
-                      className={` border text-black focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
-                      type="password"
+                      className={`w-full p-4 rounded-lg outline-none appearance-none`}
+                      type={toggler ? "text" : "password"}
                       requipurple
                       placeholder="Xxxxx$"
                       title="Password must contain a Symbol (eg. $), Capital letter (eg. A), a small letter (eg. a), and not less than 6 characters."
@@ -93,7 +98,9 @@ const SignInPage = () => {
                       }}
                       value={password}
                     />
-                    <small className="text-purple tracking-tighter ">Password must contain a Symbol (eg. $), Capital letter (eg. A), a small letter (eg. a)</small>
+                    <button type="button" onClick={handleToggler} className="flex items-center justify-center px-2">{toggler ? (<Eye size={32} />):(<EyeClosed size={32} />)}</button>
+                    </div>
+                    <small className="text-purple pr-6 ">Password must contain a Symbol (eg. $), Capital letter (eg. A), a small letter (eg. a)</small>
                   </div>
                   <div className="">
                     Do you not have an account?  <button onClick={handleSignUp} className="text-purple">Sign Up</button>

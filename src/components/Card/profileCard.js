@@ -5,8 +5,8 @@ const ProfileCard = ({handleDetails}) => {
         <div className=" bg-light_black border border-white p-4 md:p-10 rounded-lg w-full">
             <div className="flex flex-col md:flex-row justify-between gap-10">
                 <div className="md:order-last flex flex-col justify-between">
-                    <div className="bg-white p-10 w-full md:w-[11rem] rounded-lg ">
-                        <img src="/svg/siren-icon.svg" alt="parcelImage" />
+                    <div className="bg-purple p-10 w-full md:w-[11rem] rounded-lg ">
+                        <img src="/img/tripearn.png" alt="parcelImage" />
                     </div>
                     <button onClick={handleDetails} type="button" className="hidden md:block py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">View Details</button>
                 </div>

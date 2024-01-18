@@ -50,9 +50,11 @@ const IndexPage = () => {
     <Layout active={"home"}>
       <main>
         <div className="container mx-auto py-6">
-          <div className="flex gap-10 justify-between">
+          <div className="flex gap-10 justify-between pb-3">
             <div className="flex flex-col gap-6 lg:gap-10 w-full">
-              <div className="bg-blue w-full h-[200px] md:h-[450px] rounded-lg"></div>
+              <div className="bg-blue w-full rounded-lg">
+                <img alt="landing" src="/img/landing.jpg" className="rounded-lg" />
+              </div>
               <div>
                 <div className="uppercase font-bold text-5xl md:text-[92px] lg:pt-4">
                   Parcelra
@@ -94,7 +96,7 @@ const IndexPage = () => {
                   </div>
                 </div>
               </div>
-              <div className="absolute top-1/2 left-1/2 -translate-y-1/2">
+              <div className="absolute top-1/2 bottom-0 left-1/2 -translate-y-1/2">
                 <div className="flex justify-center items-center">
                   <img src="/img/plane.png" alt="plane" className="w-[800px]" />
                 </div>
@@ -121,7 +123,7 @@ const IndexPage = () => {
             </div>
           </div>
         </div>
-        <div className="container mx-auto py-10">
+        <div className="container mx-auto pt-20 pb-40">
           <div className="uppercase text-2xl md:text-5xl font-bold text-center pb-10">
             See Parcelra parcels in your area
           </div>
@@ -201,14 +203,17 @@ const IndexPage = () => {
             </div>
           </div>
         </div>
+        <div className="py-1 bg-white opacity-50">
+        <img alt="bg" src="https://images.unsplash.com/photo-1522199873717-bc67b1a5e32b?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="" />
+        </div>
         <div className="bg-purple py-10">
-          <div className="container mx-auto pb-10">
+          <div className="container mx-auto py-10">
             <div>
-              <div className="uppercase text-2xl md:text-5xl text-black font-bold text-center pb-10">
+              <div className="uppercase text-2xl md:text-5xl text- font-bold text-center pb-10">
                 advantages using Parcelra
               </div>
             </div>
-            <div className="py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center text-black gap-10">
+            <div className="py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center text- gap-10">
               <div className="flex flex-col gap-2 justify-center items-center">
                 <div>
                   <img
@@ -420,9 +425,9 @@ const IndexPage = () => {
           bigModal={true}
           Content={
             <div className="flex flex-col lg:flex-row gap-10">
-              <div className="flex p-10 bg-light_grey">
+              <div className="flex p-10 bg-purple rounded-lg">
                 <div className="flex justify-center items-center">
-                <img src="/svg/siren-icon.svg" className="w-[20rem]" alt="logo" />
+                <img src="/img/tripearn.png" className="w-[20rem]" alt="logo" />
                 </div>
                 </div>
               <div className="flex flex-col justify-between gap-10 w-full text-left">

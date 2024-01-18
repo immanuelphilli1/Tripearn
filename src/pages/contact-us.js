@@ -77,8 +77,8 @@ const ContactUsPage = () => {
 
           </div>
         </div>
-        <div className="bg-light_grey p-10 w-full min-h-[600px] my-10 ">
-
+        <div className="bg-light_grey w-full min-h-[600px] my-10 ">
+        <img alt="call" src="https://images.unsplash.com/photo-1613993995046-07bce4b0bfed?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
         </div>
       </main>
     </Layout>
