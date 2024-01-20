@@ -74,16 +74,20 @@ export const fetchData = async (
     }
   ) => {
     try {
+      const xsrfToken = await fetchCsrfToken();
+      // console.log("we are looking", xsrfToken)
       const response = await fetch(endpoint, {
         method: 'post',
         body: JSON.stringify(requestParams),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': xsrfToken,
         },
         // credentials: 'include'
       })
       // const data = await response.json();
       console.log(response)
+      // console.log("tokennnnnn::::::::",xsrfToken)
       const { data, token, message, user, errors } = await response.json()
       
       if (response.status === 200) {
@@ -117,6 +121,19 @@ export async function getAllCountries() {
     const response = await fetch(apiUrl);
     const data = await response.json();
     return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error; // Rethrow the error for the calling code to handle
+  }
+}
+
+export async function fetchCsrfToken() {
+  const csrfToken = 'https://parcelra.com/csrf-token';
+  try {
+    const response = await fetch(csrfToken);
+    const data = await response.json();
+    console.log("lets see token",data)
+    return data.csrfToken;
   } catch (error) {
     console.error('Error fetching data:', error);
     throw error; // Rethrow the error for the calling code to handle
