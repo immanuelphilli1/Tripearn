@@ -25,6 +25,7 @@ const SignInPage = () => {
   }
   function handleSignUp() {
     setLoader(false);
+    navigate('/sign-up')
     setEmail("")
     setPassword("")
   }
@@ -64,7 +65,7 @@ function handleToggler(){
     <div className="text-white">
     <Navigation />
     </div>
-    <main className="text-white flex flex-col items-center justify-center min-h-screen" >
+    <main className="text-white py-24 flex flex-col items-center justify-center min-h-screen" >
         <div className="text-2xl md:text-4xl">Sign In</div>
       <form ref={signInForm} onSubmit={handleSignInSubmit} method="POST" action="/" >
                 <div className="grid grid-cols-1 gap-4 md:gap-4 pt-4 px-6 text-left">
@@ -106,7 +107,7 @@ function handleToggler(){
                     <small className="text-purple pr-6 ">Password must contain a Symbol (eg. $), Capital letter (eg. A), a small letter (eg. a)</small>
                   </div>
                   <div className="">
-                    Do you not have an account?  <button onClick={handleSignUp} className="text-purple">Sign Up</button>
+                    Do you not have an account?  <button type="button" onClick={handleSignUp} className="text-purple">Sign Up</button>
                   </div>
                   <div className="flex items-center justify-center">
                   <button disabled={loading === true} type="submit" className="py-4 px-10 w-full disabled:text-white disabled:hover:bg-green lg:w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">

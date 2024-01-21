@@ -17,15 +17,18 @@ const Navigation = ({ active }) => {
   }, [])
 
   function handleLogout (){
-    handleLogoutRequest()
+    // handleLogoutRequest()
     localStorage.removeItem('token');
-    const targetURL = 'http://localhost:8000/' || 'https://parcelra.com/';
-
-if (window.location.href === targetURL) {
-  window.location.reload()
-} else{
-  navigate("/")
-}
+    localStorage.removeItem('user');
+    // if (typeof window !== 'undefined') {
+    //   const targetURL = 'https://parcelra.com';
+    
+    //   if (window.location.href === targetURL) {
+        window.location.reload()
+    //   } else {
+        // navigate("/")
+      // }
+    // }
   }
 
   const showMenuTray = () => {
@@ -157,6 +160,12 @@ if (window.location.href === targetURL) {
             about us
           </a>
           <a
+            href="/parcel-content"
+            className="block py-2 px-4 text-sm text-white hover:bg-blue"
+          >
+            parcels
+          </a>
+          <a
             href="/contact-us"
             className="block py-2 px-4 text-sm text-white hover:bg-blue"
           >
@@ -192,7 +201,8 @@ if (window.location.href === targetURL) {
               profile
             </a>
             <a
-              href="/disclaimer"
+              href="javascript:void(0)"
+              onClick={handleLogout}
               className="block py-2 px-4 text-sm text-red hover:text-white hover:bg-blue"
             >
               logout

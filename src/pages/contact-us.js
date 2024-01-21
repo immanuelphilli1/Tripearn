@@ -21,7 +21,7 @@ const ContactUsPage = () => {
           </div>
           <div className="py-10">
             <div className=" grid grid-cols-1 md:grid-cols-2 pt-10">
-              <div className="md:font-bold md:px-10">
+              <div className="md:font-bold md:px-10 py-6">
                 <div>
                   <div className=" text-2xl text-blue py-4 font-bold">Get In touch</div>
                   <div className=" ">Contact us in any way convenient for you</div>
@@ -32,26 +32,26 @@ const ContactUsPage = () => {
                   <div className=" ">410054, Saratov, Politekhnicheskaya str., 77</div>
                 </div>
                 <div>
-                  <div className=" text-2xl text-green py-4 font-bold">Time of operation</div>
+                  <div className=" text-xl text-green py-4 font-bold">Time of operation</div>
                   <div className=" ">Mon - Fri: 8:00 – 17:00</div>
                   <div className="">Sat - Sun: day off</div>
                 </div>
                 <div>
                   <div className=" text-2xl text-blue py-4 font-bold">Emails</div>
-                  <div className="  text-2xl text-green ">For general enquiries</div>
+                  <div className="  text-xl text-green ">For general enquiries</div>
                   <div className="">parcelra@gmail.com</div>
                 </div>
                 <div>
-                  <div className=" text-2xl text-green pt-4 font-bold">For technical support</div>
+                  <div className=" text-xl text-green pt-4 font-bold">For technical support</div>
                   <div className=" ">parcelra@gmail.com</div>
                 </div>
                 <div>
-                  <div className=" text-2xl text-green pt-4 font-bold">Questions about advertising and joint projects</div>
-                  <div className=" ">parcelra@gmail.com</div>
+                  <div className=" text-xl text-green pt-4 font-bold">Questions about advertising and joint projects</div>
+                  <div className="pb-6 ">parcelra@gmail.com</div>
                 </div>
               </div>
-              <div className="border-l">
-                <form className="px-10">
+              <div className="border-t py-6 md:border-l md:border-t-0">
+                <form className="md:px-10">
                   <div className="pb-2">
                     <label htmlFor="fullName" className="">Full Name</label>
                     <input name="fullName" className={` border border-white focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full bg-transparent`} type="text" required onChange={e => { setFullName(e.target.value) }} value={fullName} />
@@ -77,7 +77,7 @@ const ContactUsPage = () => {
 
           </div>
         </div>
-        <div className="bg-light_grey w-full min-h-[600px] my-10 ">
+        <div className="bg-transparent w-full my-10 ">
         <img alt="call" src="https://images.unsplash.com/photo-1613993995046-07bce4b0bfed?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
         </div>
       </main>
