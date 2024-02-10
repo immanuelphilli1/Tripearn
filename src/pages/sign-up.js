@@ -26,7 +26,7 @@ const SignUpPage = () => {
 
   useEffect(() => {
     getAllCountries().then(countries => {
-      setCountryData(countries)
+      setCountryData(countries.data)
     })
   }, [])
   let signUpForm = useRef(null)
@@ -142,7 +142,7 @@ setLoader(true)
                         <option disabled selected value="">Select Country</option>
                       {countryData.map(country => {
 
-                        return <option>{country.name.common}</option>
+                        return <option>{country.name}</option>
                       })}
 
                     </select>

@@ -85,20 +85,32 @@ export const handleParcelCreate = async (token, departure, arrival, arrival_date
 
 export const handleGetDetails = async (id) => {
 
-//   var raw = "";
-
-// var requestOptions = {
-//   method: 'GET',
-//   // body: raw,
-//   redirect: 'follow'
-// };
-
-// fetch("https://parcelra.com/api/v1/parcel/8", requestOptions)
-//   .then(response => response.text())
-//   .then(result => console.log(result))
-//   .catch(error => console.log('error', error));
-
   let ENDPOINT = `https://parcelra.com/api/v1/parcel/${id}` // // Replace with environment variables
+
+  try {
+    let result = await fetchData(ENDPOINT,'GET', {})
+    // console.log(accountType)
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const handleGetProfileID = async (id) => {
+
+  let ENDPOINT = `https://parcelra.com/api/v1/profile/${id}` // // Replace with environment variables
+
+  try {
+    let result = await fetchData(ENDPOINT,'GET', {})
+    // console.log(accountType)
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+export const handleGetProfile = async (token) => {
+
+  let ENDPOINT = `https://parcelra.com/api/v1/profile?token=${token}` // // Replace with environment variables
 
   try {
     let result = await fetchData(ENDPOINT,'GET', {})
@@ -137,7 +149,7 @@ export const fetchData = async (
 ) => {
   try {
     const xsrfToken = await fetchCsrfToken();
-    console.log("we are looking", xsrfToken)
+    // console.log("we are looking", xsrfToken)
     let response;
     if(method === "post"){
        response = await fetch(endpoint, {
@@ -170,12 +182,12 @@ export const fetchData = async (
     // const data = await response.json();
     console.log(response)
     // console.log("tokennnnnn::::::::",xsrfToken)
-    const { parcel,data, token, message, user, errors, id } = await response.json()
+    const { parcel,parcels,data, token, message, user, errors, id } = await response.json()
     
     if (response.status === 200) {
       // Move response Data to the backend
       finalResponse['success'] = true
-      finalResponse['data'] = data === undefined ? parcel : data
+      finalResponse['data'] = data === undefined ? parcel || parcels : data
       finalResponse['token'] = token
       finalResponse['msg'] = message
       finalResponse['user'] = user

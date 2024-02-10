@@ -5,6 +5,7 @@ import ProfileCard from "../components/Card/profileCard"
 import Modal from "../components/Modal"
 import { useEffect } from "react"
 import { navigate } from "gatsby"
+import { handleGetDetails, handleGetProfile } from "../services/services"
 
 const ProfilePage = () => {
   const [filter, setFilter] = useState("")
@@ -12,6 +13,10 @@ const ProfilePage = () => {
   const [showAcceptParcel, setShowAcceptParcel] = useState(false);
   const [showParcelDetails, setShowParcelDetails] = useState(false);
   const [showParcelSubmit, setShowParcelSubmit] = useState(false);
+  const [profileUserData, setProfileUserData] = useState([])
+  const [profileParcelData, setProfileParcelData] = useState([])
+  const [data, setData] = useState([]);
+  const token = typeof window !== "undefined" && localStorage.getItem('token');
 
   
   function handleSubmit() {
@@ -24,10 +29,20 @@ const ProfilePage = () => {
     setShowParcelSubmit(false);
     setShowParcelDetails(false);
   }
-  function handleParcelDetails() {
+  function handleParcelDetails(id) {
+    console.log("yesssssss",id)
+    if (token === undefined || token === null || token === "" || !token) {
+      navigate("/sign-in")
+
+    } else {
+    handleGetDetails(id).then((res) => {
+      console.log("response : ",res)
+      setData(res.data)
     setShowParcelDetails(true);
     setShowParcelSubmit(false);
     setShowAcceptParcel(false);
+  })
+}
   }
 
   function handleUpdate() {
@@ -42,11 +57,17 @@ const ProfilePage = () => {
 
   useEffect(() => {
     // Retrieve data from localStorage when the component mounts
-    const token = localStorage.getItem('token');
     if (token === undefined || token === null || token === "" || !token) {
       navigate("/sign-in")
 
     }
+  }, []);
+  useEffect(() => {
+    handleGetProfile(token).then(res => {
+      console.log("response profile::::::::", res.data) 
+      setProfileUserData(res.user)
+      setProfileParcelData(res.data.active)
+    })
   }, []);
 
   return (
@@ -62,10 +83,11 @@ const ProfilePage = () => {
                     <button onClick={handleUpdate} type="button" className="py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">Update Number</button>
                   </div>
                 </div>
-                <div className="flex gap-1 flex-col text-center md:text-left uppercase font-bold">
-                  <div>Immanuel phillips</div>
-                  <div>+233506397746</div>
+                  <div className="flex gap-1 flex-col text-center md:text-left uppercase font-bold">
+                  <div>{profileUserData.name}{" "}{profileUserData.surname}</div>
+                  <div>{profileUserData.phone}</div>
                 </div>
+                
                 <div className="">For more information, issues and others, Click Contact Us for assistance. Kindly read the DISCLAIMER to be informed of our policies. </div>
               </div>
             </div>
@@ -76,16 +98,22 @@ const ProfilePage = () => {
               <div className="">Filter</div>
               <div className="w-full md:w-1/3">
                 <select name="filter" placeholder="Filter" className={` border bg-white appearance-none text-black mt-1 p-4 rounded-lg focus:outline-none w-full border-white`} type="text" required onChange={e => { setFilter(e.target.value) }} value={filter}>
-                  <option>All</option>
+                  <option>Active</option>
                 </select>
               </div>
             </div>
           </div>
           <div className="py-10 grid grid-cols-1 gap-10 ">
-            <ProfileCard handleDetails={handleParcelDetails} />
-            <ProfileCard />
-            <ProfileCard />
-            <ProfileCard />
+          {profileParcelData.map(profile => (
+            <ProfileCard 
+            arrival={profile.arrival_addr} 
+            date={profile.arrival_date}
+                departure={profile.departure_addr}
+                price={profile.price}
+                id={profile.id}
+                packageID={profile.delivery_id}
+            handleDetails={(e) => handleParcelDetails(profile.id)}  />
+            ))}
           </div>
         </div>
       </main>
@@ -149,16 +177,14 @@ const ProfilePage = () => {
                 </div>
               <div className="flex flex-col justify-between gap-10 w-full text-left">
                 <div className="border-b">
-                  <div>Destination: <span className="font-bold">Accra - Ghana</span></div>
-                  <div>Primary Location: <span className="font-bold">Accra - Ghana</span></div>
-                  <div>Required Delivery Date: <span className="font-bold">Accra - Ghana</span></div>
-                  <div>Package Size: <span className="font-bold">Accra - Ghana</span></div>
-                  <div>Package Type: <span className="font-bold">Accra - Ghana</span></div>
-                  <div>Amount: <span className="font-bold">Accra - Ghana</span></div>
+                <div>Destination: <span className="font-bold">{data.arrival_addr}</span></div>
+                  <div>Primary Location: <span className="font-bold">{data.departure_addr}</span></div>
+                  <div>Required Delivery Date: <span className="font-bold">{data.arrival_date}</span></div>
+                  <div>Package Size: <span className="font-bold">{data.weight}</span></div>
+                  <div>Package Type: <span className="font-bold">{data.size}</span></div>
+                  <div>Amount: <span className="font-bold">$ {data.price}</span></div>
                 </div>
-                <div>Amount is simply dummy text of the printing and 
-typesetting industry. Lorem Ipsum has been the 
-industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </div>
+                <div>{data.comment} </div>
                 <div className="w-full">
                 <button
                     onClick={handleAcceptParcel}
