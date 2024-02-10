@@ -1,26 +1,102 @@
 import { navigate } from "gatsby";
 import * as React from "react";
 import { useState } from "react";
+import Loader from "../Modal/loader";
 
-const Search = ({ border }) => {
+const Search = ({ border, loading, handleFromChange, handleSearch, handleToChange, fromCity, fromCountry, countryData, setFromCity, setToCity, cityData, toCountry, toCity, toCityData}) => {
 
-    const [from, setFrom] = useState("")
-    const [to, setTo] = useState("")
+    
 
     return (
-        <form className="md:p-10">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-10">
-                <div>
-                    {/* <label htmlFor="l" className="text-black">lol</label> */}
-                    <input name="from" placeholder="From" className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full ${border}`} type="text" required onChange={e => { setFrom(e.target.value) }} value={from} />
-                </div>
-                <div>
-                    {/* <label htmlFor="l" className="text-black">lol</label> */}
-                    <input name="to" placeholder="To" className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full ${border}`} type="text" required onChange={e => { setTo(e.target.value) }} value={to} />
-                </div>
-                <div className="flex items-center justify-center">
-                    <button type="button" onClick={e=>navigate('/parcel-content')} className="py-4 px-10 w-full lg:w-1/2 rounded-lg text-black bg-green hover:bg-light_green font-bold">Search</button>
-                </div>
+        <form method="POST" onSubmit={handleSearch} action="/">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-6 pt-4 px-6 text-left text-black">
+                  <div className="">
+                    <label htmlFor="fromCountry" className="text-white">
+                      From (<span className="">Current Country</span>)
+                    </label>
+                    <input
+                      name="fromCountry"
+                      className={` ${border} border focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
+                      type="text"
+                      list="fromCountryList"
+                      required
+                      onChange={handleFromChange}
+                      value={fromCountry}
+                    />
+                    <datalist id="fromCountryList">
+                      {countryData.map(country => {
+
+                        return <option>{country.name}</option>
+                      })}
+                    </datalist>
+                  </div>
+                  <div>
+                    <label htmlFor="fromCity" className="text-white">
+                      From (<span className="">Current City</span>)
+                    </label>
+                    <input
+                      name="fromCity"
+                      className={`${border} border focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
+                      type="text"
+                      list="fromCityList"
+                      required
+                      onChange={(e) => {
+                        setFromCity(e.target.value);
+                      }}
+                      value={fromCity}
+                    />
+                    <datalist id="fromCityList">
+                      {cityData.map(city => {
+
+                        return <option>{city}</option>
+                      })}
+                    </datalist>
+                  </div>
+                  <div className="">
+                    <label htmlFor="toCountry" className="text-white">
+                      To (<span className="">Destination Country</span>)
+                    </label>
+                    <input
+                      name="toCountry"
+                      className={`${border} border focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
+                      type="text"
+                      list="toCountryList"
+                      required
+                      onChange={handleToChange}
+                      value={toCountry}
+                    />
+                    <datalist id="toCountryList">
+                      {countryData.map(country => {
+
+                        return <option>{country.name}</option>
+                      })}
+                    </datalist>
+                  </div>
+                  <div>
+                    <label htmlFor="toCity" className="text-white">
+                      To (<span className="">Destination City</span>)
+                    </label>
+                    <input
+                      name="toCity"
+                      className={`${border} border text-black focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
+                      type="text"
+                      required
+                      list="toCityList"
+                      onChange={(e) => {
+                        setToCity(e.target.value);
+                      }}
+                      value={toCity}
+                    />
+                    <datalist id="toCityList">
+                      {toCityData.map(city => {
+
+                        return <option>{city}</option>
+                      })}
+                    </datalist>
+                  </div>
+                  <div className="md:col-span-2 pt-4 flex items-center justify-center">
+                      <button disabled={loading === true} type="submit"  className="py-4 px-10 w-full lg:w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">{loading && (<Loader />)}Submit</button>
+                    </div>
             </div>
         </form>
     )

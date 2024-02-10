@@ -5,12 +5,112 @@ import Search from "../components/Search"
 import { useState } from "react"
 import Modal from "../components/Modal"
 import { navigate } from "gatsby"
+import { getAllCountries, getCountriesCities, getSearchParcels, handleGetDetails } from "../services/services"
+import { useEffect } from "react"
+import { Toaster, toast } from "sonner"
 
 const ParcelPage = () => {
   const [filter, setFilter] = useState("")
   const [showAcceptParcel, setShowAcceptParcel] = useState(false);
   const [showParcelDetails, setShowParcelDetails] = useState(false);
   const [showParcelSubmit, setShowParcelSubmit] = useState(false);
+  const [fromCountryData, setFromCountryData] = useState(null)
+    const [fromCountry, setFromCountry] = useState("")
+  const [fromCity, setFromCity] = useState("")
+  const [toCountry, setToCountry] = useState("")
+  const [toCountryData, setToCountryData] = useState(null)
+  const [toCity, setToCity] = useState("")
+  const [countryData, setCountryData] = useState([])
+  const [cityData, setCityData] = useState([])
+  const [toCityData, setToCityData] = useState([])
+  const [loading, setLoader] = useState(false);
+  const [searchData, setSearchData] = useState([])
+  const [showSearchResults, setShowSearchResults] = useState(false)
+  const [showError, setShowError] = useState(false)
+  const [data, setData] = useState([]);
+  const token = typeof window !== "undefined" && localStorage.getItem('token');
+
+  useEffect(() => {
+    getAllCountries().then(countries => {
+      console.log("from country:::::;", countries.data)
+      setCountryData(countries.data)
+    })
+  }, [])
+
+    // from handle Change
+  function handleFromChange(event) {
+    event.preventDefault()
+    setShowError(false)
+    setShowSearchResults(false)
+    setFromCountry(event.target.value)
+    setFromCity("")
+    const country = countryData.find((country) => {
+      if (country.name === event.target.value) {
+        return true
+      }
+      return false
+    })
+    if (country) {
+      setFromCountryData(country)
+    }
+    getCountriesCities(event.target.value).then(city => {
+      console.log("from country:::::;", city)
+      if (city.success) {
+        setCityData(city.data)
+      }
+    })
+  }
+  // to handle Change
+  function handleToChange(event) {
+    event.preventDefault()
+    setShowError(false)
+    setShowSearchResults(false)
+    setToCountry(event.target.value)
+    setToCity("")
+    const country = countryData.find((country) => {
+      if (country.name === event.target.value) {
+        return true
+      }
+      return false
+    })
+    if (country) {
+      setToCountryData(country)
+    }
+    getCountriesCities(event.target.value).then(city => {
+      console.log("from country:::::;", city)
+      if (city.success) {
+        setToCityData(city.data)
+      }
+      
+    })
+  }
+  function handleSearch (e)
+  {
+e.preventDefault()
+setLoader(true)
+getSearchParcels(fromCity, toCity).then(details =>{
+  console.log("see details::::::", details)
+  if (details.status === false) {
+    Object.keys(details.errors).forEach(key => {
+      details.errors[key].forEach(error => {
+        toast.error(error, { duration: 5000 });
+      });
+    });
+    setShowError(true)
+    setShowSearchResults(false)
+    setLoader(false)
+  } else if (details.status === true && details.parcels.data.length !== 0) {
+  setSearchData(details.parcels.data)
+  setShowSearchResults(true)
+  setShowError(false)
+  setLoader(false)
+  } else {
+    toast.error("Location not found!", {duration: 5000})
+    setLoader(false)
+    setShowError(true)
+  }
+})
+  }
 
   
   function handleSubmit() {
@@ -19,7 +119,7 @@ const ParcelPage = () => {
     setShowParcelDetails(false);
   }
   function handleAcceptParcel() {
-    const token = localStorage.getItem('token');
+    
     if (token === undefined || token === null || token === "" || !token) {
       navigate("/sign-in")
 
@@ -28,10 +128,23 @@ const ParcelPage = () => {
     setShowParcelSubmit(false);
     setShowParcelDetails(false);
   }
-  function handleParcelDetails() {
-    setShowParcelDetails(true);
-    setShowParcelSubmit(false);
-    setShowAcceptParcel(false);
+  function handleParcelDetails(id) {
+    console.log("yesssssss",id)
+    if (token === undefined || token === null || token === "" || !token) {
+      navigate("/sign-in")
+
+    } else {
+    handleGetDetails(id).then((res) => {
+      console.log("response : ",res)
+      setData(res.data)
+      setShowParcelDetails(true);
+      setShowParcelSubmit(false);
+      setShowAcceptParcel(false);
+    })
+  }
+    
+    
+    
   }
   function handleClose() {
     setShowParcelSubmit(false);
@@ -46,11 +159,13 @@ const ParcelPage = () => {
             <div className="flex flex-col gap-6 lg:gap-10 w-full">
               <div className="bg-blue w-full min-h-[350px] rounded-lg py-10 px-6">
                 <div className="uppercase text-2xl md:text-5xl font-bold text-center py-10">See Parcelra parcels in your area</div>
-                <Search border={"border-white"} />
+                <Search border={"border-white"} loading={loading}
+                handleFromChange={handleFromChange} handleSearch={handleSearch} handleToChange={handleToChange} fromCity={fromCity} fromCountry={fromCountry} countryData={countryData} setFromCity={setFromCity} setToCity={setToCity} cityData={cityData} toCountry={toCountry} toCity={toCity} toCityData={toCityData}
+                />
               </div>
             </div>
           </div>
-          <div className="py-10">
+          {/* <div className="py-10">
             <div className="flex gap-4 pt-10 items-center justify-end">
               <div className="">Filter</div>
               <div className="w-full md:w-1/3">
@@ -59,13 +174,23 @@ const ParcelPage = () => {
                 </select>
               </div>
             </div>
-          </div>
+          </div> */}
+           {showError && <div className="py-20 text-red text-2xl text-center"> No Search Results for {fromCity} to {toCity}</div>}
+          {showSearchResults && (
+            <>
+            <div className="pt-10 md:pt-16 pb-4 text-center font-bold text-4xl">Search Results</div>
           <div className="py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 ">
-            <ParcelCard handleDetails={handleParcelDetails} />
-            <ParcelCard />
-            <ParcelCard />
-            <ParcelCard />
+            {searchData.map(details=>(
+                <ParcelCard handleDetails={(e) => handleParcelDetails(details.id)} 
+                arrival={details.arrival_addr} 
+                departure={details.departure_addr}
+                price={details.price}
+                id={details.id}
+                />
+            ))}
           </div>
+          </>
+          )}
         </div>
       </main>
       {showParcelDetails && (
@@ -81,16 +206,14 @@ const ParcelPage = () => {
                 </div>
               <div className="flex flex-col justify-between gap-10 w-full text-left">
                 <div className="border-b">
-                  <div>Destination: <span className="font-bold">Accra - Ghana</span></div>
-                  <div>Primary Location: <span className="font-bold">Accra - Ghana</span></div>
-                  <div>Required Delivery Date: <span className="font-bold">Accra - Ghana</span></div>
-                  <div>Package Size: <span className="font-bold">Accra - Ghana</span></div>
-                  <div>Package Type: <span className="font-bold">Accra - Ghana</span></div>
-                  <div>Amount: <span className="font-bold">Accra - Ghana</span></div>
+                  <div>Destination: <span className="font-bold">{data.arrival_addr}</span></div>
+                  <div>Primary Location: <span className="font-bold">{data.departure_addr}</span></div>
+                  <div>Required Delivery Date: <span className="font-bold">{data.arrival_date}</span></div>
+                  <div>Package Size: <span className="font-bold">{data.weight}</span></div>
+                  <div>Package Type: <span className="font-bold">{data.size}</span></div>
+                  <div>Amount: <span className="font-bold">$ {data.price}</span></div>
                 </div>
-                <div>Amount is simply dummy text of the printing and 
-typesetting industry. Lorem Ipsum has been the 
-industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </div>
+                <div>{data.comment} </div>
                 <div className="w-full">
                 <button
                     onClick={handleAcceptParcel}
@@ -181,6 +304,7 @@ once approval is completed. Approval takes less than 24 hours
           }
         />
       )}
+      <Toaster richColors />
     </Layout>
   )
 }

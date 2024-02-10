@@ -71,7 +71,7 @@ setLoader(true)
           toast.success("Sign Up Successful!", {duration: 5000, position: 'top-center',})
           setTimeout(()=> {handleNavigate()}, 5000)
         } else {
-          toast.error("We are facing technical issues. Kindly try again later!", {duration: 5000, position: 'bottom-right',})
+          toast.error("We are facing technical issues. Kindly try again later!", {duration: 5000, position: 'top-right',})
           setLoader(false)
         }
       })

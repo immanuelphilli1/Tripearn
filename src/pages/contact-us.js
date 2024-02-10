@@ -25,11 +25,11 @@ const ContactUsPage = () => {
                 <div>
                   <div className=" text-2xl text-blue py-4 font-bold">Get In touch</div>
                   <div className=" ">Contact us in any way convenient for you</div>
-                  <div className="  font-bold text-green">+7 (917) 982-59-13</div>
+                  <div className="  font-bold text-green">+233 24 0169695</div>
                 </div>
                 <div>
                   <div className=" text-2xl text-blue py-4 font-bold">Address</div>
-                  <div className=" ">410054, Saratov, Politekhnicheskaya str., 77</div>
+                  <div className=" ">AB 27, Community 11, Tema</div>
                 </div>
                 <div>
                   <div className=" text-xl text-green py-4 font-bold">Time of operation</div>
@@ -38,16 +38,8 @@ const ContactUsPage = () => {
                 </div>
                 <div>
                   <div className=" text-2xl text-blue py-4 font-bold">Emails</div>
-                  <div className="  text-xl text-green ">For general enquiries</div>
-                  <div className="">parcelra@gmail.com</div>
-                </div>
-                <div>
-                  <div className=" text-xl text-green pt-4 font-bold">For technical support</div>
-                  <div className=" ">parcelra@gmail.com</div>
-                </div>
-                <div>
-                  <div className=" text-xl text-green pt-4 font-bold">Questions about advertising and joint projects</div>
-                  <div className="pb-6 ">parcelra@gmail.com</div>
+                  <div className="  text-xl text-green ">For general enquiries and technical support</div>
+                  <div className="">Parcelracompany@gmail.com </div>
                 </div>
               </div>
               <div className="border-t py-6 md:border-l md:border-t-0">

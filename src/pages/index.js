@@ -5,6 +5,10 @@ import Search from "../components/Search";
 import { navigate } from "gatsby";
 import { useState } from "react";
 import Modal from "../components/Modal";
+import { useEffect } from "react";
+import { getAllCountries, getCountriesCities, handleParcelCreate } from "../services/services";
+import Loader from "../components/Modal/loader";
+import { Toaster, toast } from "sonner";
 // import { Carousel } from 'react-responsive-carousel';
 // import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
@@ -13,11 +17,146 @@ const IndexPage = () => {
   const [showAcceptParcel, setShowAcceptParcel] = useState(false);
   const [showParcelDetails, setShowParcelDetails] = useState(false);
   const [showParcelSubmit, setShowParcelSubmit] = useState(false);
-  
-
+  const [deliveryDate, setDeliveryDate] = useState("")
+  const [packageSize, setPackageSize] = useState("")
+  const [packageType, setPackageType] = useState("")
+  const [fromCountry, setFromCountry] = useState("")
+  const [message, setMessage] = useState("")
+  const [fromCountryData, setFromCountryData] = useState(null)
+  const [fromCity, setFromCity] = useState("")
+  const [toCountry, setToCountry] = useState("")
+  const [toCountryData, setToCountryData] = useState(null)
+  const [toCity, setToCity] = useState("")
+  const [countryData, setCountryData] = useState([])
+  const [cityData, setCityData] = useState([])
+  const [toCityData, setToCityData] = useState([])
+  const [loading, setLoader] = useState(false);
+  const token = typeof window !== "undefined" && localStorage.getItem('token');
+  useEffect(() => {
+    getAllCountries().then(countries => {
+      console.log("from country:::::;", countries.data)
+      setCountryData(countries.data)
+    })
+  }, [])
+  //handle Show Create Parcel
   function handleCreateParcel() {
     setShowCreateParcel(true);
   }
+// from handle Change
+  function handleFromChange(event) {
+    event.preventDefault()
+    setFromCountry(event.target.value)
+    setFromCity("")
+    const country = countryData.find((country) => {
+      if (country.name === event.target.value) {
+        return true
+      }
+      return false
+    })
+    if (country) {
+      setFromCountryData(country)
+    }
+    getCountriesCities(event.target.value).then(city => {
+      console.log("from country:::::;", city)
+      if (city.success) {
+        setCityData(city.data)
+      }
+    })
+  }
+  // to handle Change
+  function handleToChange(event) {
+    event.preventDefault()
+    setToCountry(event.target.value)
+    setToCity("")
+    const country = countryData.find((country) => {
+      if (country.name === event.target.value) {
+        return true
+      }
+      return false
+    })
+    if (country) {
+      setToCountryData(country)
+    }
+    getCountriesCities(event.target.value).then(city => {
+      console.log("from country:::::;", city)
+      if (city.success) {
+        setToCityData(city.data)
+      }
+      
+    })
+  }
+// handle Parcel Creation
+  let price = 0
+  let distanceCheck = 0
+  if (fromCountryData && toCountryData) {
+    console.log("from", fromCountryData, "to", toCountryData)
+    let distanceCalculated = distance(
+      parseFloat(fromCountryData.lat), parseFloat(toCountryData.lat), parseFloat(fromCountryData.long), parseFloat(toCountryData.long)
+    )
+    distanceCheck = Math.ceil(distanceCalculated)
+    price = Math.ceil(0.01*distanceCheck)
+  }
+
+  function handleSubmitCreateParcel (e) {
+e.preventDefault()
+setLoader(true)
+if (token === undefined || token === null || token === "" || !token) {
+  navigate("/sign-in")
+} else{
+  handleParcelCreate(token,fromCity, toCity, deliveryDate, price, packageSize, packageType, message).then(res => {
+    console.log("response::::::::", res)
+    if (res.success === false) {
+      Object.keys(res.errors).forEach(key => {
+        res.errors[key].forEach(error => {
+          toast.error(error, { duration: 25000 });
+        });
+      });
+      setLoader(false)
+    } else if (res.success === true) {
+      toast.success("Parcel Created!", {duration: 5000, position: 'top-right',})
+      setTimeout(()=> {handleNavigate()}, 5000)
+    } else {
+      toast.error("We are facing technical issues. Kindly try again later!", {duration: 5000, position: 'top-right',})
+      setLoader(false)
+    }
+  })
+}
+  }
+  function handleNavigate(){
+    navigate("/profile")
+  }
+  function distance(lat1,
+    lat2, lon1, lon2) {
+
+    // The math module contains a function
+    // named toRadians which converts from
+    // degrees to radians.
+    lon1 = lon1 * Math.PI / 180;
+    lon2 = lon2 * Math.PI / 180;
+    lat1 = lat1 * Math.PI / 180;
+    lat2 = lat2 * Math.PI / 180;
+
+    // Haversine formula 
+    let dlon = lon2 - lon1;
+    let dlat = lat2 - lat1;
+    let a = Math.pow(Math.sin(dlat / 2), 2)
+      + Math.cos(lat1) * Math.cos(lat2)
+      * Math.pow(Math.sin(dlon / 2), 2);
+
+    let c = 2 * Math.asin(Math.sqrt(a));
+
+    // Radius of earth in kilometers. Use 3956 
+    // for miles
+    let r = 6371;
+
+    // calculate the result
+    return (c * r);
+  }
+
+
+
+
+
   function handleSubmit() {
     setShowParcelSubmit(true);
     setShowAcceptParcel(false);
@@ -25,7 +164,7 @@ const IndexPage = () => {
     setShowParcelDetails(false);
   }
   function handleAcceptParcel() {
-    const token = localStorage.getItem('token');
+    
     if (token === undefined || token === null || token === "" || !token) {
       navigate("/sign-in")
     }
@@ -46,6 +185,10 @@ const IndexPage = () => {
     setShowAcceptParcel(false);
     setShowParcelDetails(false);
   }
+
+  
+
+
   return (
     <Layout active={"home"}>
       <main>
@@ -111,13 +254,13 @@ const IndexPage = () => {
                 Need to deliver a parcel?
               </div>
               <div className="text-black text-lg md:text-2xl text-center pt-2">
-                These are featured routes our travelers easily accept on Parcelra
-                
+                These are sample parcels to help users create or send parcels on Parcelra
+
               </div>
             </div>
             <div className="py-10 flex flex-col lg:flex-row gap-10  ">
               {/* <Carousel autoPlay={true} interval={3000} infiniteLoop={true}> */}
-              <ParcelCard handleDetails={handleParcelDetails} />
+              <ParcelCard />
               <ParcelCard />
               {/* </Carousel> */}
             </div>
@@ -127,9 +270,9 @@ const IndexPage = () => {
           <div className="uppercase text-2xl md:text-5xl font-bold text-center pb-10">
             See Parcelra parcels in your area
           </div>
-          <div className="lg:bg-white rounded-full lg:p-10">
-            <Search border={"border-light_black"} />
-          </div>
+          <div className="flex items-center justify-center pt-4">
+                    <button type="button" onClick={e=>navigate('/parcel-content')} className="py-4 px-10 w-full lg:w-1/2 rounded-lg text-black bg-green hover:bg-light_green font-bold">Search Now!</button>
+                </div>
         </div>
         <div className="bg-white py-10 mt-10">
           <div className="container mx-auto">
@@ -204,7 +347,7 @@ const IndexPage = () => {
           </div>
         </div>
         <div className="py-1 bg-white opacity-50">
-        <img alt="bg" src="https://images.unsplash.com/photo-1522199873717-bc67b1a5e32b?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="" />
+          <img alt="bg" src="https://images.unsplash.com/photo-1522199873717-bc67b1a5e32b?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" className="" />
         </div>
         <div className="bg-purple py-10">
           <div className="container mx-auto py-10">
@@ -271,123 +414,150 @@ const IndexPage = () => {
           bigModal={true}
           Content={
             <div>
-              <form>
+              <div className="pb-2">Kindly <a className="font-bold text-red hover:underline" href="/sign-in">Sign In</a> before you complete this form</div>
+              <form method="POST" onSubmit={handleSubmitCreateParcel} action="/">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-6 pt-4 px-6 text-left">
-                  <div>
-                    <label htmlFor="From" className="text-black">
-                      From (<span className="text-red">Location</span>)
+                  <div className="text-black">
+                    <label htmlFor="fromCountry" className="">
+                      From (<span className="text-red">Current Country</span>)
                     </label>
                     <input
-                      name="from"
-                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
+                      name="fromCountry"
+                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
                       type="text"
+                      list="fromCountryList"
                       required
-                      // onChange={(e) => {
-                      //   setFrom(e.target.value);
-                      // }}
-                      // value={from}
+                      onChange={handleFromChange}
+                      value={fromCountry}
                     />
+                    <datalist id="fromCountryList">
+                      {countryData.map(country => {
+
+                        return <option>{country.name}</option>
+                      })}
+                    </datalist>
                   </div>
                   <div>
-                    <label htmlFor="to" className="text-black">
-                    To (<span className="text-red">Destination</span>)
+                    <label htmlFor="fromCity" className="text-black">
+                      From (<span className="text-red">Current City</span>)
                     </label>
                     <input
-                      name="to"
+                      name="fromCity"
+                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
+                      type="text"
+                      list="fromCityList"
+                      required
+                      onChange={(e) => {
+                        setFromCity(e.target.value);
+                      }}
+                      value={fromCity}
+                    />
+                    <datalist id="fromCityList">
+                      {cityData.map(city => {
+
+                        return <option>{city}</option>
+                      })}
+                    </datalist>
+                  </div>
+                  <div className="text-black">
+                    <label htmlFor="toCountry" className="">
+                      To (<span className="text-red">Destination Country</span>)
+                    </label>
+                    <input
+                      name="toCountry"
+                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
+                      type="text"
+                      list="toCountryList"
+                      required
+                      onChange={handleToChange}
+                      value={toCountry}
+                    />
+                    <datalist id="toCountryList">
+                      {countryData.map(country => {
+
+                        return <option>{country.name}</option>
+                      })}
+                    </datalist>
+                  </div>
+                  <div>
+                    <label htmlFor="toCity" className="text-black">
+                      To (<span className="text-red">Destination City</span>)
+                    </label>
+                    <input
+                      name="toCity"
                       className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
                       type="text"
                       required
-                      // onChange={(e) => {
-                      //   setTo(e.target.value);
-                      // }}
-                      // value={to}
+                      list="toCityList"
+                      onChange={(e) => {
+                        setToCity(e.target.value);
+                      }}
+                      value={toCity}
                     />
+                    <datalist id="toCityList">
+                      {toCityData.map(city => {
+
+                        return <option>{city}</option>
+                      })}
+                    </datalist>
                   </div>
                   <div>
                     <label htmlFor="deliveryDate" className="text-black">
-                    Required Delivery Date
+                      Required Delivery Date
                     </label>
                     <input
                       name="deliveryDate"
                       className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
                       type="date"
+                      // min={new Date()}
                       required
-                      // onChange={(e) => {
-                      //   setDeliveryDate(e.target.value);
-                      // }}
-                      // value={deliveryDate}
+                    onChange={(e) => {
+                      setDeliveryDate(e.target.value);
+                    }}
+                    value={deliveryDate}
                     />
                   </div>
                   <div>
                     <label htmlFor="packageSize" className="text-black">
-                    Package Size
+                      Package Size
                     </label>
-                    <input
-                      name="packageSize"
-                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
-                      type="text"
-                      required
-                      // onChange={(e) => {
-                      //   setPackageSize(e.target.value);
-                      // }}
-                      // value={packageSize}
-                    />
+                    <select name="packageSize" required placeholder="Package Size" className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`} type="text"
+                     onChange={e => { setPackageSize(e.target.value) }} value={packageSize}
+                    >
+                      <option value="" selected disabled>Select size</option>
+                      <option value="1">1 Kg</option>
+                      <option value="2">2 Kg</option>
+                      <option value="3">2 Kg</option>
+                      <option value="4">4 Kg</option>
+                      <option value="5">5 Kg</option>
+                    </select>
                   </div>
                   <div>
                     <label htmlFor="packageType" className="text-black">
-                    Package Type
+                      Package Type
                     </label>
-                    <input
-                      name="packageType"
-                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
-                      type="text"
-                      required
-                      // onChange={(e) => {
-                      //   setPackageType(e.target.value);
-                      // }}
-                      // value={packageType}
-                    />
+                    <select name="packageType" required placeholder="Package Type" className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`} type="text"
+                     onChange={e => { setPackageType(e.target.value) }} value={packageType}
+                    >
+                      <option value="" selected disabled>Select type</option>
+                      <option value="bag">Bag</option>
+                      <option value="backpack">Backpack</option>
+                      <option value="suitcase">Suitcase</option>
+                      <option value="trunk">Trunk</option>
+                      <option value="trailer">Trailer</option>
+                    </select>
                   </div>
-                  <div>
-                    <label htmlFor="recipientName" className="text-black">
-                    Recipient Name
-                    </label>
-                    <input
-                      name="recipientName"
-                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
-                      type="text"
-                      required
-                      // onChange={(e) => {
-                      //   setRecipientName(e.target.value);
-                      // }}
-                      // value={recipientName}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="recipientNumber" className="text-black">
-                    Recipient Number
-                    </label>
-                    <input
-                      name="recipientName"
-                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
-                      type="text"
-                      required
-                      // onChange={(e) => {
-                      //   setRecipientName(e.target.value);
-                      // }}
-                      // value={recipientName}
-                    />
-                  </div>
+
                   <div>
                     <label htmlFor="amount" className="text-black">
-                      Calculated Payment Amount
+                      Calculated Payment Amount ($)
                     </label>
                     <input
                       name="amount"
                       disabled
                       className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-red `}
                       type="text"
-                      value={"700"}
+                      value={`$ `+price}
                     />
                   </div>
                   <div className=" md:col-span-2">
@@ -401,18 +571,18 @@ const IndexPage = () => {
                       className={` border border-light_black focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full bg-transparent`}
                       type="text"
                       required
-                      // onChange={(e) => {
-                      //   setMessage(e.target.value);
-                      // }}
-                      // value={message}
+                    onChange={(e) => {
+                      setMessage(e.target.value);
+                    }}
+                    value={message}
                     />
                   </div>
                   <div className=" md:col-span-2 flex flex-col md:flex-row justify-between md:items-center gap-4">
-                    <div>Calculated Distance</div>
-                  <div className="flex items-center justify-center">
-                    <button type="button" onClick={e=>navigate('/parcel-content')} className="py-4 px-10 w-full lg:w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">Submit</button>
-                </div>
-                </div>
+                    <div>Calculated Distance: <span className="text-red">{distanceCheck} km</span></div>
+                    <div className="flex items-center justify-center">
+                      <button disabled={loading === true} type="submit"  className="py-4 px-10 w-full lg:w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">{loading && (<Loader />)}Submit</button>
+                    </div>
+                  </div>
                 </div>
               </form>
             </div>
@@ -427,9 +597,9 @@ const IndexPage = () => {
             <div className="flex flex-col lg:flex-row gap-10">
               <div className="flex p-10 bg-purple rounded-lg">
                 <div className="flex justify-center items-center">
-                <img src="/img/tripearn.png" className="w-[20rem]" alt="logo" />
+                  <img src="/img/tripearn.png" className="w-[20rem]" alt="logo" />
                 </div>
-                </div>
+              </div>
               <div className="flex flex-col justify-between gap-10 w-full text-left">
                 <div className="border-b">
                   <div>Destination: <span className="font-bold">Accra - Ghana</span></div>
@@ -439,11 +609,11 @@ const IndexPage = () => {
                   <div>Package Type: <span className="font-bold">Accra - Ghana</span></div>
                   <div>Amount: <span className="font-bold">Accra - Ghana</span></div>
                 </div>
-                <div>Amount is simply dummy text of the printing and 
-typesetting industry. Lorem Ipsum has been the 
-industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </div>
+                <div>Amount is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the
+                  industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </div>
                 <div className="w-full">
-                <button
+                  <button
                     onClick={handleAcceptParcel}
                     type="button"
                     className="py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green font-bold"
@@ -458,7 +628,7 @@ industry's standard dummy text ever since the 1500s, when an unknown printer too
       )}
       {showAcceptParcel && (
         <Modal
-          handleClose={handleClose} 
+          handleClose={handleClose}
           Title={"Offer Delivery"}
           Content={
             <div>
@@ -466,52 +636,52 @@ industry's standard dummy text ever since the 1500s, when an unknown printer too
                 <div className="grid grid-cols-1 gap-6 md:gap-6 pt-4 px-6 text-left">
                   <div>
                     <label htmlFor="departure" className="text-black">
-                    Date of Departure
+                      Date of Departure
                     </label>
                     <input
                       name="departure"
                       className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
                       type="date"
                       required
-                      // onChange={(e) => {
-                      //   setDeparture(e.target.value);
-                      // }}
-                      // value={departure}
+                    // onChange={(e) => {
+                    //   setDeparture(e.target.value);
+                    // }}
+                    // value={departure}
                     />
                   </div>
                   <div>
                     <label htmlFor="arrivalDate" className="text-black">
-                    Date of Arrival
+                      Date of Arrival
                     </label>
                     <input
                       name="arrivalDate"
                       className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
                       type="date"
                       required
-                      // onChange={(e) => {
-                      //   setArrivalDate(e.target.value);
-                      // }}
-                      // value={arrivalDate}
+                    // onChange={(e) => {
+                    //   setArrivalDate(e.target.value);
+                    // }}
+                    // value={arrivalDate}
                     />
                   </div>
                   <div>
                     <label htmlFor="arrivalTime" className="text-black">
-                    Form of travel
+                      Form of travel
                     </label>
                     <input
                       name="arrivalTime"
                       className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
                       type="text"
                       required
-                      // onChange={(e) => {
-                      //   setArrivalTime(e.target.value);
-                      // }}
-                      // value={arrivalTime}
+                    // onChange={(e) => {
+                    //   setArrivalTime(e.target.value);
+                    // }}
+                    // value={arrivalTime}
                     />
                   </div>
                   <div className="flex items-center justify-center">
                     <button type="button" onClick={handleSubmit} className="py-4 px-10 w-full lg:w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">Submit</button>
-                </div>
+                  </div>
                 </div>
               </form>
             </div>
@@ -519,19 +689,20 @@ industry's standard dummy text ever since the 1500s, when an unknown printer too
         />
       )}
       {showParcelSubmit && (
-        <Modal 
+        <Modal
           Title={"Thank You"}
           handleClose={handleClose}
           bigModal={true}
           Content={
             <div className="pt-6">
-              We have received your request to deliver package 12345. Your details provided 
-are being processed! We will send you an email and SMS of package details 
-once approval is completed. Approval takes less than 24 hours 
+              We have received your request to deliver package 12345. Your details provided
+              are being processed! We will send you an email and SMS of package details
+              once approval is completed. Approval takes less than 24 hours
             </div>
           }
         />
       )}
+      <Toaster richColors />
     </Layout>
   );
 };
