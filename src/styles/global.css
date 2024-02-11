@@ -80,3 +80,28 @@
       border-radius: 4px;
     }
     }
+    .custom-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    #custom-input {
+      padding-right: 30px; /* Space for the arrow */
+    }
+    
+    .custom-dropdown-arrow {
+      position: absolute;
+      top: 50%;
+      right: 10px; /* Adjust the right position as needed */
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 6px 6px 0 6px;
+      border-color: #000 transparent transparent transparent; /* Adjust the color as needed */
+      pointer-events: none; /* Ensure the arrow doesn't interfere with input focus */
+    }
+    
+    #custom-input:focus + .custom-dropdown-arrow {
+      border-color: transparent transparent #000 transparent; /* Adjust the color when focused if needed */
+    }

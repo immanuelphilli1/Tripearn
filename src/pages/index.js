@@ -419,11 +419,11 @@ if (token === undefined || token === null || token === "" || !token) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-6 pt-4 px-6 text-left">
                   <div className="text-black">
                     <label htmlFor="fromCountry" className="">
-                      From (<span className="text-red">Current Country</span>)
+                      From (<span className="text-blue">Current Country</span>)
                     </label>
                     <input
                       name="fromCountry"
-                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
+                      className={` border focus:border-blue mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
                       type="text"
                       list="fromCountryList"
                       required
@@ -439,11 +439,11 @@ if (token === undefined || token === null || token === "" || !token) {
                   </div>
                   <div>
                     <label htmlFor="fromCity" className="text-black">
-                      From (<span className="text-red">Current City</span>)
+                      From (<span className="text-blue">Current City</span>)
                     </label>
                     <input
                       name="fromCity"
-                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
+                      className={` border focus:border-blue mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
                       type="text"
                       list="fromCityList"
                       required
@@ -461,11 +461,11 @@ if (token === undefined || token === null || token === "" || !token) {
                   </div>
                   <div className="text-black">
                     <label htmlFor="toCountry" className="">
-                      To (<span className="text-red">Destination Country</span>)
+                      To (<span className="text-blue">Destination Country</span>)
                     </label>
                     <input
                       name="toCountry"
-                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
+                      className={` border focus:border-blue mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
                       type="text"
                       list="toCountryList"
                       required
@@ -481,11 +481,11 @@ if (token === undefined || token === null || token === "" || !token) {
                   </div>
                   <div>
                     <label htmlFor="toCity" className="text-black">
-                      To (<span className="text-red">Destination City</span>)
+                      To (<span className="text-blue">Destination City</span>)
                     </label>
                     <input
                       name="toCity"
-                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
+                      className={` border focus:border-blue mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
                       type="text"
                       required
                       list="toCityList"
@@ -507,7 +507,7 @@ if (token === undefined || token === null || token === "" || !token) {
                     </label>
                     <input
                       name="deliveryDate"
-                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
+                      className={` border focus:border-blue mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
                       type="date"
                       // min={new Date()}
                       required
@@ -521,22 +521,21 @@ if (token === undefined || token === null || token === "" || !token) {
                     <label htmlFor="packageSize" className="text-black">
                       Package Size
                     </label>
-                    <select name="packageSize" required placeholder="Package Size" className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`} type="text"
+                    <select name="packageSize" required placeholder="Package Size" className={` border focus:border-blue mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`} type="text"
                      onChange={e => { setPackageSize(e.target.value) }} value={packageSize}
                     >
                       <option value="" selected disabled>Select size</option>
-                      <option value="1">1 Kg</option>
-                      <option value="2">2 Kg</option>
-                      <option value="3">2 Kg</option>
-                      <option value="4">4 Kg</option>
-                      <option value="5">5 Kg</option>
+                      <option value="1">1-5 Kg</option>
+                      <option value="2">5-10 Kg</option>
+                      <option value="3">10-15 Kg</option>
+                      <option value="4">15-20 Kg</option>
                     </select>
                   </div>
                   <div>
                     <label htmlFor="packageType" className="text-black">
                       Package Type
                     </label>
-                    <select name="packageType" required placeholder="Package Type" className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`} type="text"
+                    <select name="packageType" required placeholder="Package Type" className={` border focus:border-blue mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`} type="text"
                      onChange={e => { setPackageType(e.target.value) }} value={packageType}
                     >
                       <option value="" selected disabled>Select type</option>
@@ -545,6 +544,11 @@ if (token === undefined || token === null || token === "" || !token) {
                       <option value="suitcase">Suitcase</option>
                       <option value="trunk">Trunk</option>
                       <option value="trailer">Trailer</option>
+                      {/* <option value="food">food</option>
+                      <option value="documents">documents</option>
+                      <option value="fragile goods">fragile goods</option>
+                      <option value="personal items">personal items</option>
+                      <option value="others">others</option> */}
                     </select>
                   </div>
 
@@ -555,7 +559,7 @@ if (token === undefined || token === null || token === "" || !token) {
                     <input
                       name="amount"
                       disabled
-                      className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-red `}
+                      className={` border focus:border-blue mt-1 p-4 rounded-lg focus:outline-none w-full border-blue `}
                       type="text"
                       value={`$ `+price}
                     />
@@ -568,7 +572,7 @@ if (token === undefined || token === null || token === "" || !token) {
                       rows={4}
                       cols={51}
                       name="message"
-                      className={` border border-light_black focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full bg-transparent`}
+                      className={` border border-light_black focus:border-blue mt-1 p-4 rounded-lg focus:outline-none w-full bg-transparent`}
                       type="text"
                       required
                     onChange={(e) => {

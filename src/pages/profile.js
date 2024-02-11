@@ -111,7 +111,7 @@ const ProfilePage = () => {
                 departure={profile.departure_addr}
                 price={profile.price}
                 id={profile.id}
-                packageID={profile.delivery_id}
+                packageID={profile.id}
             handleDetails={(e) => handleParcelDetails(profile.id)}  />
             ))}
           </div>
@@ -170,9 +170,9 @@ const ProfilePage = () => {
           bigModal={true}
           Content={
             <div className="flex flex-col lg:flex-row gap-10">
-              <div className="flex p-10 bg-light_grey">
+              <div className="flex p-10 bg-purple rounded-lg">
                 <div className="flex justify-center items-center">
-                <img src="/svg/siren-icon.svg" className="w-[20rem]" alt="logo" />
+                <img src="/img/tripearn.png" className="w-[20rem]" alt="logo" />
                 </div>
                 </div>
               <div className="flex flex-col justify-between gap-10 w-full text-left">
@@ -185,7 +185,8 @@ const ProfilePage = () => {
                   <div>Amount: <span className="font-bold">$ {data.price}</span></div>
                 </div>
                 <div>{data.comment} </div>
-                <div className="w-full">
+                {/* if status is offer delivery, show this button */}
+                {/* <div className="w-full">
                 <button
                     onClick={handleAcceptParcel}
                     type="button"
@@ -193,7 +194,7 @@ const ProfilePage = () => {
                   >
                     Request Payment
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           }
