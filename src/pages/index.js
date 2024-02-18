@@ -203,8 +203,7 @@ if (token === undefined || token === null || token === "" || !token) {
                   Parcelra
                 </div>
                 <div className="pt-4 md:text-xl">
-                  The largest parcel delivery service that unites travelers and
-                  people who need to deliver any parcel
+                Have a parcel to send? Connect with a traveler and get it delivered.
                 </div>
                 <div className="flex flex-col md:flex-row gap-4 md:gap-10 pt-10">
                   <button
@@ -254,7 +253,7 @@ if (token === undefined || token === null || token === "" || !token) {
                 Need to deliver a parcel?
               </div>
               <div className="text-black text-lg md:text-2xl text-center pt-2">
-                These are sample parcels to help users create or send parcels on Parcelra
+              Make your trip count! Help others by delivering parcels and earn extra cash along the way
 
               </div>
             </div>
@@ -526,9 +525,9 @@ if (token === undefined || token === null || token === "" || !token) {
                     >
                       <option value="" selected disabled>Select size</option>
                       <option value="1">1-5 Kg</option>
-                      <option value="2">5-10 Kg</option>
-                      <option value="3">10-15 Kg</option>
-                      <option value="4">15-20 Kg</option>
+                      <option value="5-10">5-10 Kg</option>
+                      <option value="10-15">10-15 Kg</option>
+                      <option value="15-20">15-20 Kg</option>
                     </select>
                   </div>
                   <div>
@@ -539,16 +538,11 @@ if (token === undefined || token === null || token === "" || !token) {
                      onChange={e => { setPackageType(e.target.value) }} value={packageType}
                     >
                       <option value="" selected disabled>Select type</option>
-                      <option value="bag">Bag</option>
-                      <option value="backpack">Backpack</option>
-                      <option value="suitcase">Suitcase</option>
-                      <option value="trunk">Trunk</option>
-                      <option value="trailer">Trailer</option>
-                      {/* <option value="food">food</option>
-                      <option value="documents">documents</option>
-                      <option value="fragile goods">fragile goods</option>
-                      <option value="personal items">personal items</option>
-                      <option value="others">others</option> */}
+                      <option value="food">Food</option>
+                      <option value="documents">Documents</option>
+                      <option value="fragile items">Fragile goods</option>
+                      <option value="personal items">Personal items</option>
+                      <option value="others">Others</option>
                     </select>
                   </div>
 

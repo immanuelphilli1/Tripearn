@@ -66,7 +66,7 @@ const ProfilePage = () => {
     handleGetProfile(token).then(res => {
       console.log("response profile::::::::", res.data) 
       setProfileUserData(res.user)
-      setProfileParcelData(res.data.active)
+      setProfileParcelData(res.data)
     })
   }, []);
 

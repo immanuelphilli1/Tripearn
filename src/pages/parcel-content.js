@@ -5,9 +5,10 @@ import Search from "../components/Search"
 import { useState } from "react"
 import Modal from "../components/Modal"
 import { navigate } from "gatsby"
-import { getAllCountries, getCountriesCities, getSearchParcels, handleGetDetails } from "../services/services"
+import { getAllCountries, getCountriesCities, getSearchParcels, handleGetAllParcels, handleGetDetails } from "../services/services"
 import { useEffect } from "react"
 import { Toaster, toast } from "sonner"
+import Loader from "../components/Modal/loader"
 
 const ParcelPage = () => {
   const [filter, setFilter] = useState("")
@@ -24,6 +25,8 @@ const ParcelPage = () => {
   const [cityData, setCityData] = useState([])
   const [toCityData, setToCityData] = useState([])
   const [loading, setLoader] = useState(false);
+  const [allParcelsData, setAllParcelsData] = useState([])
+  const [showAllParcelsData, setShowAllParcelsData] = useState(true)
   const [searchData, setSearchData] = useState([])
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [showError, setShowError] = useState(false)
@@ -34,6 +37,12 @@ const ParcelPage = () => {
     getAllCountries().then(countries => {
       console.log("from country:::::;", countries.data)
       setCountryData(countries.data)
+    })
+  }, [])
+  useEffect(() => {
+    handleGetAllParcels().then(parcels => {
+      console.log("from all parcels:::::;", parcels.data.data)
+      setAllParcelsData(parcels.data.data)
     })
   }, [])
 
@@ -97,10 +106,12 @@ getSearchParcels(fromCity, toCity).then(details =>{
       });
     });
     setShowError(true)
+    setShowAllParcelsData(false)
     setShowSearchResults(false)
     setLoader(false)
   } else if (details.status === true && details.parcels.data.length !== 0) {
   setSearchData(details.parcels.data)
+  setShowAllParcelsData(false)
   setShowSearchResults(true)
   setShowError(false)
   setLoader(false)
@@ -175,6 +186,22 @@ getSearchParcels(fromCity, toCity).then(details =>{
               </div>
             </div>
           </div> */}
+          {showAllParcelsData && (
+            <>
+            <div className="pt-10 md:pt-16 pb-4 text-center font-bold text-4xl">{allParcelsData.length > 0 ? "All Parcels": <Loader />}</div>
+          <div className="py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 ">
+            {allParcelsData.map(details=>(
+                <ParcelCard handleDetails={(e) => handleParcelDetails(details.id)} 
+                arrival={details.arrival_addr} 
+                departure={details.departure_addr}
+                price={details.price}
+                id={details.id}
+                />
+                // console.log("al details:::::::::::::: ", details)
+            ))}
+          </div>
+          </>
+          )}
            {showError && <div className="py-20 text-red text-2xl text-center"> No Search Results for {fromCity} to {toCity}</div>}
           {showSearchResults && (
             <>
@@ -209,7 +236,7 @@ getSearchParcels(fromCity, toCity).then(details =>{
                   <div>Destination: <span className="font-bold">{data.arrival_addr}</span></div>
                   <div>Primary Location: <span className="font-bold">{data.departure_addr}</span></div>
                   <div>Required Delivery Date: <span className="font-bold">{data.arrival_date}</span></div>
-                  <div>Package Size: <span className="font-bold">{data.weight}</span></div>
+                  <div>Package Size: <span className="font-bold">{data.weight} kg</span></div>
                   <div>Package Type: <span className="font-bold">{data.size}</span></div>
                   <div>Amount: <span className="font-bold">$ {data.price}</span></div>
                 </div>

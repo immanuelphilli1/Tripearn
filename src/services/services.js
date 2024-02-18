@@ -121,6 +121,19 @@ export const handleGetProfile = async (token) => {
   }
 }
 
+export const handleGetAllParcels = async () => {
+
+  let ENDPOINT = `${Base_url}/parcel/all` // // Replace with environment variables
+
+  try {
+    let result = await fetchData(ENDPOINT,'GET', {})
+    // console.log(accountType)
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const getCountriesCities = async (country) => {
 
   let citiesENDPOINT = 'https://countriesnow.space/api/v0.1/countries/cities' // // Replace with environment variables
