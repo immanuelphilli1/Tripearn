@@ -524,10 +524,10 @@ if (token === undefined || token === null || token === "" || !token) {
                      onChange={e => { setPackageSize(e.target.value) }} value={packageSize}
                     >
                       <option value="" selected disabled>Select size</option>
-                      <option value="1">1-5 Kg</option>
-                      <option value="5-10">5-10 Kg</option>
-                      <option value="10-15">10-15 Kg</option>
-                      <option value="15-20">15-20 Kg</option>
+                      <option value="5">1-5 Kg</option>
+                      <option value="10">5-10 Kg</option>
+                      <option value="15">10-15 Kg</option>
+                      <option value="20">15-20 Kg</option>
                     </select>
                   </div>
                   <div>
