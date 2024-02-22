@@ -29,7 +29,7 @@ const ContactUsPage = () => {
                 </div>
                 <div>
                   <div className=" text-2xl text-blue py-4 font-bold">Address</div>
-                  <div className=" ">AB 27, Community 11, Tema</div>
+                  <div className=" ">2nd Floor College House, 17 King Edwards Road, Ruislip, London.</div>
                 </div>
                 <div>
                   <div className=" text-xl text-green py-4 font-bold">Time of operation</div>
