@@ -293,8 +293,8 @@ handleNumberUpdate(token, mobileNumber).then(update => {
               <form method="POST" onSubmit={handleUpdateNumber} action="/">
                 <div className="grid grid-cols-1 gap-6 md:gap-6 pt-4 px-6 text-left">
                   <div className="">
-                    <label htmlFor="fromCountry" className="text-white">
-                      From (<span className="">Current Country</span>)
+                    <label htmlFor="fromCountry" className="text-black">
+                      Current Country
                     </label>
                     <input
                       name="fromCountry"
