@@ -16,7 +16,7 @@ const ParcelPage = () => {
   const [showParcelDetails, setShowParcelDetails] = useState(false);
   const [showParcelSubmit, setShowParcelSubmit] = useState(false);
   const [fromCountryData, setFromCountryData] = useState(null)
-    const [fromCountry, setFromCountry] = useState("")
+  const [fromCountry, setFromCountry] = useState("")
   const [fromCity, setFromCity] = useState("")
   const [toCountry, setToCountry] = useState("")
   const [toCountryData, setToCountryData] = useState(null)
@@ -46,7 +46,7 @@ const ParcelPage = () => {
     })
   }, [])
 
-    // from handle Change
+  // from handle Change
   function handleFromChange(event) {
     event.preventDefault()
     setShowError(false)
@@ -90,47 +90,57 @@ const ParcelPage = () => {
       if (city.success) {
         setToCityData(city.data)
       }
-      
+
     })
   }
-  function handleSearch (e)
-  {
-e.preventDefault()
-setLoader(true)
-getSearchParcels(fromCity, toCity).then(details =>{
-  console.log("see details::::::", details)
-  if (details.status === false) {
-    Object.keys(details.errors).forEach(key => {
-      details.errors[key].forEach(error => {
-        toast.error(error, { duration: 5000 });
-      });
-    });
-    setShowError(true)
-    setShowAllParcelsData(false)
-    setShowSearchResults(false)
-    setLoader(false)
-  } else if (details.status === true && details.parcels.data.length !== 0) {
-  setSearchData(details.parcels.data)
-  setShowAllParcelsData(false)
-  setShowSearchResults(true)
-  setShowError(false)
-  setLoader(false)
-  } else {
-    toast.error("Location not found!", {duration: 5000})
-    setLoader(false)
-    setShowError(true)
-  }
-})
+  function handleSearch(e) {
+    e.preventDefault()
+    setLoader(true)
+    toast.info("Processing!", { duration: 5000 })
+    getSearchParcels(fromCity, toCity).then(details => {
+      console.log("see details::::::", details)
+      if (details.status === false) {
+        Object.keys(details.errors).forEach(key => {
+          details.errors[key].forEach(error => {
+            toast.error(error, { duration: 5000 });
+          });
+        });
+        setShowError(true)
+        setShowAllParcelsData(false)
+        setShowSearchResults(false)
+        setLoader(false)
+      } else if (details.status === true && details.parcels.data.length !== 0) {
+        setSearchData(details.parcels.data)
+        setShowAllParcelsData(false)
+        setShowSearchResults(true)
+        setShowError(false)
+        setLoader(false)
+      } else if (details.status === true && details.parcels.data.length === 0) {
+        toast.error("No Parcels currently available for this route!", { duration: 20000 })
+        setShowError(true)
+        setShowAllParcelsData(false)
+        setLoader(false)
+      } else {
+        toast.error("Location not found!", { duration: 5000 })
+        setLoader(false)
+        setShowError(true)
+      }
+    })
   }
 
-  
+  function handleAllParcels(e) {
+    e.preventDefault()
+    setShowError(false)
+    setShowAllParcelsData(true)
+
+  }
   function handleSubmit() {
     setShowParcelSubmit(true);
     setShowAcceptParcel(false);
     setShowParcelDetails(false);
   }
   function handleAcceptParcel() {
-    
+
     if (token === undefined || token === null || token === "" || !token) {
       navigate("/sign-in")
 
@@ -140,22 +150,22 @@ getSearchParcels(fromCity, toCity).then(details =>{
     setShowParcelDetails(false);
   }
   function handleParcelDetails(id) {
-    console.log("yesssssss",id)
+    console.log("yesssssss", id)
     if (token === undefined || token === null || token === "" || !token) {
       navigate("/sign-in")
 
     } else {
-    handleGetDetails(id).then((res) => {
-      console.log("response : ",res)
-      setData(res.data)
-      setShowParcelDetails(true);
-      setShowParcelSubmit(false);
-      setShowAcceptParcel(false);
-    })
-  }
-    
-    
-    
+      handleGetDetails(id).then((res) => {
+        console.log("response : ", res)
+        setData(res.data)
+        setShowParcelDetails(true);
+        setShowParcelSubmit(false);
+        setShowAcceptParcel(false);
+      })
+    }
+
+
+
   }
   function handleClose() {
     setShowParcelSubmit(false);
@@ -171,7 +181,7 @@ getSearchParcels(fromCity, toCity).then(details =>{
               <div className="bg-blue w-full min-h-[350px] rounded-lg py-10 px-6">
                 <div className="uppercase text-2xl md:text-5xl font-bold text-center py-10">See Parcelra parcels in your area</div>
                 <Search border={"border-white"} loading={loading}
-                handleFromChange={handleFromChange} handleSearch={handleSearch} handleToChange={handleToChange} fromCity={fromCity} fromCountry={fromCountry} countryData={countryData} setFromCity={setFromCity} setToCity={setToCity} cityData={cityData} toCountry={toCountry} toCity={toCity} toCityData={toCityData}
+                  handleFromChange={handleFromChange} handleSearch={handleSearch} handleToChange={handleToChange} fromCity={fromCity} fromCountry={fromCountry} countryData={countryData} setFromCity={setFromCity} setToCity={setToCity} cityData={cityData} toCountry={toCountry} toCity={toCity} toCityData={toCityData}
                 />
               </div>
             </div>
@@ -188,35 +198,42 @@ getSearchParcels(fromCity, toCity).then(details =>{
           </div> */}
           {showAllParcelsData && (
             <>
-            <div className="pt-10 md:pt-16 pb-4 text-center font-bold text-4xl">{allParcelsData.length > 0 ? "All Parcels": <Loader />}</div>
-          <div className="py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 ">
-            {allParcelsData.map(details=>(
-                <ParcelCard handleDetails={(e) => handleParcelDetails(details.id)} 
-                arrival={details.arrival_addr} 
-                departure={details.departure_addr}
-                price={details.price}
-                id={details.id}
-                />
-                // console.log("al details:::::::::::::: ", details)
-            ))}
-          </div>
-          </>
+              <div className="pt-10 md:pt-16 pb-4 text-center font-bold text-4xl">{allParcelsData.length > 0 ? "All Parcels" : <Loader />}</div>
+              <div className="py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 ">
+                {allParcelsData.map(details => (
+                  <ParcelCard handleDetails={(e) => handleParcelDetails(details.id)}
+                    arrival={details.arrival_addr}
+                    departure={details.departure_addr}
+                    price={details.price}
+                    id={details.id}
+                  />
+                  // console.log("al details:::::::::::::: ", details)
+                ))}
+              </div>
+            </>
           )}
-           {showError && <div className="py-20 text-red text-2xl text-center"> No Search Results for {fromCity} to {toCity}</div>}
+          {showError &&
+            <div className="flex justify-center items-center flex-col gap-4 py-20 text-red text-2xl text-center"><
+              div> No Parcels are currently available from {fromCity} to {toCity}</div>
+              <div className="flex">
+                <button onClick={handleAllParcels} type="button" className="py-3 px-6 w-full rounded-lg text-base font-bold text-black bg-green hover:bg-light_green \">See all parcels</button>
+              </div>
+            </div>
+          }
           {showSearchResults && (
             <>
-            <div className="pt-10 md:pt-16 pb-4 text-center font-bold text-4xl">Search Results</div>
-          <div className="py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 ">
-            {searchData.map(details=>(
-                <ParcelCard handleDetails={(e) => handleParcelDetails(details.id)} 
-                arrival={details.arrival_addr} 
-                departure={details.departure_addr}
-                price={details.price}
-                id={details.id}
-                />
-            ))}
-          </div>
-          </>
+              <div className="pt-10 md:pt-16 pb-4 text-center font-bold text-4xl">Search Results</div>
+              <div className="py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 ">
+                {searchData.map(details => (
+                  <ParcelCard handleDetails={(e) => handleParcelDetails(details.id)}
+                    arrival={details.arrival_addr}
+                    departure={details.departure_addr}
+                    price={details.price}
+                    id={details.id}
+                  />
+                ))}
+              </div>
+            </>
           )}
         </div>
       </main>
@@ -228,9 +245,9 @@ getSearchParcels(fromCity, toCity).then(details =>{
             <div className="flex flex-col lg:flex-row gap-10">
               <div className="flex p-10 bg-purple rounded-lg">
                 <div className="flex justify-center items-center">
-                <img src="/img/tripearn.png" className="w-[20rem]" alt="logo" />
+                  <img src="/img/tripearn.png" className="w-[20rem]" alt="logo" />
                 </div>
-                </div>
+              </div>
               <div className="flex flex-col justify-between gap-10 w-full text-left">
                 <div className="border-b">
                   <div>Destination: <span className="font-bold">{data.arrival_addr}</span></div>
@@ -242,7 +259,7 @@ getSearchParcels(fromCity, toCity).then(details =>{
                 </div>
                 <div>{data.comment} </div>
                 <div className="w-full">
-                <button
+                  <button
                     onClick={handleAcceptParcel}
                     type="button"
                     className="py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green font-bold"
@@ -257,7 +274,7 @@ getSearchParcels(fromCity, toCity).then(details =>{
       )}
       {showAcceptParcel && (
         <Modal
-          handleClose={handleClose} 
+          handleClose={handleClose}
           Title={"Offer Delivery"}
           Content={
             <div>
@@ -265,52 +282,52 @@ getSearchParcels(fromCity, toCity).then(details =>{
                 <div className="grid grid-cols-1 gap-6 md:gap-6 pt-4 px-6 text-left">
                   <div>
                     <label htmlFor="departure" className="text-black">
-                    Date of Departure
+                      Date of Departure
                     </label>
                     <input
                       name="departure"
                       className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
                       type="date"
                       required
-                      // onChange={(e) => {
-                      //   setDeparture(e.target.value);
-                      // }}
-                      // value={departure}
+                    // onChange={(e) => {
+                    //   setDeparture(e.target.value);
+                    // }}
+                    // value={departure}
                     />
                   </div>
                   <div>
                     <label htmlFor="arrivalDate" className="text-black">
-                    Date of Arrival
+                      Date of Arrival
                     </label>
                     <input
                       name="arrivalDate"
                       className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
                       type="date"
                       required
-                      // onChange={(e) => {
-                      //   setArrivalDate(e.target.value);
-                      // }}
-                      // value={arrivalDate}
+                    // onChange={(e) => {
+                    //   setArrivalDate(e.target.value);
+                    // }}
+                    // value={arrivalDate}
                     />
                   </div>
                   <div>
                     <label htmlFor="arrivalTime" className="text-black">
-                    Arrival Time
+                      Arrival Time
                     </label>
                     <input
                       name="arrivalTime"
                       className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
                       type="time"
                       required
-                      // onChange={(e) => {
-                      //   setArrivalTime(e.target.value);
-                      // }}
-                      // value={arrivalTime}
+                    // onChange={(e) => {
+                    //   setArrivalTime(e.target.value);
+                    // }}
+                    // value={arrivalTime}
                     />
                   </div>
                   <div className="flex items-center justify-center">
                     <button type="button" onClick={handleSubmit} className="py-4 px-10 w-full lg:w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">Submit</button>
-                </div>
+                  </div>
                 </div>
               </form>
             </div>
@@ -318,15 +335,15 @@ getSearchParcels(fromCity, toCity).then(details =>{
         />
       )}
       {showParcelSubmit && (
-        <Modal 
+        <Modal
           Title={"Thank You"}
           handleClose={handleClose}
           bigModal={true}
           Content={
             <div className="pt-6">
-              We have received your request to deliver package 12345. Your details provided 
-are being processed! We will send you an email and SMS of package details 
-once approval is completed. Approval takes less than 24 hours 
+              We have received your request to deliver package 12345. Your details provided
+              are being processed! We will send you an email and SMS of package details
+              once approval is completed. Approval takes less than 24 hours
             </div>
           }
         />

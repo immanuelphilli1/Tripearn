@@ -82,6 +82,22 @@ export const handleParcelCreate = async (token, departure, arrival, arrival_date
   }
 }
 
+export const handleNumberUpdate = async (token, phone) => {
+  console.log(token)
+  console.log(phone)
+  let updateENDPOINT = `${Base_url}/profile/settings` // // Replace with environment variables
+
+  try {
+    let result = await fetchData(updateENDPOINT,'put', {
+      token, phone
+    })
+    // console.log(accountType)
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 
 export const handleGetDetails = async (id) => {
 
@@ -149,6 +165,21 @@ export const getCountriesCities = async (country) => {
   }
 }
 
+export const getCountriesCodes = async (country) => {
+
+  let citiesENDPOINT = 'https://countriesnow.space/api/v0.1/countries/codes' // // Replace with environment variables
+
+  try {
+    let result = await fetchData(citiesENDPOINT,'post', {
+      country,
+    })
+    // console.log(accountType)
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 
 
 //test
@@ -164,7 +195,7 @@ export const fetchData = async (
     const xsrfToken = await fetchCsrfToken();
     // console.log("we are looking", xsrfToken)
     let response;
-    if(method === "post"){
+    if(method === "post" || method === "put"){
        response = await fetch(endpoint, {
         method: method,
         body: JSON.stringify(requestParams),

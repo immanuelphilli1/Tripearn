@@ -11,7 +11,9 @@ import Loader from "../components/Modal/loader";
 import { Toaster, toast } from "sonner";
 // import { Carousel } from 'react-responsive-carousel';
 // import 'react-responsive-carousel/lib/styles/carousel.min.css';
-
+const today = new Date()
+today.setDate(today.getDate() + 5)
+const minDate = today.toISOString().split("T")[0]
 const IndexPage = () => {
   const [showCreateParcel, setShowCreateParcel] = useState(false);
   const [showAcceptParcel, setShowAcceptParcel] = useState(false);
@@ -508,7 +510,7 @@ if (token === undefined || token === null || token === "" || !token) {
                       name="deliveryDate"
                       className={` border focus:border-blue mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
                       type="date"
-                      // min={new Date()}
+                      min={minDate}
                       required
                     onChange={(e) => {
                       setDeliveryDate(e.target.value);
