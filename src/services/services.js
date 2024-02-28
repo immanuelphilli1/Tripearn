@@ -82,9 +82,25 @@ export const handleParcelCreate = async (token, departure, arrival, arrival_date
   }
 }
 
+export const handleOfferDelivery = async (token, departure_date, arrival_date, id) => {
+  
+
+  let deliveryENDPOINT = `${Base_url}/parcel/${id}/delivery/offer` // // Replace with environment variables
+
+  try {
+    let result = await fetchData(deliveryENDPOINT,'post', {
+      token, departure_date, arrival_date, type_transport:"airplane"
+    })
+    // console.log(accountType)
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const handleNumberUpdate = async (token, phone) => {
-  console.log(token)
-  console.log(phone)
+  // console.log(token)
+  // console.log(phone)
   let updateENDPOINT = `${Base_url}/profile/settings` // // Replace with environment variables
 
   try {
@@ -224,7 +240,7 @@ export const fetchData = async (
     
     
     // const data = await response.json();
-    console.log(response)
+    // console.log(response)
     // console.log("tokennnnnn::::::::",xsrfToken)
     const { parcel,parcels,data, token, message, user, errors, id } = await response.json()
     
@@ -323,7 +339,7 @@ export async function fetchCsrfToken() {
   try {
     const response = await fetch(csrfToken);
     const data = await response.json();
-    console.log("lets see token",data)
+    // console.log("lets see token",data)
     return data.csrfToken;
   } catch (error) {
     console.error('Error fetching data:', error);

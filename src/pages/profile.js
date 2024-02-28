@@ -28,7 +28,7 @@ const ProfilePage = () => {
   
   useEffect(() => {
     getAllCountries().then(countries => {
-      console.log("from country:::::;", countries.data)
+      // console.log("from country:::::;", countries.data)
       setCountryData(countries.data)
     })
   }, [])
@@ -47,7 +47,7 @@ const ProfilePage = () => {
       setFromCountryData(country)
     }
     getCountriesCodes(event.target.value).then(code => {
-      console.log("from country code:::::;", code)
+      // console.log("from country code:::::;", code)
       if (code.success) {
         setPhoneCode(code.data.dial_code)
       }
@@ -60,7 +60,7 @@ setLoader(true)
 toast.info("processing!", {duration: 5000})
 let mobileNumber = phoneCode+phoneNumber
 handleNumberUpdate(token, mobileNumber).then(update => {
-  console.log("update status::::::::", update)
+  // console.log("update status::::::::", update)
   if (update.success === false) {
     Object.keys(update.errors).forEach(key => {
       update.errors[key].forEach(error => {
@@ -90,13 +90,13 @@ handleNumberUpdate(token, mobileNumber).then(update => {
     setShowParcelDetails(false);
   }
   function handleParcelDetails(id) {
-    console.log("yesssssss",id)
+    // console.log("yesssssss",id)
     if (token === undefined || token === null || token === "" || !token) {
       navigate("/sign-in")
 
     } else {
     handleGetDetails(id).then((res) => {
-      console.log("response : ",res)
+      // console.log("response : ",res)
       setData(res.data)
     setShowParcelDetails(true);
     setShowParcelSubmit(false);
@@ -124,7 +124,7 @@ handleNumberUpdate(token, mobileNumber).then(update => {
   }, []);
   useEffect(() => {
     handleGetProfile(token).then(res => {
-      console.log("response profile::::::::", res.data) 
+      // console.log("response profile::::::::", res.data) 
       setProfileUserData(res.user)
       setProfileParcelData(res.data)
     })
@@ -170,8 +170,9 @@ handleNumberUpdate(token, mobileNumber).then(update => {
           </div>
           {filter === "all" && profileParcelData.length > 0 ? (
           <div className="py-10 grid grid-cols-1 gap-10 ">
-          {profileParcelData.map(profile => (
+          {profileParcelData.map((profile, key) => (
             <ProfileCard 
+            key={key}
             arrival={profile.arrival_addr} 
             date={profile.arrival_date}
                 departure={profile.departure_addr}
@@ -187,8 +188,9 @@ handleNumberUpdate(token, mobileNumber).then(update => {
 { filter === "pending" && profileParcelData.filter((profile) => profile.status === "pending")
         .length > 0 ? (
   <div className="py-10 grid grid-cols-1 gap-10 ">
-  {profileParcelData.filter(profile => profile.status === "pending").map(profile => (
+  {profileParcelData.filter(profile => profile.status === "pending").map((profile, key) => (
     <ProfileCard 
+    key={key}
     arrival={profile.arrival_addr} 
     date={profile.arrival_date}
         departure={profile.departure_addr}
@@ -207,8 +209,9 @@ handleNumberUpdate(token, mobileNumber).then(update => {
 { filter === "active" && profileParcelData.filter((profile) => profile.status === "active")
         .length > 0 ? (
   <div className="py-10 grid grid-cols-1 gap-10 ">
-  {profileParcelData.filter(profile => profile.status === "active").map(profile => (
+  {profileParcelData.filter(profile => profile.status === "active").map((profile, key) => (
     <ProfileCard 
+    key={key}
     arrival={profile.arrival_addr} 
     date={profile.arrival_date}
         departure={profile.departure_addr}
@@ -227,8 +230,9 @@ handleNumberUpdate(token, mobileNumber).then(update => {
 { filter === "awaiting payment" && profileParcelData.filter((profile) => profile.status === "awaiting payment")
         .length > 0 ? (
   <div className="py-10 grid grid-cols-1 gap-10 ">
-  {profileParcelData.filter(profile => profile.status === "awaiting payment").map(profile => (
+  {profileParcelData.filter(profile => profile.status === "awaiting payment").map((profile, key) => (
     <ProfileCard 
+    key={key}
     arrival={profile.arrival_addr} 
     date={profile.arrival_date}
         departure={profile.departure_addr}
@@ -247,8 +251,9 @@ handleNumberUpdate(token, mobileNumber).then(update => {
 { filter === "inactive" && profileParcelData.filter((profile) => profile.status === "inactive")
         .length > 0 ? (
   <div className="py-10 grid grid-cols-1 gap-10 ">
-  {profileParcelData.filter(profile => profile.status === "inactive").map(profile => (
+  {profileParcelData.filter(profile => profile.status === "inactive").map((profile, key) => (
     <ProfileCard 
+    key={key}
     arrival={profile.arrival_addr} 
     date={profile.arrival_date}
         departure={profile.departure_addr}
@@ -267,8 +272,9 @@ handleNumberUpdate(token, mobileNumber).then(update => {
 { filter === "closed" && profileParcelData.filter((profile) => profile.status === "closed")
         .length > 0 ? (
   <div className="py-10 grid grid-cols-1 gap-10 ">
-  {profileParcelData.filter(profile => profile.status === "closed").map(profile => (
+  {profileParcelData.filter(profile => profile.status === "closed").map((profile, key) => (
     <ProfileCard 
+    key={key}
     arrival={profile.arrival_addr} 
     date={profile.arrival_date}
         departure={profile.departure_addr}
@@ -306,9 +312,9 @@ handleNumberUpdate(token, mobileNumber).then(update => {
                       value={fromCountry}
                     />
                     <datalist id="fromCountryList">
-                      {countryData.map(country => {
+                      {countryData.map((country, key) => {
 
-                        return <option>{country.name}</option>
+                        return <option key={key}>{country.name}</option>
                       })}
                     </datalist>
                   </div>

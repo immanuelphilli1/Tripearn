@@ -57,9 +57,9 @@ const Modal = ({
         </div>
       </div>
       <div>
-        <a href={() => false} onClick={handleClose}>
-        <svg version="1.1" viewBox="0 0 24 24" title="Close" className="cursor-pointer ml-auto md:ml-2 w-7 h-7 "><g id="Icons+Indicators-/-System-Icons-/-close-/-#FFFFFF" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" ><g id="close"><polygon id="bg" points="0 0 24 0 24 24 0 24"></polygon><path d="M20,4 L4,20" id="Shape" stroke="#FFFFFF" stroke-linecap="round" ></path><path d="M4,4 L20,20" id="Shape" stroke="#FFFFFF" stroke-linecap="round" ></path></g></g></svg>
-        </a>
+        <button onClick={handleClose}>
+        <svg version="1.1" viewBox="0 0 24 24" title="Close" className="cursor-pointer ml-auto md:ml-2 w-7 h-7 "><g id="Icons+Indicators-/-System-Icons-/-close-/-#FFFFFF" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" ><g id="close"><polygon id="bg" points="0 0 24 0 24 24 0 24"></polygon><path d="M20,4 L4,20" id="Shape" stroke="#FFFFFF" strokeLinecap="round" ></path><path d="M4,4 L20,20" id="Shape" stroke="#FFFFFF" strokeLinecap="round" ></path></g></g></svg>
+        </button>
       </div>
     </div>
   </div>

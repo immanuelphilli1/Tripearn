@@ -38,7 +38,7 @@ function handleToggler(){
         if (signInValidate !== "") {
     setLoader(true)
           handleLoginRequest(email, password).then(res => {
-            console.log("response::::::::", res)
+            // console.log("response::::::::", res)
             if (res.success === false) {
               Object.keys(res.errors).forEach(key => {
                 res.errors[key].forEach(error => {

@@ -24,9 +24,9 @@ const Search = ({ border, loading, handleFromChange, handleSearch, handleToChang
                       value={fromCountry}
                     />
                     <datalist id="fromCountryList">
-                      {countryData.map(country => {
+                      {countryData.map((country, key) => {
 
-                        return <option>{country.name}</option>
+                        return <option key={key}>{country.name}</option>
                       })}
                     </datalist>
                   </div>
@@ -46,9 +46,9 @@ const Search = ({ border, loading, handleFromChange, handleSearch, handleToChang
                       value={fromCity}
                     />
                     <datalist id="fromCityList">
-                      {cityData.map(city => {
+                      {cityData.map((city, key) => {
 
-                        return <option>{city}</option>
+                        return <option key={key}>{city}</option>
                       })}
                     </datalist>
                   </div>
@@ -66,9 +66,9 @@ const Search = ({ border, loading, handleFromChange, handleSearch, handleToChang
                       value={toCountry}
                     />
                     <datalist id="toCountryList">
-                      {countryData.map(country => {
+                      {countryData.map((country, key) => {
 
-                        return <option>{country.name}</option>
+                        return <option key={key}>{country.name}</option>
                       })}
                     </datalist>
                   </div>
@@ -88,9 +88,9 @@ const Search = ({ border, loading, handleFromChange, handleSearch, handleToChang
                       value={toCity}
                     />
                     <datalist id="toCityList">
-                      {toCityData.map(city => {
+                      {toCityData.map((city, key) => {
 
-                        return <option>{city}</option>
+                        return <option key={key}>{city}</option>
                       })}
                     </datalist>
                   </div>

@@ -59,7 +59,7 @@ const SignUpPage = () => {
     if (validate !== "") {
 setLoader(true)
       handleRegisterRequest(firstName, lastName, country, email, phone, password, confirmPassword).then(res => {
-        console.log("response::::::::", res)
+        // console.log("response::::::::", res)
         if (res.success === false) {
           Object.keys(res.errors).forEach(key => {
             res.errors[key].forEach(error => {

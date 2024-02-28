@@ -200,13 +200,13 @@ const Navigation = ({ active }) => {
             >
               profile
             </a>
-            <a
-              href="javascript:void(0)"
+            <button
+              // href="javascript:void(0)"
               onClick={handleLogout}
-              className="block py-2 px-4 text-sm text-red hover:text-white hover:bg-blue"
+              className="block py-2 px-4 text-sm uppercase text-red hover:text-white hover:bg-blue"
             >
               logout
-            </a>
+            </button>
           </div>
           )}
         </div>

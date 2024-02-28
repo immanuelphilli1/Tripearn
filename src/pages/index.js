@@ -36,7 +36,7 @@ const IndexPage = () => {
   const token = typeof window !== "undefined" && localStorage.getItem('token');
   useEffect(() => {
     getAllCountries().then(countries => {
-      console.log("from country:::::;", countries.data)
+      // console.log("from country:::::;", countries.data)
       setCountryData(countries.data)
     })
   }, [])
@@ -59,7 +59,7 @@ const IndexPage = () => {
       setFromCountryData(country)
     }
     getCountriesCities(event.target.value).then(city => {
-      console.log("from country:::::;", city)
+      // console.log("from country:::::;", city)
       if (city.success) {
         setCityData(city.data)
       }
@@ -80,7 +80,7 @@ const IndexPage = () => {
       setToCountryData(country)
     }
     getCountriesCities(event.target.value).then(city => {
-      console.log("from country:::::;", city)
+      // console.log("from country:::::;", city)
       if (city.success) {
         setToCityData(city.data)
       }
@@ -91,7 +91,7 @@ const IndexPage = () => {
   let price = 0
   let distanceCheck = 0
   if (fromCountryData && toCountryData) {
-    console.log("from", fromCountryData, "to", toCountryData)
+    // console.log("from", fromCountryData, "to", toCountryData)
     let distanceCalculated = distance(
       parseFloat(fromCountryData.lat), parseFloat(toCountryData.lat), parseFloat(fromCountryData.long), parseFloat(toCountryData.long)
     )
@@ -106,7 +106,7 @@ if (token === undefined || token === null || token === "" || !token) {
   navigate("/sign-in")
 } else{
   handleParcelCreate(token,fromCity, toCity, deliveryDate, price, packageSize, packageType, message).then(res => {
-    console.log("response::::::::", res)
+    // console.log("response::::::::", res)
     if (res.success === false) {
       Object.keys(res.errors).forEach(key => {
         res.errors[key].forEach(error => {

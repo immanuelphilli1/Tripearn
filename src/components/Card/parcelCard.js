@@ -1,9 +1,9 @@
 import { navigate } from "gatsby";
 import * as React from "react";
 
-const ParcelCard = ({handleDetails=()=>navigate('/parcel-content'), price ="60", arrival="United Kingdom, London", departure="Accra, Ghana", id}) => {
+const ParcelCard = ({ handleDetails=()=>navigate('/parcel-content'), price ="60", arrival="United Kingdom, London", departure="Accra, Ghana", id}) => {
     return (
-        <div className=" bg-light_black border border-green p-4 rounded-lg w-full">
+        <div  className=" bg-light_black border border-green p-4 rounded-lg w-full">
             <div className="flex h-full flex-col md:flex-row gap-10 items-start md:items-center justify-center">
                 <div className="flex items-center justify-center">
                 <div className="flex items-center justify-center bg-purple p-10 w-[9rem] md:w-[11rem] rounded-lg">

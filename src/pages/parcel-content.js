@@ -5,10 +5,14 @@ import Search from "../components/Search"
 import { useState } from "react"
 import Modal from "../components/Modal"
 import { navigate } from "gatsby"
-import { getAllCountries, getCountriesCities, getSearchParcels, handleGetAllParcels, handleGetDetails } from "../services/services"
+import { getAllCountries, getCountriesCities, getSearchParcels, handleGetAllParcels, handleGetDetails, handleOfferDelivery } from "../services/services"
 import { useEffect } from "react"
 import { Toaster, toast } from "sonner"
 import Loader from "../components/Modal/loader"
+
+const today = new Date()
+today.setDate(today.getDate())
+const minDate = today.toISOString().split("T")[0]
 
 const ParcelPage = () => {
   const [filter, setFilter] = useState("")
@@ -17,6 +21,7 @@ const ParcelPage = () => {
   const [showParcelSubmit, setShowParcelSubmit] = useState(false);
   const [fromCountryData, setFromCountryData] = useState(null)
   const [fromCountry, setFromCountry] = useState("")
+  const [parcelID, setParcelID] = useState()
   const [fromCity, setFromCity] = useState("")
   const [toCountry, setToCountry] = useState("")
   const [toCountryData, setToCountryData] = useState(null)
@@ -30,18 +35,20 @@ const ParcelPage = () => {
   const [searchData, setSearchData] = useState([])
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [showError, setShowError] = useState(false)
+  const [departureDate, setDepartureDate] = useState("")
+  const [arrivalDate, setArrivalDate] = useState("")
   const [data, setData] = useState([]);
   const token = typeof window !== "undefined" && localStorage.getItem('token');
 
   useEffect(() => {
     getAllCountries().then(countries => {
-      console.log("from country:::::;", countries.data)
+      // console.log("from country:::::;", countries.data)
       setCountryData(countries.data)
     })
   }, [])
   useEffect(() => {
     handleGetAllParcels().then(parcels => {
-      console.log("from all parcels:::::;", parcels.data.data)
+      // console.log("from all parcels:::::;", parcels.data.data)
       setAllParcelsData(parcels.data.data)
     })
   }, [])
@@ -63,7 +70,7 @@ const ParcelPage = () => {
       setFromCountryData(country)
     }
     getCountriesCities(event.target.value).then(city => {
-      console.log("from country:::::;", city)
+      // console.log("from country:::::;", city)
       if (city.success) {
         setCityData(city.data)
       }
@@ -86,7 +93,7 @@ const ParcelPage = () => {
       setToCountryData(country)
     }
     getCountriesCities(event.target.value).then(city => {
-      console.log("from country:::::;", city)
+      // console.log("from country:::::;", city)
       if (city.success) {
         setToCityData(city.data)
       }
@@ -98,7 +105,7 @@ const ParcelPage = () => {
     setLoader(true)
     toast.info("Processing!", { duration: 5000 })
     getSearchParcels(fromCity, toCity).then(details => {
-      console.log("see details::::::", details)
+      // console.log("see details::::::", details)
       if (details.status === false) {
         Object.keys(details.errors).forEach(key => {
           details.errors[key].forEach(error => {
@@ -134,10 +141,26 @@ const ParcelPage = () => {
     setShowAllParcelsData(true)
 
   }
-  function handleSubmit() {
+  function handleSubmit(e) {
+    e.preventDefault()
+    setLoader(true)
+    handleOfferDelivery(token, departureDate, arrivalDate, parcelID).then(details => {
+      // console.log("see accept parcel details::::::", details)
+      if (details.success === false) {
+        Object.keys(details.errors).forEach(key => {
+          details.errors[key].forEach(error => {
+            toast.error(error, { duration: 5000 });
+          });
+        });
+        setLoader(false)
+      } else if (details.success === true) {
     setShowParcelSubmit(true);
     setShowAcceptParcel(false);
     setShowParcelDetails(false);
+      } else {
+        toast.error("Parcel cannot be selected by same user!", { duration: 5000 });
+      }
+    })
   }
   function handleAcceptParcel() {
 
@@ -150,14 +173,15 @@ const ParcelPage = () => {
     setShowParcelDetails(false);
   }
   function handleParcelDetails(id) {
-    console.log("yesssssss", id)
+    // console.log("yesssssss", id)
     if (token === undefined || token === null || token === "" || !token) {
       navigate("/sign-in")
 
     } else {
       handleGetDetails(id).then((res) => {
-        console.log("response : ", res)
+        // console.log("response : ", res)
         setData(res.data)
+        setParcelID(id)
         setShowParcelDetails(true);
         setShowParcelSubmit(false);
         setShowAcceptParcel(false);
@@ -200,8 +224,9 @@ const ParcelPage = () => {
             <>
               <div className="pt-10 md:pt-16 pb-4 text-center font-bold text-4xl">{allParcelsData.length > 0 ? "All Parcels" : <Loader />}</div>
               <div className="py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 ">
-                {allParcelsData.map(details => (
+                {allParcelsData.map((details, key) => (
                   <ParcelCard handleDetails={(e) => handleParcelDetails(details.id)}
+                  key={key}
                     arrival={details.arrival_addr}
                     departure={details.departure_addr}
                     price={details.price}
@@ -224,8 +249,9 @@ const ParcelPage = () => {
             <>
               <div className="pt-10 md:pt-16 pb-4 text-center font-bold text-4xl">Search Results</div>
               <div className="py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 ">
-                {searchData.map(details => (
+                {searchData.map((details, key) => (
                   <ParcelCard handleDetails={(e) => handleParcelDetails(details.id)}
+                  key={key}
                     arrival={details.arrival_addr}
                     departure={details.departure_addr}
                     price={details.price}
@@ -289,10 +315,11 @@ const ParcelPage = () => {
                       className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
                       type="date"
                       required
-                    // onChange={(e) => {
-                    //   setDeparture(e.target.value);
-                    // }}
-                    // value={departure}
+                      min={minDate}
+                    onChange={(e) => {
+                      setDepartureDate(e.target.value);
+                    }}
+                    value={departureDate}
                     />
                   </div>
                   <div>
@@ -303,14 +330,15 @@ const ParcelPage = () => {
                       name="arrivalDate"
                       className={` border focus:border-red mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black `}
                       type="date"
+                      min={departureDate}
                       required
-                    // onChange={(e) => {
-                    //   setArrivalDate(e.target.value);
-                    // }}
-                    // value={arrivalDate}
+                    onChange={(e) => {
+                      setArrivalDate(e.target.value);
+                    }}
+                    value={arrivalDate}
                     />
                   </div>
-                  <div>
+                  {/* <div>
                     <label htmlFor="arrivalTime" className="text-black">
                       Arrival Time
                     </label>
@@ -324,7 +352,7 @@ const ParcelPage = () => {
                     // }}
                     // value={arrivalTime}
                     />
-                  </div>
+                  </div> */}
                   <div className="flex items-center justify-center">
                     <button type="button" onClick={handleSubmit} className="py-4 px-10 w-full lg:w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">Submit</button>
                   </div>
@@ -341,8 +369,8 @@ const ParcelPage = () => {
           bigModal={true}
           Content={
             <div className="pt-6">
-              We have received your request to deliver package 12345. Your details provided
-              are being processed! We will send you an email and SMS of package details
+              We have received your request to deliver parcel {parcelID}. Your details provided
+              are being processed! We will send you an email of parcel details
               once approval is completed. Approval takes less than 24 hours
             </div>
           }
