@@ -45,38 +45,38 @@ const Navigation = ({ active }) => {
               className=" w-[50px] height-[50px]"
             />
           </a>
-          <div className="hidden lg:flex gap-10">
+          <div className="hidden lg:flex gap-10 lg:gap-4">
             <a
               href="/"
-              className={`hover:text-blue py-2 ${active === "home" ? "text-blue border-b border-blue" : ""
+              className={`hover:text-blue py-2 lg:px-2 ${active === "home" ? "text-blue border-b border-blue" : ""
                 }`}
             >
               Home
             </a>
             <a
               href="/about-us"
-              className={`hover:text-blue py-2 ${active === "about" ? "text-blue border-b border-blue" : ""
+              className={`hover:text-blue py-2 lg:px-2 ${active === "about" ? "text-blue border-b border-blue" : ""
                 }`}
             >
               about us
             </a>
             <a
               href="/parcel-content"
-              className={`hover:text-blue py-2 ${active === "parcels" ? "text-blue border-b border-blue" : ""
+              className={`hover:text-blue py-2 lg:px-2 ${active === "parcels" ? "text-blue border-b border-blue" : ""
                 }`}
             >
               Parcels
             </a>
             <a
               href="/contact-us"
-              className={`hover:text-blue py-2 ${active === "contact" ? "text-blue border-b border-blue" : ""
+              className={`hover:text-blue py-2 lg:px-2 ${active === "contact" ? "text-blue border-b border-blue" : ""
                 }`}
             >
               contact us
             </a>
             <a
               href="/disclaimer"
-              className={`hover:text-blue py-2 ${active === "disclaimer" ? "text-blue border-b border-blue" : ""
+              className={`hover:text-blue py-2 lg:px-2 ${active === "disclaimer" ? "text-blue border-b border-blue" : ""
                 }`}
             >
               disclaimer

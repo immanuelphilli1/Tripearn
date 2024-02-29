@@ -196,7 +196,7 @@ if (token === undefined || token === null || token === "" || !token) {
       <main>
         <div className="container mx-auto py-6">
           <div className="flex gap-10 justify-between pb-3">
-            <div className="flex flex-col gap-6 lg:gap-10 w-full">
+            <div className="flex flex-col gap-6 lg:gap-10 w-full lg:pr-2">
               <div className="bg-blue w-full rounded-lg">
                 <img alt="landing" src="/img/landing.jpg" className="rounded-lg" />
               </div>
@@ -208,6 +208,7 @@ if (token === undefined || token === null || token === "" || !token) {
                 Have a parcel to send? Connect with a traveler and get it delivered.
                 </div>
                 <div className="flex flex-col md:flex-row gap-4 md:gap-10 pt-10">
+                  <div className="lg:pr-3 w-full">
                   <button
                     onClick={handleCreateParcel}
                     type="button"
@@ -215,6 +216,8 @@ if (token === undefined || token === null || token === "" || !token) {
                   >
                     send parcel
                   </button>
+                  </div>
+                  <div className="lg:pl-3 w-full">
                   <button
                     onClick={(e) => navigate("/parcel-content")}
                     type="button"
@@ -222,10 +225,11 @@ if (token === undefined || token === null || token === "" || !token) {
                   >
                     offer delivery
                   </button>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="w-full hidden rounded-lg bg-purple lg:block">
+            <div className="w-full hidden rounded-lg bg-purple lg:block lg:pl-2">
               <div className="h-full ">
                 <div className="flex flex-col h-full justify-between gap-10">
                   <div className="pt-10 flex items-center justify-center">
