@@ -98,6 +98,22 @@ export const handleOfferDelivery = async (token, departure_date, arrival_date, i
   }
 }
 
+export const handlePayment = async (token, parcel_id, delivery_id) => {
+  
+
+  let paymentENDPOINT = `${Base_url}/payment/create/${parcel_id}/${delivery_id}` // // Replace with environment variables
+
+  try {
+    let result = await fetchData(paymentENDPOINT,'post', {
+      token
+    })
+    // console.log(accountType)
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const handleNumberUpdate = async (token, phone) => {
   // console.log(token)
   // console.log(phone)
@@ -242,12 +258,13 @@ export const fetchData = async (
     // const data = await response.json();
     // console.log(response)
     // console.log("tokennnnnn::::::::",xsrfToken)
-    const { parcel,parcels,data, token, message, user, errors, id } = await response.json()
+    const { parcel,parcels,data, url, token, message, user, errors, id } = await response.json()
     
     if (response.status === 200) {
       // Move response Data to the backend
       finalResponse['success'] = true
       finalResponse['data'] = data === undefined ? parcel || parcels : data
+      finalResponse['url'] = url
       finalResponse['token'] = token
       finalResponse['msg'] = message
       finalResponse['user'] = user
@@ -258,6 +275,7 @@ export const fetchData = async (
 
     finalResponse['success'] = false
     finalResponse['msg'] = message
+    finalResponse['url'] = url
     finalResponse['token'] = token
     finalResponse['data'] = data
     finalResponse['user'] = user

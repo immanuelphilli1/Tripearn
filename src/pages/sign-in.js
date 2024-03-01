@@ -21,7 +21,7 @@ const SignInPage = () => {
     signInForm.current.reportValidity()
   }
   function handleNavigate(){
-    navigate("/profile")
+    navigate(-1)
   }
   function handleSignUp() {
     setLoader(false);
