@@ -114,6 +114,22 @@ export const handlePayment = async (token, parcel_id, delivery_id) => {
   }
 }
 
+export const handlePaymentStatus = async (session_id) => {
+  
+
+  let paymentStatusENDPOINT = `${Base_url}/payment/success` // // Replace with environment variables
+
+  try {
+    let result = await fetchData(paymentStatusENDPOINT,'post', {
+      session_id
+    })
+    // console.log(accountType)
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const handleNumberUpdate = async (token, phone) => {
   // console.log(token)
   // console.log(phone)

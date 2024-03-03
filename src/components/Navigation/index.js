@@ -13,7 +13,11 @@ const Navigation = ({ active }) => {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
     setUser(user)
-    setCheck(token)
+    if (token !== null) {
+      setCheck(token)
+    } else {
+    setCheck(null)
+    }
   }, [])
 
   function handleLogout (){
