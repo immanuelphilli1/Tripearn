@@ -73,6 +73,7 @@ const SignInPage = () => {
               <label htmlFor="email" className="">
                 Email
               </label>
+              <div className=" text-black">
               <input
                 name="email"
                 className={` border text-black focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
@@ -83,6 +84,7 @@ const SignInPage = () => {
                 }}
                 value={email}
               />
+            </div>
             </div>
             <div>
               <label htmlFor="password" className="">
