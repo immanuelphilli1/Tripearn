@@ -94,7 +94,7 @@ setLoader(true)
                       name="firstName"
                       className={` border text-black focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
                       type="text"
-                      requipurple
+                      required
                       onChange={(e) => {
                         setFirstName(e.target.value);
                       }}
@@ -109,7 +109,7 @@ setLoader(true)
                       name="lastName"
                       className={` border text-black focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
                       type="text"
-                      requipurple
+                      required
                       onChange={(e) => {
                         setLastName(e.target.value);
                       }}
@@ -124,7 +124,7 @@ setLoader(true)
                       name="email"
                       className={` border text-black focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
                       type="email"
-                      requipurple
+                      required
                       onChange={(e) => {
                         setEmail(e.target.value);
                       }}
@@ -135,7 +135,7 @@ setLoader(true)
                     <label htmlFor="country" className="text-white">
                       Country
                     </label>
-                    <select name="country" placeholder="country" className={` border focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`} type="text" requipurple onChange={(e) => {
+                    <select name="country" placeholder="country" className={` border focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`} type="text" required onChange={(e) => {
                       setCountry(e.target.value);
                     }}
                       value={country}>
@@ -155,7 +155,7 @@ setLoader(true)
                       name="phone"
                       className={` border text-black focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
                       type="t"
-                      requipurple
+                      required
                       onChange={(e) => {
                         setPhone(e.target.value);
                       }}
@@ -171,7 +171,7 @@ setLoader(true)
                       name="password"
                       className={`w-full p-4 rounded-lg outline-none appearance-none`}
                       type={toggler ? "text" : "password"}
-                      requipurple
+                      required
                       placeholder="Xxxxx$"
                       title="Password must contain a Symbol (eg. $), Capital letter (eg. A), a small letter (eg. a), and not less than 6 characters."
                       minLength={6}
@@ -193,7 +193,7 @@ setLoader(true)
                       name="confirmPassword"
                       className={`w-full p-4 rounded-lg outline-none appearance-none`}
                       type={togglerC ? "text" : "password"}
-                      requipurple
+                      required
                       title="Confirm Password must match Password above"
                       minLength={6}
                       onChange={(e) => {
@@ -206,7 +206,7 @@ setLoader(true)
                      <small className="text-purple">Confirm Password must match Password above</small>
                   </div>
                   <div className=" md:col-span-2">
-                    Do you already have an account? <button type="button" onClick={handleSignIn} className="text-purple">Sign In</button>
+                    Do you already have an account? <button type="button" onClick={handleSignIn} className="text-purple hover:underline">Sign In</button>
                   </div>
                   <div className="flex items-center justify-center md:col-span-2">
                     <button disabled={loading === true} type="submit" className="text-black py-4 px-10 w-full md:w-1/2  disabled:text-white disabled:hover:bg-green rounded-lg  bg-green hover:bg-light_green font-bold">

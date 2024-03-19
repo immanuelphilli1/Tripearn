@@ -28,7 +28,7 @@ const Navigation = ({ active }) => {
     //   const targetURL = 'https://parcelra.com';
     
     //   if (window.location.href === targetURL) {
-        window.location.reload()
+        window.location.href=('/sign-in')
     //   } else {
         // navigate("/")
       // }

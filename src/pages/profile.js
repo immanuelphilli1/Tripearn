@@ -5,23 +5,28 @@ import ProfileCard from "../components/Card/profileCard"
 import Modal from "../components/Modal"
 import { useEffect } from "react"
 import { navigate } from "gatsby"
-import { getAllCountries, getCountriesCodes, handleGetDetails, handleGetProfile, handleNumberUpdate } from "../services/services"
+import { getAllCountries, getCountriesCodes, handleGetDetails, handleGetProfile, handleNumberUpdate, handleGetDelivery } from "../services/services"
 import { Toaster, toast } from "sonner"
+import Loader from "../components/Modal/loader"
 
 const ProfilePage = () => {
   const [filter, setFilter] = useState("all")
   const [showUpdate, setShowUpdate] = useState(false);
   const [showAcceptParcel, setShowAcceptParcel] = useState(false);
   const [showParcelDetails, setShowParcelDetails] = useState(false);
+  const [showActiveStats, setShowActiveStats] = useState(false);
   const [fromCountry, setFromCountry] = useState("")
   const [phoneCode, setPhoneCode] = useState("")
+  const [activeTab, setActiveTab] = useState("parcels")
   const [loading, setLoader] = useState(false);
+  const [fullLoader, setFullLoader] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("")
   const [fromCountryData, setFromCountryData] = useState(null)
   const [showParcelSubmit, setShowParcelSubmit] = useState(false);
   const [profileUserData, setProfileUserData] = useState([])
   const [countryData, setCountryData] = useState([])
   const [profileParcelData, setProfileParcelData] = useState([])
+  const [deliveryData, setDeliveryData] = useState([])
   const [data, setData] = useState([]);
   const token = typeof window !== "undefined" && localStorage.getItem('token');
 
@@ -79,15 +84,24 @@ handleNumberUpdate(token, mobileNumber).then(update => {
 })
   }
 
+  function handleActiveTabParcels() {
+    setActiveTab("parcels");
+  }
+  function handleActiveTabDeliveries() {
+    setActiveTab("deliveries");
+  }
+
   function handleSubmit() {
     setShowParcelSubmit(true);
     setShowAcceptParcel(false);
     setShowParcelDetails(false);
+    setShowActiveStats(false);
   }
   function handleAcceptParcel() {
     setShowAcceptParcel(true);
     setShowParcelSubmit(false);
     setShowParcelDetails(false);
+    setShowActiveStats(false);
   }
   function handleParcelDetails(id) {
     // console.log("yesssssss",id)
@@ -99,6 +113,24 @@ handleNumberUpdate(token, mobileNumber).then(update => {
       // console.log("response : ",res)
       setData(res.data)
     setShowParcelDetails(true);
+    setShowParcelSubmit(false);
+    setShowAcceptParcel(false);
+    setShowActiveStats(false);
+  })
+}
+  }
+
+  function handleActiveStatus(id) {
+    // console.log("yesssssss",id)
+    if (token === undefined || token === null || token === "" || !token) {
+      navigate("/sign-in")
+
+    } else {
+    handleGetDetails(id).then((res) => {
+      // console.log("response : ",res)
+      setData(res.data)
+      setShowActiveStats(true);
+    setShowParcelDetails(false);
     setShowParcelSubmit(false);
     setShowAcceptParcel(false);
   })
@@ -113,6 +145,7 @@ handleNumberUpdate(token, mobileNumber).then(update => {
     setShowParcelSubmit(false);
     setShowAcceptParcel(false);
     setShowParcelDetails(false);
+    setShowActiveStats(false)
   }
 
   useEffect(() => {
@@ -127,6 +160,15 @@ handleNumberUpdate(token, mobileNumber).then(update => {
       // console.log("response profile::::::::", res.data) 
       setProfileUserData(res.user)
       setProfileParcelData(res.data)
+    })
+  }, []);
+  useEffect(() => {
+    handleGetDelivery(token).then(res => {
+      if (res.success) {
+        setFullLoader(false)
+      }
+      console.log("response delivery::::::::", res.data.data) 
+      setDeliveryData(res.data.data)
     })
   }, []);
 
@@ -152,8 +194,14 @@ handleNumberUpdate(token, mobileNumber).then(update => {
               </div>
             </div>
           </div>
-          <div className="py-10">
-            <div className="uppercase text-2xl md:text-4xl font-bold text-center">parcel activity</div>
+          <div className="uppercase pt-10 text-2xl md:text-4xl font-bold text-center">parcel activity</div>
+          {!fullLoader && <div>
+          <div className="pb-10">
+            
+            <div className="py-10 flex items-center justify-center gap-5">
+              <button onClick={handleActiveTabParcels} className={`border-2 rounded-full px-6 py-1 text-lg  ${activeTab === "parcels" ? "bg-blue":"hover:bg-white hover:text-black bg-transparent"} `}>Parcels</button>
+              <button onClick={handleActiveTabDeliveries} className={`border-2 rounded-full px-6 py-1 text-lg  ${activeTab === "deliveries" ? "bg-blue":"hover:bg-white hover:text-black bg-transparent"} `}>Deliveries</button>
+            </div>
             <div className="flex gap-4 pt-10 items-center justify-end">
               <div className="">Filter</div>
               <div className="w-full md:w-1/3">
@@ -161,13 +209,14 @@ handleNumberUpdate(token, mobileNumber).then(update => {
                   <option value="all">All</option>
                   <option value="pending">Pending</option>
                   <option value="active">Active</option>
-                  <option value="awaiting payment">Awaiting Payment</option>
                   <option value="inactive">Inactive</option>
                   <option value="closed">Closed</option>
                 </select>
               </div>
             </div>
           </div>
+          {activeTab === "parcels" && 
+          <div>
           {filter === "all" && profileParcelData.length > 0 ? (
           <div className="py-10 grid grid-cols-1 gap-10 ">
           {profileParcelData.map((profile, key) => (
@@ -180,10 +229,11 @@ handleNumberUpdate(token, mobileNumber).then(update => {
                 status={profile.status}
                 id={profile.id}
                 packageID={profile.id}
+                handleActiveStatus={(e) => handleActiveStatus(profile.id)}
             handleDetails={(e) => handleParcelDetails(profile.id)}  />
             ))}
           </div>
-):  filter === "all" && profileParcelData.length < 0 ?(<div className="flex justify-center items-center md:text-xl"> No Parcels available for you! 😢</div>) : null}
+):  (filter === "all" && profileParcelData.length < 0 ) || filter === "all" && profileParcelData.length !=="" ?(<div className="flex justify-center items-center md:text-xl"> No Parcels available for you! 😢</div>) : null}
 
 { filter === "pending" && profileParcelData.filter((profile) => profile.status === "pending")
         .length > 0 ? (
@@ -227,7 +277,7 @@ handleNumberUpdate(token, mobileNumber).then(update => {
 !=="") ?(<div className="flex justify-center items-center md:text-xl"> No active Parcels available for you! 😢</div>) : null}
 
 
-{ filter === "awaiting payment" && profileParcelData.filter((profile) => profile.status === "awaiting payment")
+{/* { filter === "awaiting payment" && profileParcelData.filter((profile) => profile.status === "awaiting payment")
         .length > 0 ? (
   <div className="py-10 grid grid-cols-1 gap-10 ">
   {profileParcelData.filter(profile => profile.status === "awaiting payment").map((profile, key) => (
@@ -245,7 +295,7 @@ handleNumberUpdate(token, mobileNumber).then(update => {
   </div>
 ) : (filter === "awaiting payment" && profileParcelData.filter((profile) => profile.status === "awaiting payment")
 .length < 0 ) || (filter === "awaiting payment" && profileParcelData.filter((profile) => profile.status === "awaiting payment")
-!=="") ?(<div className="flex justify-center items-center md:text-xl"> No Parcels awaiting payments available for you! 😢</div>) : null}
+!=="") ?(<div className="flex justify-center items-center md:text-xl"> No Parcels awaiting payments available for you! 😢</div>) : null} */}
 
 
 { filter === "inactive" && profileParcelData.filter((profile) => profile.status === "inactive")
@@ -288,6 +338,120 @@ handleNumberUpdate(token, mobileNumber).then(update => {
 ) : (filter === "closed" && profileParcelData.filter((profile) => profile.status === "closed")
 .length < 0 ) || (filter === "closed" && profileParcelData.filter((profile) => profile.status === "closed")
 !=="") ?(<div className="flex justify-center items-center md:text-xl"> No Closed Parcels available for you! 😢</div>) : null}
+        </div>
+}
+{activeTab === "deliveries" && 
+          <div>
+          {filter === "all" && deliveryData.length > 0 ? (
+          <div className="py-10 grid grid-cols-1 gap-10 ">
+          {deliveryData.map((profile, key) => (
+            <ProfileCard 
+            cardStyle="bg-white text-light_black"
+            key={key}
+            arrival={profile.parcel.arrival_addr} 
+            date={profile.arrival_date}
+                departure={profile.parcel.departure_addr}
+                price={profile.parcel.price}
+                status={profile.status}
+                id={profile.id}
+                packageID={profile.parcel.id}
+            handleDetails={(e) => handleParcelDetails(profile.parcel.id)}  />
+            ))}
+          </div>
+):  (filter === "all" && deliveryData.length < 0 ) || filter === "all" && deliveryData.length !=="" ?(<div className="flex justify-center items-center md:text-xl"> No Parcel Delivery available for you! 😢</div>) : null}
+
+{ filter === "pending" && deliveryData.filter((profile) => profile.status === "pending")
+        .length > 0 ? (
+  <div className="py-10 grid grid-cols-1 gap-10 ">
+  {deliveryData.filter(profile => profile.status === "pending").map((profile, key) => (
+    <ProfileCard 
+    cardStyle="bg-white text-light_black"
+    key={key}
+    arrival={profile.parcel.arrival_addr} 
+    date={profile.arrival_date}
+        departure={profile.parcel.departure_addr}
+        price={profile.parcel.price}
+        status={profile.status}
+        id={profile.id}
+        packageID={profile.parcel.id}
+    handleDetails={(e) => handleParcelDetails(profile.parcel.id)}  />
+    ))}
+  </div>
+) : (filter === "pending" && deliveryData.filter((profile) => profile.status === "pending")
+.length < 0 ) || (filter === "pending" && deliveryData.filter((profile) => profile.status === "pending")
+!=="") ?(<div className="flex justify-center items-center md:text-xl"> No Pending Parcel Delivery available for you! 😢</div>) : null}
+
+
+{ filter === "active" && deliveryData.filter((profile) => profile.status === "active")
+        .length > 0 ? (
+  <div className="py-10 grid grid-cols-1 gap-10 ">
+  {deliveryData.filter(profile => profile.status === "active").map((profile, key) => (
+    <ProfileCard 
+    cardStyle="bg-white text-light_black"
+    key={key}
+    arrival={profile.parcel.arrival_addr} 
+    date={profile.arrival_date}
+        departure={profile.parcel.departure_addr}
+        price={profile.parcel.price}
+        status={profile.status}
+        id={profile.id}
+        packageID={profile.parcel.id}
+    handleDetails={(e) => handleParcelDetails(profile.parcel.id)}  />
+    ))}
+  </div>
+) : (filter === "active" && deliveryData.filter((profile) => profile.status === "active")
+.length < 0 ) || (filter === "active" && deliveryData.filter((profile) => profile.status === "active")
+!=="") ?(<div className="flex justify-center items-center md:text-xl"> No active Parcel Delivery available for you! 😢</div>) : null}
+
+
+{ filter === "inactive" && deliveryData.filter((profile) => profile.status === "inactive")
+        .length > 0 ? (
+  <div className="py-10 grid grid-cols-1 gap-10 ">
+  {deliveryData.filter(profile => profile.status === "inactive").map((profile, key) => (
+    <ProfileCard 
+    cardStyle="bg-white text-light_black"
+    key={key}
+    arrival={profile.parcel.arrival_addr} 
+    date={profile.arrival_date}
+        departure={profile.parcel.departure_addr}
+        price={profile.parcel.price}
+        status={profile.status}
+        id={profile.id}
+        packageID={profile.parcel.id}
+    handleDetails={(e) => handleParcelDetails(profile.parcel.id)}  />
+    ))}
+  </div>
+) : (filter === "inactive" && deliveryData.filter((profile) => profile.status === "inactive")
+.length < 0 ) || (filter === "inactive" && deliveryData.filter((profile) => profile.status === "inactive")
+!=="") ?(<div className="flex justify-center items-center md:text-xl"> No Inactive Parcel Delivery available for you! 😢</div>) : null}
+
+
+{ filter === "closed" && deliveryData.filter((profile) => profile.status === "closed")
+        .length > 0 ? (
+  <div className="py-10 grid grid-cols-1 gap-10 ">
+  {deliveryData.filter(profile => profile.status === "closed").map((profile, key) => (
+    <ProfileCard 
+    cardStyle="bg-white text-light_black"
+    key={key}
+    arrival={profile.parcel.arrival_addr} 
+    date={profile.arrival_date}
+        departure={profile.parcel.departure_addr}
+        price={profile.parcel.price}
+        status={profile.status}
+        id={profile.id}
+        packageID={profile.parcel.id}
+    handleDetails={(e) => handleParcelDetails(profile.parcel.id)}  />
+    ))}
+  </div>
+) : (filter === "closed" && deliveryData.filter((profile) => profile.status === "closed")
+.length < 0 ) || (filter === "closed" && deliveryData.filter((profile) => profile.status === "closed")
+!=="") ?(<div className="flex justify-center items-center md:text-xl"> No Closed Parcel Delivery available for you! 😢</div>) : null}
+        </div>
+}</div>}
+        </div>
+        <div className="flex justify-center items-center pt-10">
+        {fullLoader && <Loader clasStyle="w-20 h-20 text-blue" />}
+        {loading && <Loader clasStyle="w-10 h-10" />}
         </div>
       </main>
       {showUpdate && (
@@ -361,7 +525,7 @@ handleNumberUpdate(token, mobileNumber).then(update => {
                 <div>Destination: <span className="font-bold">{data.arrival_addr}</span></div>
                   <div>Primary Location: <span className="font-bold">{data.departure_addr}</span></div>
                   <div>Required Delivery Date: <span className="font-bold">{data.arrival_date}</span></div>
-                  <div>Package Size: <span className="font-bold">{data.weight}</span></div>
+                  <div>Package Size: <span className="font-bold">{data.weight}KG</span></div>
                   <div>Package Type: <span className="font-bold">{data.size}</span></div>
                   <div>Amount: <span className="font-bold">$ {data.price}</span></div>
                 </div>
@@ -468,6 +632,22 @@ handleNumberUpdate(token, mobileNumber).then(update => {
               We have received your request to redeem your funds. Your details provided 
 are being processed! We will send you an email and SMS of successful 
 payment once approval is completed. Approval takes less than 72 hours 
+            </div>
+          }
+        />
+      )}
+      {showActiveStats && (
+        <Modal 
+          Title={"Parcel Confirmation"}
+          handleClose={handleClose}
+          bigModal={true}
+          Content={
+            <div className="pt-6">
+              <div className="text-lg">Kindly confirm if the parcel PD1020000{data.id}  has been delivered?</div>
+              <div className="flex gap-4 pt-6 justify-center items-center">
+                <div><button type="button" className=" py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">Yes, parcel delivered</button></div>
+                <div><button type="button" className=" py-3 px-6 w-full rounded-lg text-white bg-red hover:bg-opacity-70 font-bold">No, parcel not delivered</button></div>
+              </div>
             </div>
           }
         />

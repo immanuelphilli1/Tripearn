@@ -369,7 +369,7 @@ const ParcelPage = () => {
           bigModal={true}
           Content={
             <div className="pt-6">
-              We have received your request to deliver parcel {parcelID}. Your details provided
+              We have received your request to deliver parcel PD1020000{parcelID}. Your details provided
               are being processed! We will send you an email of parcel details
               once approval is completed. Approval takes less than 24 hours
             </div>

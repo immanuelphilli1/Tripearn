@@ -20,12 +20,21 @@ const SignInPage = () => {
   function signInValidate() {
     signInForm.current.reportValidity()
   }
+  function handleProfileNavigate() {
+    navigate('/profile')
+  }
   function handleNavigate() {
-    navigate(-1)
+    navigate(-1, { replace: true })
   }
   function handleSignUp() {
     setLoader(false);
     navigate('/sign-up')
+    setEmail("")
+    setPassword("")
+  }
+  function handleReset() {
+    setLoader(false);
+    navigate('/reset-password')
     setEmail("")
     setPassword("")
   }
@@ -34,6 +43,8 @@ const SignInPage = () => {
   }
   function handleSignInSubmit(e) {
     e.preventDefault()
+    const previousPage = document.referrer;
+    console.log(previousPage)
     signInValidate()
     if (signInValidate !== "") {
       setLoader(true)
@@ -42,13 +53,19 @@ const SignInPage = () => {
         if (res.success === false) {
           Object.keys(res.errors).forEach(key => {
             res.errors[key].forEach(error => {
-              toast.error(error, { duration: 25000 });
+              toast.error(error, { duration: 25000, position: 'top-right' });
             });
           });
           setLoader(false)
         } else if (res.success === true) {
-          toast.success("Login Successful!", { duration: 5000, position: 'top-right', })
+          if (previousPage.includes("/restore") || previousPage.includes("/sign-in")) {
+          setTimeout(() => { handleProfileNavigate() }, 5000)
+        } else if(previousPage.includes("/payments")) {
           setTimeout(() => { handleNavigate() }, 5000)
+        } else {
+          setTimeout(() => { handleNavigate() }, 5000)
+        }
+        toast.success("Login Successful!", { duration: 5000, position: 'top-right', })
           // if (typeof localStorage !== undefined) {
           localStorage.setItem('token', res.token);
           localStorage.setItem('user', res.user.name);
@@ -78,7 +95,7 @@ const SignInPage = () => {
                 name="email"
                 className={` border text-black focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
                 type="email"
-                requipurple
+                required
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
@@ -95,7 +112,7 @@ const SignInPage = () => {
                   name="password"
                   className={`w-full p-4 rounded-lg outline-none appearance-none`}
                   type={toggler ? "text" : "password"}
-                  requipurple
+                  required
                   placeholder="Xxxxx$"
                   title="Password must contain a Symbol (eg. $), Capital letter (eg. A), a small letter (eg. a), and not less than 6 characters."
                   minLength={6}
@@ -109,7 +126,10 @@ const SignInPage = () => {
               <small className="text-purple pr-6 ">Password must contain a Symbol (eg. $), Capital letter (eg. A), a small letter (eg. a)</small>
             </div>
             <div className="">
-              Do you not have an account?  <button type="button" onClick={handleSignUp} className="text-purple">Sign Up</button>
+              Have you forgotten your password?  <button type="button" onClick={handleReset} className="text-purple hover:underline">Reset Now</button>
+            </div>
+            <div className="">
+              Do you not have an account?  <button type="button" onClick={handleSignUp} className="text-purple hover:underline">Sign Up</button>
             </div>
             <div className="flex items-center justify-center">
               <button disabled={loading === true} type="submit" className="py-4 px-10 w-full disabled:text-white disabled:hover:bg-green lg:w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">
