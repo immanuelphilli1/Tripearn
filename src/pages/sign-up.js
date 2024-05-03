@@ -23,6 +23,7 @@ const SignUpPage = () => {
   const [loading, setLoader] = useState(false);
   const [toggler, setToggler] = useState(false);
   const [togglerC, setTogglerC] = useState(false);
+  const [tnc, setTnc] = useState(false);
 
   useEffect(() => {
     getAllCountries().then(countries => {
@@ -204,6 +205,24 @@ setLoader(true)
                     <button type="button" onClick={handleCToggler} className="flex items-center justify-center px-2">{togglerC ? (<Eye size={32} />):(<EyeClosed size={32} />)}</button>
                     </div>
                      <small className="text-purple">Confirm Password must match Password above</small>
+                  </div>
+                  <div className=" md:col-span-2">
+                    <div className="flex">
+                  <input
+                      name="confirmPassword"
+                      className={` p-4 cursor-pointer`}
+                      type="checkbox"
+                      required
+                      checked={tnc}
+                      onChange={(e) => {
+                        setTnc(e.target.value);
+                      }}
+                      value={tnc}
+                    />
+                    <span className="pl-2">I have read the</span>
+                    <a href="/disclaimer" className="px-2 text-purple hover:underline"> Disclaimer{" "} </a>
+                    <span> {" "}and I agree to continue with the service</span>
+                  </div>
                   </div>
                   <div className=" md:col-span-2">
                     Do you already have an account? <button type="button" onClick={handleSignIn} className="text-purple hover:underline">Sign In</button>

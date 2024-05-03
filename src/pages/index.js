@@ -198,7 +198,7 @@ if (token === undefined || token === null || token === "" || !token) {
           <div className="flex gap-10 justify-between pb-3">
             <div className="flex flex-col gap-6 lg:gap-10 w-full lg:pr-2">
               <div className="bg-blue w-full rounded-lg">
-                <img alt="landing" src="/img/landing.jpg" className="rounded-lg" />
+                <img alt="landing" src="/img/landing.webp" className="rounded-lg" />
               </div>
               <div>
                 <div className="uppercase font-bold text-5xl md:text-[92px] lg:pt-4">
@@ -246,7 +246,7 @@ if (token === undefined || token === null || token === "" || !token) {
               </div>
               <div className="absolute top-1/2 bottom-0 left-1/2 -translate-y-1/2">
                 <div className="flex justify-center items-center">
-                  <img src="/img/plane.png" alt="plane" className="w-[800px]" />
+                  <img src="/img/plane.webp" alt="plane" className="w-[800px]" />
                 </div>
               </div>
             </div>

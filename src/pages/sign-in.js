@@ -58,12 +58,12 @@ const SignInPage = () => {
           });
           setLoader(false)
         } else if (res.success === true) {
-          if (previousPage.includes("/restore") || previousPage.includes("/sign-in")) {
+          if (previousPage.includes("/restore") || previousPage.includes("/sign-in") || previousPage.includes("/sign-in/")) {
           setTimeout(() => { handleProfileNavigate() }, 5000)
         } else if(previousPage.includes("/payments")) {
           setTimeout(() => { handleNavigate() }, 5000)
         } else {
-          setTimeout(() => { handleNavigate() }, 5000)
+          setTimeout(() => { handleProfileNavigate() }, 5000)
         }
         toast.success("Login Successful!", { duration: 5000, position: 'top-right', })
           // if (typeof localStorage !== undefined) {

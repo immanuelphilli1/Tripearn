@@ -11,7 +11,7 @@ const AboutUsPage = () => {
               <div className="bg-purple w-full min-h-[350px] rounded-lg p-10 flex flex-col justify-between  gap-10">
                 <div />
                 <div className="uppercase text-2xl md:text-5xl font-bold text-center self-center">Disclaimer</div>
-                <div className="">Last updated: January 15, 2020</div>
+                <div className="">Last updated: January 15, 2024</div>
               </div>
             </div>
           </div>
@@ -21,7 +21,7 @@ const AboutUsPage = () => {
             <div className=" py-2 ">The words of which the initial letter is capitalized have meanings defined under the following conditions.</div>
             <div className=" py-2">The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</div>
             <div className=" text-2xl text-blue py-4 font-bold">Definitions</div>
-            <div className=" py-2 ">Company (referred to as either "the Company", "We", "Us" or "Our" in this Cookies Policy) refers to Parcelra.coporation, Russia Saratov Begovaya 22.</div>
+            <div className=" py-2 ">Company (referred to as either "the Company", "We", "Us" or "Our" in this Cookies Policy) refers to Parcelra.com.</div>
             <div className=" py-2 ">You means the individual accessing the Service, or the company, or other legal entity on behalf of which such individual is accessing or using the Service, as applicable.</div>
             <div className=" py-2 ">Website refers to https://parcelra.ru/ (Parcelra ).</div>
             <div className=" py-2 ">Service refers to the Website.</div>
@@ -68,7 +68,7 @@ const AboutUsPage = () => {
             <div className=" text-2xl text-blue py-4 font-bold">Contact Information</div>
             <div className=" py-2">If you have any questions or concerns regarding this disclaimer, please contact us at</div>
             <div className=" py-2">By email: Parcelracompany@gmail.com</div>
-            <div className=" py-2">By phone number: +233 50 639 77 46</div>
+            <div className=" py-2">By phone number: +447361587707</div>
           </div>
         </div>
       </main>

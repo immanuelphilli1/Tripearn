@@ -5,9 +5,10 @@ import ProfileCard from "../components/Card/profileCard"
 import Modal from "../components/Modal"
 import { useEffect } from "react"
 import { navigate } from "gatsby"
-import { getAllCountries, getCountriesCodes, handleGetDetails, handleGetProfile, handleNumberUpdate, handleGetDelivery } from "../services/services"
+import { getAllCountries, getCountriesCodes, handleGetDetails, handleGetProfile, handleNumberUpdate, handleGetDelivery, handleReceiptConfirmSender, handleReceiptConfirmTraveler } from "../services/services"
 import { Toaster, toast } from "sonner"
 import Loader from "../components/Modal/loader"
+import StarRating from "../components/starRating"
 
 const ProfilePage = () => {
   const [filter, setFilter] = useState("all")
@@ -19,6 +20,9 @@ const ProfilePage = () => {
   const [phoneCode, setPhoneCode] = useState("")
   const [activeTab, setActiveTab] = useState("parcels")
   const [loading, setLoader] = useState(false);
+  const [showSuccessfulDelivery, setShowSuccessfulDelivery] = useState(false)
+  const [showSuccessfulTransitDelivery, setShowSuccessfulTransitDelivery] = useState(false)
+  const [showFailedDelivery, setShowFailedDelivery] = useState(false)
   const [fullLoader, setFullLoader] = useState(true);
   const [phoneNumber, setPhoneNumber] = useState("")
   const [fromCountryData, setFromCountryData] = useState(null)
@@ -146,6 +150,67 @@ handleNumberUpdate(token, mobileNumber).then(update => {
     setShowAcceptParcel(false);
     setShowParcelDetails(false);
     setShowActiveStats(false)
+    setShowFailedDelivery(false);
+    setShowSuccessfulDelivery(false);
+    setShowSuccessfulTransitDelivery(false);
+  }
+  function handleSuccessfulDelivery(e) {
+    if(data.status === "active") {
+      handleReceiptConfirmSender(token, data.id).then(update => {
+        console.log("update status receipt yes::::::::", update)
+        if (update.success === false) {
+          Object.keys(update.errors).forEach(key => {
+            update.errors[key].forEach(error => {
+              toast.error(error, { duration: 5000 });
+            });
+          });
+          setLoader(false)
+        } else if (update.success === true ) {
+          setShowSuccessfulDelivery(true);
+    setShowSuccessfulTransitDelivery(false)
+          setLoader(false)
+        } else {
+          toast.error("We are having technical issues, check back in a while", { duration: 5000 })
+          setLoader(false)
+        }
+      })
+    
+    } else {
+      handleReceiptConfirmTraveler(token, data.id).then(update => {
+        console.log("update status receipt yes::::::::", update)
+        if (update.success === false) {
+          Object.keys(update.errors).forEach(key => {
+            update.errors[key].forEach(error => {
+              toast.error(error, { duration: 5000 });
+            });
+          });
+          setLoader(false)
+        } else if (update.success === true ) {
+          setShowSuccessfulTransitDelivery(true);
+      setShowSuccessfulDelivery(false);
+          setLoader(false)
+        } else {
+          toast.error("We are having technical issues, check back in a while", { duration: 5000 })
+          setLoader(false)
+        }
+      })
+      
+    }
+    setShowFailedDelivery(false);
+    setShowUpdate(false);
+    setShowParcelSubmit(false);
+    setShowAcceptParcel(false);
+    setShowParcelDetails(false);
+    setShowActiveStats(false)
+  }
+  function handleFailedDelivery() {
+    setShowFailedDelivery(true);
+    setShowSuccessfulDelivery(false);
+    setShowUpdate(false);
+    setShowParcelSubmit(false);
+    setShowAcceptParcel(false);
+    setShowParcelDetails(false);
+    setShowActiveStats(false)
   }
 
   useEffect(() => {
@@ -208,7 +273,7 @@ handleNumberUpdate(token, mobileNumber).then(update => {
                 <select name="filter" placeholder="Filter" className={` border bg-white  text-black mt-1 p-4 rounded-lg focus:outline-none w-full border-white`} type="text" required onChange={e => { setFilter(e.target.value) }} value={filter}>
                   <option value="all">All</option>
                   <option value="pending">Pending</option>
-                  <option value="active">Active</option>
+                  <option value={activeTab === "parcels" ? "active" : "transit"}>{activeTab === "parcels" ? "Active" : "Transit"}</option>
                   <option value="inactive">Inactive</option>
                   <option value="closed">Closed</option>
                 </select>
@@ -269,6 +334,7 @@ handleNumberUpdate(token, mobileNumber).then(update => {
         status={profile.status}
         id={profile.id}
         packageID={profile.id}
+        handleActiveStatus={(e) => handleActiveStatus(profile.id)}
     handleDetails={(e) => handleParcelDetails(profile.id)}  />
     ))}
   </div>
@@ -355,6 +421,7 @@ handleNumberUpdate(token, mobileNumber).then(update => {
                 status={profile.status}
                 id={profile.id}
                 packageID={profile.parcel.id}
+                handleActiveStatus={(e) => handleActiveStatus(profile.id)}
             handleDetails={(e) => handleParcelDetails(profile.parcel.id)}  />
             ))}
           </div>
@@ -381,6 +448,27 @@ handleNumberUpdate(token, mobileNumber).then(update => {
 .length < 0 ) || (filter === "pending" && deliveryData.filter((profile) => profile.status === "pending")
 !=="") ?(<div className="flex justify-center items-center md:text-xl"> No Pending Parcel Delivery available for you! 😢</div>) : null}
 
+{ filter === "transit" && deliveryData.filter((profile) => profile.status === "transit")
+        .length > 0 ? (
+  <div className="py-10 grid grid-cols-1 gap-10 ">
+  {deliveryData.filter(profile => profile.status === "transit").map((profile, key) => (
+    <ProfileCard 
+    cardStyle="bg-white text-light_black"
+    key={key}
+    arrival={profile.parcel.arrival_addr} 
+    date={profile.arrival_date}
+        departure={profile.parcel.departure_addr}
+        price={profile.parcel.price}
+        status={profile.status}
+        id={profile.id}
+        packageID={profile.parcel.id}
+        handleActiveStatus={(e) => handleActiveStatus(profile.id)}
+    handleDetails={(e) => handleParcelDetails(profile.parcel.id)}  />
+    ))}
+  </div>
+) : (filter === "transit" && deliveryData.filter((profile) => profile.status === "transit")
+.length < 0 ) || (filter === "transit" && deliveryData.filter((profile) => profile.status === "transit")
+!=="") ?(<div className="flex justify-center items-center md:text-xl"> No Parcel in transit for you! 😢</div>) : null}
 
 { filter === "active" && deliveryData.filter((profile) => profile.status === "active")
         .length > 0 ? (
@@ -396,6 +484,7 @@ handleNumberUpdate(token, mobileNumber).then(update => {
         status={profile.status}
         id={profile.id}
         packageID={profile.parcel.id}
+        handleActiveStatus={(e) => handleActiveStatus(profile.id)}
     handleDetails={(e) => handleParcelDetails(profile.parcel.id)}  />
     ))}
   </div>
@@ -645,9 +734,46 @@ payment once approval is completed. Approval takes less than 72 hours
             <div className="pt-6">
               <div className="text-lg">Kindly confirm if the parcel PD1020000{data.id}  has been delivered?</div>
               <div className="flex gap-4 pt-6 justify-center items-center">
-                <div><button type="button" className=" py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">Yes, parcel delivered</button></div>
-                <div><button type="button" className=" py-3 px-6 w-full rounded-lg text-white bg-red hover:bg-opacity-70 font-bold">No, parcel not delivered</button></div>
+                <div><button onClick={(e) => handleSuccessfulDelivery(data.status, data.id)} type="button" className=" py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">Yes, parcel delivered</button></div>
+                <div><button onClick={handleFailedDelivery} type="button" className=" py-3 px-6 w-full rounded-lg text-white bg-red hover:bg-opacity-70 font-bold">No, parcel not delivered</button></div>
               </div>
+            </div>
+          }
+        />
+      )}
+      {showSuccessfulDelivery && (
+        <Modal
+          Title={"Thank You"}
+          handleClose={handleClose}
+          bigModal={true}
+          Content={
+            <div className="pt-6">
+              Thank you for using <span className="text-blue">parcelra.com</span>. Please rate your experience with us.
+              <div><StarRating /></div>
+            </div>
+          }
+        />
+      )}
+      {showFailedDelivery && (
+        <Modal
+          Title={"Thank You"}
+          handleClose={handleClose}
+          bigModal={true}
+          Content={
+            <div className="pt-6">
+              Thank you for using <span className="text-blue">parcelra.com</span>. Please we will reach out to know the current status of the parcel. Thank you for the feedback!
+            </div>
+          }
+        />
+      )}
+      {showSuccessfulTransitDelivery && (
+        <Modal
+          Title={"Thank You"}
+          handleClose={handleClose}
+          bigModal={true}
+          Content={
+            <div className="pt-6">
+              Thank you for delivering parcel PD1020000{data.id}. We are awaiting confirmation, which typically takes less than 24 hours. Once confirmed, we will send you an email to proceed with payment.
             </div>
           }
         />

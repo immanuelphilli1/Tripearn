@@ -25,7 +25,7 @@ const ContactUsPage = () => {
                 <div>
                   <div className=" text-2xl text-blue py-4 font-bold">Get In touch</div>
                   <div className=" ">Contact us in any way convenient for you</div>
-                  <div className="  font-bold text-green">+44 079 56659635</div>
+                  <div className="  font-bold text-green">+447361587707</div>
                 </div>
                 <div>
                   <div className=" text-2xl text-blue py-4 font-bold">Address</div>

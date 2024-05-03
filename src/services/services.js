@@ -179,6 +179,38 @@ export const handleNumberUpdate = async (token, phone) => {
   }
 }
 
+export const handleReceiptConfirmSender = async (token, id) => {
+  // console.log(token)
+  // console.log(phone)
+  let updateENDPOINT = `${Base_url}/parcel/${id}/delivery/confirm` // // Replace with environment variables
+
+  try {
+    let result = await fetchData(updateENDPOINT,'put', {
+      token
+    })
+    // console.log(accountType)
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const handleReceiptConfirmTraveler = async (token, id) => {
+  // console.log(token)
+  // console.log(phone)
+  let updateENDPOINT = `${Base_url}/delivery/${id}/confirm` // // Replace with environment variables
+
+  try {
+    let result = await fetchData(updateENDPOINT,'put', {
+      token
+    })
+    // console.log(accountType)
+    return result
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 
 export const handleGetDetails = async (id) => {
 
