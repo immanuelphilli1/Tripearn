@@ -44,7 +44,7 @@ const IndexPage = () => {
   function handleCreateParcel() {
     setShowCreateParcel(true);
   }
-// from handle Change
+  // from handle Change
   function handleFromChange(event) {
     event.preventDefault()
     setFromCountry(event.target.value)
@@ -84,10 +84,10 @@ const IndexPage = () => {
       if (city.success) {
         setToCityData(city.data)
       }
-      
+
     })
   }
-// handle Parcel Creation
+  // handle Parcel Creation
   let price = 0
   let distanceCheck = 0
   if (fromCountryData && toCountryData) {
@@ -96,35 +96,35 @@ const IndexPage = () => {
       parseFloat(fromCountryData.lat), parseFloat(toCountryData.lat), parseFloat(fromCountryData.long), parseFloat(toCountryData.long)
     )
     distanceCheck = Math.ceil(distanceCalculated)
-    price = Math.ceil(0.01*distanceCheck)
+    price = Math.ceil(0.01 * distanceCheck)
   }
 
-  function handleSubmitCreateParcel (e) {
-e.preventDefault()
-setLoader(true)
-if (token === undefined || token === null || token === "" || !token) {
-  navigate("/sign-in")
-} else{
-  handleParcelCreate(token,fromCity, toCity, deliveryDate, price, packageSize, packageType, message).then(res => {
-    // console.log("response::::::::", res)
-    if (res.success === false) {
-      Object.keys(res.errors).forEach(key => {
-        res.errors[key].forEach(error => {
-          toast.error(error, { duration: 25000 });
-        });
-      });
-      setLoader(false)
-    } else if (res.success === true) {
-      toast.success("Parcel Created!", {duration: 5000, position: 'top-right',})
-      setTimeout(()=> {handleNavigate()}, 5000)
+  function handleSubmitCreateParcel(e) {
+    e.preventDefault()
+    setLoader(true)
+    if (token === undefined || token === null || token === "" || !token) {
+      navigate("/sign-in")
     } else {
-      toast.error("We are facing technical issues. Kindly try again later!", {duration: 5000, position: 'top-right',})
-      setLoader(false)
+      handleParcelCreate(token, fromCity, toCity, deliveryDate, price, packageSize, packageType, message).then(res => {
+        // console.log("response::::::::", res)
+        if (res.success === false) {
+          Object.keys(res.errors).forEach(key => {
+            res.errors[key].forEach(error => {
+              toast.error(error, { duration: 25000 });
+            });
+          });
+          setLoader(false)
+        } else if (res.success === true) {
+          toast.success("Parcel Created!", { duration: 5000, position: 'top-right', })
+          setTimeout(() => { handleNavigate() }, 5000)
+        } else {
+          toast.error("We are facing technical issues. Kindly try again later!", { duration: 5000, position: 'top-right', })
+          setLoader(false)
+        }
+      })
     }
-  })
-}
   }
-  function handleNavigate(){
+  function handleNavigate() {
     navigate("/profile")
   }
   function distance(lat1,
@@ -166,7 +166,7 @@ if (token === undefined || token === null || token === "" || !token) {
     setShowParcelDetails(false);
   }
   function handleAcceptParcel() {
-    
+
     if (token === undefined || token === null || token === "" || !token) {
       navigate("/sign-in")
     }
@@ -188,7 +188,7 @@ if (token === undefined || token === null || token === "" || !token) {
     setShowParcelDetails(false);
   }
 
-  
+
 
 
   return (
@@ -205,26 +205,26 @@ if (token === undefined || token === null || token === "" || !token) {
                   Parcelra
                 </div>
                 <div className="pt-4 md:text-xl">
-                Have a parcel to send? Connect with a traveler and get it delivered.
+                  Have a parcel to send? Connect with a traveler and get it delivered.
                 </div>
                 <div className="flex flex-col md:flex-row gap-4 md:gap-10 pt-10">
                   <div className="lg:pr-3 w-full">
-                  <button
-                    onClick={handleCreateParcel}
-                    type="button"
-                    className="py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green uppercase font-bold"
-                  >
-                    send parcel
-                  </button>
+                    <button
+                      onClick={handleCreateParcel}
+                      type="button"
+                      className="py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green uppercase font-bold"
+                    >
+                      send parcel
+                    </button>
                   </div>
                   <div className="lg:pl-3 w-full">
-                  <button
-                    onClick={(e) => navigate("/parcel-content")}
-                    type="button"
-                    className="py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green uppercase font-bold"
-                  >
-                    offer delivery
-                  </button>
+                    <button
+                      onClick={(e) => navigate("/parcel-content")}
+                      type="button"
+                      className="py-3 px-6 w-full rounded-lg text-black bg-green hover:bg-light_green uppercase font-bold"
+                    >
+                      offer delivery
+                    </button>
                   </div>
                 </div>
               </div>
@@ -259,7 +259,7 @@ if (token === undefined || token === null || token === "" || !token) {
                 Need to deliver a parcel?
               </div>
               <div className="text-black text-lg md:text-2xl text-center pt-2">
-              Make your trip count! Help others by delivering parcels and earn extra cash along the way
+                Make your trip count! Help others by delivering parcels and earn extra cash along the way
 
               </div>
             </div>
@@ -276,8 +276,8 @@ if (token === undefined || token === null || token === "" || !token) {
             See Parcelra parcels in your area
           </div>
           <div className="flex items-center justify-center pt-4">
-                    <button type="button" onClick={e=>navigate('/parcel-content')} className="py-4 px-10 w-full lg:w-1/2 rounded-lg text-black bg-green hover:bg-light_green font-bold">Search Now!</button>
-                </div>
+            <button type="button" onClick={e => navigate('/parcel-content')} className="py-4 px-10 w-full lg:w-1/2 rounded-lg text-black bg-green hover:bg-light_green font-bold">Search Now!</button>
+          </div>
         </div>
         <div className="bg-white py-10 mt-10">
           <div className="container mx-auto">
@@ -516,10 +516,10 @@ if (token === undefined || token === null || token === "" || !token) {
                       type="date"
                       min={minDate}
                       required
-                    onChange={(e) => {
-                      setDeliveryDate(e.target.value);
-                    }}
-                    value={deliveryDate}
+                      onChange={(e) => {
+                        setDeliveryDate(e.target.value);
+                      }}
+                      value={deliveryDate}
                     />
                   </div>
                   <div>
@@ -527,7 +527,7 @@ if (token === undefined || token === null || token === "" || !token) {
                       Package Size
                     </label>
                     <select name="packageSize" required placeholder="Package Size" className={` border focus:border-blue mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`} type="text"
-                     onChange={e => { setPackageSize(e.target.value) }} value={packageSize}
+                      onChange={e => { setPackageSize(e.target.value) }} value={packageSize}
                     >
                       <option value="" selected disabled>Select size</option>
                       <option value="5">1-5 Kg</option>
@@ -541,7 +541,7 @@ if (token === undefined || token === null || token === "" || !token) {
                       Package Type
                     </label>
                     <select name="packageType" required placeholder="Package Type" className={` border focus:border-blue mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`} type="text"
-                     onChange={e => { setPackageType(e.target.value) }} value={packageType}
+                      onChange={e => { setPackageType(e.target.value) }} value={packageType}
                     >
                       <option value="" selected disabled>Select type</option>
                       <option value="food">Food</option>
@@ -561,7 +561,7 @@ if (token === undefined || token === null || token === "" || !token) {
                       disabled
                       className={` border focus:border-blue mt-1 p-4 rounded-lg focus:outline-none w-full border-blue `}
                       type="text"
-                      value={`$ `+price}
+                      value={`$ ` + price}
                     />
                   </div>
                   <div className=" md:col-span-2">
@@ -575,16 +575,16 @@ if (token === undefined || token === null || token === "" || !token) {
                       className={` border border-light_black focus:border-blue mt-1 p-4 rounded-lg focus:outline-none w-full bg-transparent`}
                       type="text"
                       required
-                    onChange={(e) => {
-                      setMessage(e.target.value);
-                    }}
-                    value={message}
+                      onChange={(e) => {
+                        setMessage(e.target.value);
+                      }}
+                      value={message}
                     />
                   </div>
                   <div className=" md:col-span-2 flex flex-col md:flex-row justify-between md:items-center gap-4">
                     <div>Calculated Distance: <span className="text-red">{distanceCheck} km</span></div>
                     <div className="flex items-center justify-center">
-                      <button disabled={loading === true} type="submit"  className="py-4 px-10 w-full lg:w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">{loading && (<Loader />)}Submit</button>
+                      <button disabled={loading === true} type="submit" className="py-4 px-10 w-full lg:w-full rounded-lg text-black bg-green hover:bg-light_green font-bold">{loading && (<Loader />)}Submit</button>
                     </div>
                   </div>
                 </div>

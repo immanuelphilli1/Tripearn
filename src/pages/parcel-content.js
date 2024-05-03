@@ -154,9 +154,9 @@ const ParcelPage = () => {
         });
         setLoader(false)
       } else if (details.success === true) {
-    setShowParcelSubmit(true);
-    setShowAcceptParcel(false);
-    setShowParcelDetails(false);
+        setShowParcelSubmit(true);
+        setShowAcceptParcel(false);
+        setShowParcelDetails(false);
       } else {
         toast.error("Parcel cannot be selected by same user!", { duration: 5000 });
       }
@@ -226,7 +226,7 @@ const ParcelPage = () => {
               <div className="py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 ">
                 {allParcelsData.map((details, key) => (
                   <ParcelCard handleDetails={(e) => handleParcelDetails(details.id)}
-                  key={key}
+                    key={key}
                     arrival={details.arrival_addr}
                     departure={details.departure_addr}
                     price={details.price}
@@ -251,7 +251,7 @@ const ParcelPage = () => {
               <div className="py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 ">
                 {searchData.map((details, key) => (
                   <ParcelCard handleDetails={(e) => handleParcelDetails(details.id)}
-                  key={key}
+                    key={key}
                     arrival={details.arrival_addr}
                     departure={details.departure_addr}
                     price={details.price}
@@ -316,10 +316,10 @@ const ParcelPage = () => {
                       type="date"
                       required
                       min={minDate}
-                    onChange={(e) => {
-                      setDepartureDate(e.target.value);
-                    }}
-                    value={departureDate}
+                      onChange={(e) => {
+                        setDepartureDate(e.target.value);
+                      }}
+                      value={departureDate}
                     />
                   </div>
                   <div>
@@ -332,10 +332,10 @@ const ParcelPage = () => {
                       type="date"
                       min={departureDate}
                       required
-                    onChange={(e) => {
-                      setArrivalDate(e.target.value);
-                    }}
-                    value={arrivalDate}
+                      onChange={(e) => {
+                        setArrivalDate(e.target.value);
+                      }}
+                      value={arrivalDate}
                     />
                   </div>
                   {/* <div>

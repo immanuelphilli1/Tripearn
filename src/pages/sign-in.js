@@ -7,6 +7,7 @@ import { navigate } from "gatsby";
 import Loader from "../components/Modal/loader";
 import Navigation from "../components/Navigation";
 import { Eye, EyeClosed } from "@phosphor-icons/react";
+import { Helmet } from "react-helmet";
 
 
 const SignInPage = () => {
@@ -59,13 +60,13 @@ const SignInPage = () => {
           setLoader(false)
         } else if (res.success === true) {
           if (previousPage.includes("/restore") || previousPage.includes("/sign-in") || previousPage.includes("/sign-in/")) {
-          setTimeout(() => { handleProfileNavigate() }, 5000)
-        } else if(previousPage.includes("/payments")) {
-          setTimeout(() => { handleNavigate() }, 5000)
-        } else {
-          setTimeout(() => { handleProfileNavigate() }, 5000)
-        }
-        toast.success("Login Successful!", { duration: 5000, position: 'top-right', })
+            setTimeout(() => { handleProfileNavigate() }, 5000)
+          } else if (previousPage.includes("/payments")) {
+            setTimeout(() => { handleNavigate() }, 5000)
+          } else {
+            setTimeout(() => { handleProfileNavigate() }, 5000)
+          }
+          toast.success("Login Successful!", { duration: 5000, position: 'top-right', })
           // if (typeof localStorage !== undefined) {
           localStorage.setItem('token', res.token);
           localStorage.setItem('user', res.user.name);
@@ -79,6 +80,9 @@ const SignInPage = () => {
   }
   return (
     <>
+      <Helmet>
+        <link rel="icon" href="/img/favicon.ico" />
+      </Helmet>
       <div className="text-white">
         <Navigation />
       </div>
@@ -91,17 +95,17 @@ const SignInPage = () => {
                 Email
               </label>
               <div className=" text-black">
-              <input
-                name="email"
-                className={` border text-black focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
-                type="email"
-                required
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                value={email}
-              />
-            </div>
+                <input
+                  name="email"
+                  className={` border text-black focus:border-purple mt-1 p-4 rounded-lg focus:outline-none w-full border-light_black`}
+                  type="email"
+                  required
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                  value={email}
+                />
+              </div>
             </div>
             <div>
               <label htmlFor="password" className="">

@@ -8,6 +8,7 @@ import Loader from "../components/Modal/loader";
 import Navigation from "../components/Navigation";
 import { Eye, EyeClosed } from "@phosphor-icons/react";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 
 
 const SignInPage = ({ location }) => {
@@ -63,6 +64,9 @@ const SignInPage = ({ location }) => {
   }
   return (
     <>
+      <Helmet>
+        <link rel="icon" href="/img/favicon.ico" />
+      </Helmet>
       <div className="text-white">
         <Navigation />
       </div>

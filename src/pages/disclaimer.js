@@ -37,34 +37,34 @@ const AboutUsPage = () => {
             <div className=" py-2">The Company may use copyrighted material which has not always been specifically authorized by the copyright owner. The Company is making such material available for criticism, comment, news reporting, teaching, scholarship, or research.</div>
             <div className=" py-2">The Company believes this constitutes a "fair use" of any such copyrighted material as provided for in section 107 of the United States Copyright law.</div>
             <div className=" py-2">If You wish to use copyrighted material from the Service for your own purposes that go beyond fair use, You must obtain permission from the copyright owner.</div>
-            
+
             <div className=" text-2xl text-blue py-4 font-bold">Introduction</div>
             <div className=" py-2">Welcome to Parcelra.com, the platform connecting international travelers with individuals seeking to send items to the traveler's destination. By using our services, you acknowledge and agree to the terms outlined in this disclaimer. Please read this disclaimer carefully before using our platform.
-</div>
+            </div>
             <div className=" text-2xl text-blue py-4 font-bold">Risks and Responsibilities
-</div>
+            </div>
             <div className=" text-xl text-blue py-1 font-bold">1. Risks of Lost item</div>
             <div className=" py-2"> Parcelra.com facilitates the connection between travelers and senders, but we do not take responsibility for any lost, damaged, or misplaced items during the delivery process. Users are advised to exercise caution and consider the inherent risks associated with entrusting their items to strangers.
-</div>
-<div className=" text-xl text-blue py-1 font-bold">2. Verification Responsibility</div>
+            </div>
+            <div className=" text-xl text-blue py-1 font-bold">2. Verification Responsibility</div>
             <div className=" py-2"> Travelers are responsible for thoroughly inspecting the packages they are carrying to ensure they are not transporting illegal or prohibited items. Parcelra.com does not assume any liability for the contents of the packages and urges travelers to exercise due diligence.
-</div>
-<div className=" text-xl text-blue py-1 font-bold">3. Sender's Responsibility</div>
+            </div>
+            <div className=" text-xl text-blue py-1 font-bold">3. Sender's Responsibility</div>
             <div className=" py-2">Senders are solely responsible for verifying the identity and reliability of the traveler they choose for the delivery. It is strongly recommended that senders check the traveler's tickets, passports, and take appropriate precautionary measures, such as capturing photographs of the items being handed over.
-</div>
-<div className=" text-xl text-blue py-1 font-bold">4. Data Security</div>
+            </div>
+            <div className=" text-xl text-blue py-1 font-bold">4. Data Security</div>
             <div className=" py-2"> Parcelra.com places the utmost importance on safeguarding the privacy and security of user data. We employ stringent measures to protect personal information, and users can trust that their data is safe with us. However, users must understand that while we take reasonable measures to secure their data, there are inherent risks associated with online platforms.
 
-</div>
-<div className=" text-2xl text-blue py-4 font-bold">Assumption of Risk</div>
+            </div>
+            <div className=" text-2xl text-blue py-4 font-bold">Assumption of Risk</div>
             <div className=" py-2"> Users of Parcelra.com acknowledge that the transportation of items through strangers involves inherent risks. By utilizing our platform, users assume all risks associated with the delivery process and agree that Parcelra.com is not liable for any direct, indirect, incidental, consequential, or exemplary damages resulting from the use of our services.
 
-</div>
-<div className=" text-2xl text-blue py-4 font-bold">Terms of Service Updates</div>
+            </div>
+            <div className=" text-2xl text-blue py-4 font-bold">Terms of Service Updates</div>
             <div className=" py-2"> Parcelra.com reserves the right to update this disclaimer and our Terms of Service at any time. Users are encouraged to review these documents periodically for changes.
 
-</div>
-            
+            </div>
+
             <div className=" text-2xl text-blue py-4 font-bold">Contact Information</div>
             <div className=" py-2">If you have any questions or concerns regarding this disclaimer, please contact us at</div>
             <div className=" py-2">By email: Parcelracompany@gmail.com</div>

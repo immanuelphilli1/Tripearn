@@ -19,7 +19,7 @@ const AboutUsPage = () => {
             <div className=" py-2 ">While studying at Saratov State Technical University in August 2018, I encountered a challenge that sparked a wonderful idea. As an international student in Russia, renewing my visa and passport annually was mandatory. Facing a tight deadline with only three months left on my visa, I needed my passport renewed. The Ghanaian Embassy in Moscow took over two months to process it. To overcome the delivery hurdle, I asked a friend traveling to Saratov to pick up my passport, avoiding the lengthy post office delivery. This experience inspired us to create a system to assist others in similar situations, and with my co-founders, we brought this idea to life.</div>
             <div className=" py-2">So I asked myself what if there was a system that could help others in this situation. Together with my co-founders, we were able to bring this idea to life.</div>
             <div className="bg-white w-full min-h-[50px] flex items-center justify-center rounded-lg my-10 ">
-            <img alt="bg" src="/img/about-1.jpg" className="" />
+              <img alt="bg" src="/img/about-1.jpg" className="" />
             </div>
             <div className=" text-2xl text-blue py-4 font-bold">Currently</div>
             <div className=" py-2 ">Presently, Parcelra stands as the leading parcel delivery service, connecting you with travelers who, whether by bus, train, or plane, have extra space in their luggage. They can seamlessly deliver your parcel along their travel route to the desired destination. This benefits both you and the traveler, as they earn a reward for the delivery, ensuring your parcel arrives safely and on time.</div>
@@ -28,7 +28,7 @@ const AboutUsPage = () => {
             <div className=" text-2xl text-blue py-4 font-bold">Rapid Delivery</div>
             <div className=" py-2">Get your documents, gifts, or important parcels delivered in less than 24 hours. With people traveling around the clock, we ensure swift delivery regardless of the time of day.</div>
             <div className="bg-white w-full min-h-[50px] flex items-center justify-center rounded-lg my-10 ">
-            <img alt="bg" src="/img/about-2.jpg" className="" />
+              <img alt="bg" src="/img/about-2.jpg" className="" />
             </div>
             <div className=" text-2xl text-blue py-4 font-bold">Reliable & Approachable</div>
             <div className=" py-2 ">Understanding the importance of trust in parcel delivery, we've crafted a secure service connecting you with only verified and reliable travelers. Our system provides ample information for tracking your packages, ensuring a reliable and approachable delivery experience.</div>
