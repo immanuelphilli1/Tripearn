@@ -137,4 +137,4 @@ const SignInPage = ({ location }) => {
 
 export default SignInPage
 
-export const Head = () => <title>Sign In</title>
+export const Head = () => <title>Restore</title>
