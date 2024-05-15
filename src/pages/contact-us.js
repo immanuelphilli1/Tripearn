@@ -1,6 +1,7 @@
 import * as React from "react"
 import Layout from "../components/layout"
 import { useState } from "react"
+import { FacebookLogo, InstagramLogo, MetaLogo } from "@phosphor-icons/react"
 
 const ContactUsPage = () => {
   const [fullName, setFullName] = useState("")
@@ -40,6 +41,14 @@ const ContactUsPage = () => {
                   <div className=" text-2xl text-blue py-4 font-bold">Emails</div>
                   <div className="  text-xl text-green ">For general enquiries and technical support</div>
                   <div className="">Parcelracompany@gmail.com </div>
+                </div>
+                <div>
+                <div className="text-xl pt-6 pb-4">Follow Us</div>
+                <div className="flex gap-4">
+                    <a  href="https://www.facebook.com/Parcelra?mibextid=LQQJ4d" target="_blank" className="fill-white hover:fill-[#3b5998]"><FacebookLogo size={32} weight="fill" color="" /></a>
+            <a  href="https://www.facebook.com/Parcelra?mibextid=LQQJ4d" target="_blank" className="fill-white hover:fill-blue"><MetaLogo size={32} weight="fill" color="" /></a>
+        <a href="https://www.instagram.com/parcelra?igsh=MTdiMWV0bjlxaHozZw==" target="_blank" className="fill-white hover:fill-[#E1306C]"><InstagramLogo size={32} weight="fill" color="" /></a>
+        </div>
                 </div>
               </div>
               <div className="border-t py-6 md:border-l md:border-t-0">
